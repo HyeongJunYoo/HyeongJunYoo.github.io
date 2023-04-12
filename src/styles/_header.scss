@@ -2,12 +2,12 @@
   background: $main;
   display: flex;
   vertical-align: bottom;
-  min-height: 100vh;
+  min-height: 70vh;
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
   .particles-js-canvas-el {
-    height: 100vh !important;
+    height: 70vh !important;
   }
 }
 
