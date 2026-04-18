@@ -1,0 +1,83 @@
+# GitHub Pages + https://github.com/sproogen/modern-resume-theme
+repository: HyeongJunYoo/HyeongJunYoo.github.io
+url: "https://hyeongjunyoo.github.io"
+baseurl: ""
+
+version: 2
+
+name: 유형준
+title: 소프트웨어 엔지니어
+email:
+phone:
+website: "https://hyeongjunyoo.github.io"
+
+darkmode: false
+
+github_username: HyeongJunYoo
+
+about_profile_image: images/profile.jpg
+about_content: |
+  여기에 자기소개를 작성하세요. Markdown을 사용할 수 있습니다.
+
+  - 강조, [링크](https://github.com/HyeongJunYoo), 목록 등을 자유롭게 쓸 수 있습니다.
+
+content:
+  - title: 프로젝트
+    layout: list
+    content:
+      - layout: left
+        title: 프로젝트 이름
+        link: https://github.com/HyeongJunYoo/HyeongJunYoo.github.io
+        link_text: 저장소
+        quote: >
+          프로젝트 한 줄 요약
+        description: |
+          프로젝트 설명과 본인 역할, 사용 기술 등을 적습니다.
+
+  - title: 경력
+    layout: list
+    content:
+      - layout: right
+        title: 회사명
+        sub_title: 직무
+        caption: 20XX년 X월 - 현재
+        quote: >
+          회사/팀 소개(선택)
+        description: |
+          담당 업무와 성과를 적습니다.
+
+  - title: 학력
+    layout: list
+    content:
+      - layout: top-right
+        title: 학교명
+        sub_title: 전공 및 학위
+        caption: 20XX - 20XX
+        description: |
+          관련 수업, 활동, 논문 등(선택)
+
+  - title: 기타
+    layout: text
+    content: |
+      관심사, 스킬, 언어 등 추가로 보여주고 싶은 내용을 적습니다.
+
+footer_show_references: true
+
+remote_theme: sproogen/modern-resume-theme
+
+sass:
+  sass_dir: _sass
+  style: compressed
+
+plugins:
+  - jekyll-remote-theme
+  - jekyll-seo-tag
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
