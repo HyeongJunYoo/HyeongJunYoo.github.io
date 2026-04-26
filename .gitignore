@@ -1,5 +1,11 @@
-_site/
-.sass-cache/
-.jekyll-cache/
-.jekyll-metadata
-vendor/
+node_modules/
+dist/
+build/
+.cache/
+.npm-cache/
+.astro/
+preview.log
+preview.err
+.env
+.env.*
+*.local

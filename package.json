@@ -1,0 +1,21 @@
+{
+  "name": "hyeongjunyoo-resume",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node_modules/.bin/node scripts/astro-runner.mjs dev",
+    "build": "node_modules/.bin/node scripts/astro-runner.mjs build",
+    "preview": "node_modules/.bin/node scripts/astro-runner.mjs preview"
+  },
+  "dependencies": {
+    "astro": "6.1.9"
+  },
+  "devDependencies": {
+    "node": "24.15.0",
+    "typescript": "^5.9.3"
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  }
+}
