@@ -4,25 +4,23 @@ import {
   activities,
   career,
   education,
-  highlights,
   profile,
   projects,
   skills
 } from "../data/resume";
+
+const activityPreviewLimit = 5;
+const hasHiddenActivities = activities.length > activityPreviewLimit;
 ---
 
 <Layout>
   <header class="site-header" aria-label="주요 메뉴">
-    <a class="brand" href="#top" aria-label="상단으로 이동">
-      <span class="brand-mark" aria-hidden="true">YJ</span>
-      <span>유형준</span>
-    </a>
     <nav class="site-nav">
       <a href="#about">About</a>
-      <a href="#skills">Skills</a>
       <a href="#career">Career</a>
       <a href="#projects">Projects</a>
-      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#activities">Activities</a>
       <a href="#education">Education</a>
     </nav>
   </header>
@@ -30,92 +28,58 @@ import {
   <main id="main">
     <section id="top" class="hero section-block" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <p class="eyebrow">Updated {profile.updatedAt}</p>
         <h1 id="hero-title">{profile.name}</h1>
         <p class="role">{profile.role}</p>
-        <p class="hero-summary">{profile.headline}</p>
-        <ul class="keyword-list" aria-label="핵심 키워드">
-          {profile.keywords.map((keyword) => <li>{keyword}</li>)}
-        </ul>
-        <div class="contact-row" aria-label="연락처 및 링크">
+      </div>
+
+      <div class="hero-aside" aria-label="연락처 및 링크">
+        <nav class="profile-links" aria-label="외부 링크">
           {profile.links.map((link) => (
             <a
               href={link.href}
-              target={link.kind === "external" ? "_blank" : undefined}
-              rel={link.kind === "external" ? "noreferrer" : undefined}
+              target="_blank"
+              rel="noreferrer"
             >
               {link.label}
             </a>
           ))}
+        </nav>
+        <div class="contact-lines">
+          <p>
+            Email
+            <a href={`mailto:${profile.contact.email}`}>{profile.contact.email}</a>
+          </p>
+          <p>
+            Phone
+            <a href={`tel:${profile.contact.phone}`}>{profile.contact.phone}</a>
+          </p>
         </div>
       </div>
-
-      <aside class="system-map" aria-label="개발 경험 요약">
-        <div class="map-header">
-          <span>Unity Client</span>
-          <span>PC / VR / Mobile</span>
-        </div>
-        <div class="map-grid">
-          <span class="map-node node-core">Platform</span>
-          <span class="map-node">XR Input</span>
-          <span class="map-node">Realtime Sync</span>
-          <span class="map-node">UGUI / MVVM</span>
-          <span class="map-node">SDK Tooling</span>
-          <span class="map-node">Avatar Tracking</span>
-        </div>
-      </aside>
     </section>
 
-    <section id="about" class="section-block about-grid reveal" aria-labelledby="about-title">
-      <div class="section-heading">
-        <p class="eyebrow">About</p>
-        <h2 id="about-title">플랫폼과 콘텐츠 사이를 연결하는 클라이언트 개발</h2>
+    <section id="about" class="section-block about-section" aria-labelledby="about-title">
+      <div class="section-heading compact">
+        <h2 id="about-title">About Me</h2>
       </div>
       <div class="about-body">
         <p>{profile.summary}</p>
-        <dl class="metric-grid">
-          {highlights.map((item) => (
-            <div>
-              <dt>{item.value}</dt>
-              <dd>{item.label}</dd>
-            </div>
-          ))}
-        </dl>
       </div>
     </section>
 
-    <section id="skills" class="section-block reveal" aria-labelledby="skills-title">
+    <section id="career" class="section-block" aria-labelledby="career-title">
       <div class="section-heading compact">
-        <p class="eyebrow">Skills</p>
-        <h2 id="skills-title">주로 다뤄온 기술 영역</h2>
-      </div>
-      <div class="skill-grid">
-        {skills.map((group) => (
-          <article class="skill-card">
-            <h3>{group.title}</h3>
-            <ul>
-              {group.items.map((item) => <li>{item}</li>)}
-            </ul>
-          </article>
-        ))}
-      </div>
-    </section>
-
-    <section id="career" class="section-block reveal" aria-labelledby="career-title">
-      <div class="section-heading compact">
-        <p class="eyebrow">Career</p>
-        <h2 id="career-title">실무 경력</h2>
+        <h2 id="career-title">Career</h2>
       </div>
       <div class="career-list">
         {career.map((item) => (
           <article class="career-item">
-            <div class="career-meta">
+            <div class="entry-period">
               <span>{item.period}</span>
-              <strong>{item.company}</strong>
-              <p>{item.team} · {item.role}</p>
             </div>
             <div class="career-content">
-              <h3>{item.summary}</h3>
+              <h3>{item.company}</h3>
+              <p class="entry-subtitle">{item.team} · {item.role}</p>
+              <p class="entry-summary">{item.summary}</p>
               <ul class="check-list">
                 {item.details.map((detail) => <li>{detail}</li>)}
               </ul>
@@ -125,101 +89,116 @@ import {
       </div>
     </section>
 
-    <section id="projects" class="section-block reveal" aria-labelledby="projects-title">
-      <div class="section-heading project-heading">
-        <div>
-          <p class="eyebrow">Projects</p>
-          <h2 id="projects-title">프로젝트 상세</h2>
-        </div>
-        <p>
-          각 프로젝트는 담당 역할, 목적, 구현 내용, 결과가 드러나도록 정리했습니다.
-          기간은 해당 주제가 가장 집중적으로 진행된 대표 기간 기준입니다.
-        </p>
+    <section id="projects" class="section-block" aria-labelledby="projects-title">
+      <div class="section-heading compact">
+        <h2 id="projects-title">Projects</h2>
       </div>
 
       <div class="project-timeline">
         {projects.map((project, index) => (
-          <article class="project-card reveal" id={`project-${index + 1}`}>
-            <div class="project-index" aria-hidden="true">{String(index + 1).padStart(2, "0")}</div>
-            <div class="project-content">
-              <div class="project-topline">
-                <p>{project.period}</p>
-                <ul class="tag-list" aria-label={`${project.title} 태그`}>
-                  {project.tags.map((tag) => <li>{tag}</li>)}
-                </ul>
-              </div>
-              <h3>{project.title}</h3>
-              <ul class="tech-list" aria-label={`${project.title} 기술 스택`}>
-                {project.tech.map((tech) => <li>{tech}</li>)}
-              </ul>
+          <article class="project-card" id={`project-${index + 1}`}>
+            <aside class="project-meta" aria-label={`${project.title} 요약`}>
+              <p class="project-period">{project.period}</p>
+            </aside>
 
+            <div class="project-content">
+              <header class="entry-header">
+                <h3>{project.title}</h3>
+              </header>
               <div class="project-detail-grid">
-                <section>
-                  <h4>역할</h4>
+                <section aria-label="설명">
                   <ul>
-                    {project.role.map((item) => <li>{item}</li>)}
+                    {project.description.map((item) => <li>{item}</li>)}
                   </ul>
                 </section>
-                <section>
-                  <h4>목적</h4>
+                <section aria-label="성과">
                   <ul>
-                    {project.purpose.map((item) => <li>{item}</li>)}
-                  </ul>
-                </section>
-                <section>
-                  <h4>내용</h4>
-                  <ul>
-                    {project.details.map((item) => <li>{item}</li>)}
-                  </ul>
-                </section>
-                <section>
-                  <h4>결과</h4>
-                  <ul>
-                    {project.outcome.map((item) => <li>{item}</li>)}
+                    {project.results.map((item) => <li>{item}</li>)}
                   </ul>
                 </section>
               </div>
+              <section class="project-tech" aria-label={`${project.title} 기술 스택`}>
+                <ul class="tech-list">
+                  {project.tech.map((tech) => <li>{tech}</li>)}
+                </ul>
+              </section>
             </div>
           </article>
         ))}
       </div>
     </section>
 
-    <section id="experience" class="section-block reveal" aria-labelledby="experience-title">
+    <section id="skills" class="section-block" aria-labelledby="skills-title">
       <div class="section-heading compact">
-        <p class="eyebrow">Experience</p>
-        <h2 id="experience-title">외부 활동</h2>
+        <h2 id="skills-title">Skills</h2>
       </div>
-      <div class="activity-grid">
-        {activities.map((activity) => (
-          <article class="activity-card">
-            <h3>{activity.title}</h3>
-            <ul class="check-list">
-              {activity.items.map((item) => <li>{item}</li>)}
+      <div class="skill-list">
+        {skills.map((group) => (
+          <section class="skill-row">
+            <h3>{group.title}</h3>
+            <ul>
+              {group.items.map((item) => <li>{item}</li>)}
             </ul>
-          </article>
+          </section>
         ))}
       </div>
     </section>
 
-    <section id="education" class="section-block reveal" aria-labelledby="education-title">
+    <section id="activities" class="section-block" aria-labelledby="activities-title">
       <div class="section-heading compact">
-        <p class="eyebrow">Education</p>
-        <h2 id="education-title">학력 및 연구</h2>
+        <h2 id="activities-title">Activities</h2>
+      </div>
+      <div id="activities-list" class="activity-list">
+        {activities.map((activity, index) => (
+          <article
+            class={`activity-item${index >= activityPreviewLimit ? " activity-item-extra" : ""}`}
+            data-activity-extra={index >= activityPreviewLimit ? "true" : undefined}
+            hidden={index >= activityPreviewLimit}
+          >
+            <div class="entry-period">
+              <span>{activity.date}</span>
+            </div>
+            <div class="activity-content">
+              <h3>{activity.title}</h3>
+              <p class="entry-summary">{activity.description}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+      {hasHiddenActivities && (
+        <div class="activity-actions">
+          <button
+            type="button"
+            class="activity-toggle"
+            data-activity-toggle
+            aria-expanded="false"
+            aria-controls="activities-list"
+          >
+            더 보기
+          </button>
+        </div>
+      )}
+    </section>
+
+    <section id="education" class="section-block" aria-labelledby="education-title">
+      <div class="section-heading compact">
+        <h2 id="education-title">Education</h2>
       </div>
       <div class="education-list">
         {education.map((item) => (
           <article class="education-item">
-            <div>
-              <p class="period">{item.period}</p>
-              <h3>{item.title}</h3>
-              <p>{item.meta}</p>
+            <div class="entry-period">
+              <span>{item.period}</span>
             </div>
-            {item.details.length > 0 && (
-              <ul class="check-list">
-                {item.details.map((detail) => <li>{detail}</li>)}
-              </ul>
-            )}
+            <div class="education-content">
+              <h3>{item.title}</h3>
+              <p class="entry-subtitle">{item.meta}</p>
+              {item.details.length > 0 && (
+                <ul class="check-list">
+                  {item.details.map((detail) => <li>{detail}</li>)}
+                </ul>
+              )}
+            </div>
           </article>
         ))}
       </div>
@@ -231,28 +210,8 @@ import {
     <a href="#top">Back to top</a>
   </footer>
 
-  <script>
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const revealTargets = document.querySelectorAll(".reveal");
-
-    if (!prefersReducedMotion && "IntersectionObserver" in window) {
-      const revealObserver = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("is-visible");
-              revealObserver.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.12 }
-      );
-
-      revealTargets.forEach((target) => revealObserver.observe(target));
-    } else {
-      revealTargets.forEach((target) => target.classList.add("is-visible"));
-    }
-
+  <script is:inline>
+    const initResumeInteractions = () => {
     const navLinks = [...document.querySelectorAll(".site-nav a")];
     const sections = navLinks
       .map((link) => document.querySelector(link.getAttribute("href") || ""))
@@ -272,6 +231,29 @@ import {
       );
 
       sections.forEach((section) => navObserver.observe(section));
+    }
+
+    const activityToggle = document.querySelector("[data-activity-toggle]");
+    const activityExtras = [...document.querySelectorAll("[data-activity-extra]")];
+
+    if (activityToggle && activityExtras.length > 0) {
+      activityToggle.addEventListener("click", () => {
+        const shouldExpand = activityToggle.getAttribute("aria-expanded") !== "true";
+
+        activityToggle.setAttribute("aria-expanded", String(shouldExpand));
+        activityToggle.textContent = shouldExpand ? "접기" : "더 보기";
+        activityExtras.forEach((activity) => {
+          activity.hidden = !shouldExpand;
+        });
+      });
+    }
+
+    };
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initResumeInteractions, { once: true });
+    } else {
+      initResumeInteractions();
     }
   </script>
 </Layout>
