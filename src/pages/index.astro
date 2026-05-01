@@ -20,16 +20,33 @@ const hasHiddenActivities = activities.length > activityPreviewLimit;
       <a href="#career">Career</a>
       <a href="#projects">Projects</a>
       <a href="#skills">Skills</a>
-      <a href="#activities">Activities</a>
+      <a href="#activities">Demos</a>
       <a href="#education">Education</a>
     </nav>
+    <button
+      type="button"
+      class="theme-toggle"
+      data-theme-toggle
+      aria-label="Toggle color theme"
+      aria-pressed="false"
+    >
+      <span class="theme-toggle-track" aria-hidden="true">
+        <span class="theme-toggle-thumb"></span>
+      </span>
+      <span class="theme-toggle-label" data-theme-label>Dark</span>
+    </button>
   </header>
 
   <main id="main">
     <section id="top" class="hero section-block" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <h1 id="hero-title">{profile.name}</h1>
-        <p class="role">{profile.role}</p>
+        <div class="profile-photo-slot" aria-hidden="true">
+          <span>{profile.initials}</span>
+        </div>
+        <div class="hero-title-group">
+          <h1 id="hero-title">{profile.name}</h1>
+          <p class="role">{profile.role}</p>
+        </div>
       </div>
 
       <div class="hero-aside" aria-label="연락처 및 링크">
@@ -39,20 +56,30 @@ const hasHiddenActivities = activities.length > activityPreviewLimit;
               href={link.href}
               target="_blank"
               rel="noreferrer"
+              aria-label={`${link.label} ${link.displayText}`}
             >
-              {link.label}
+              <span
+                class="link-icon"
+                style={`--icon-url: url("${link.iconUrl}")`}
+                aria-hidden="true"
+              />
+              <span class="link-value">{link.displayText}</span>
             </a>
           ))}
         </nav>
         <div class="contact-lines">
-          <p>
-            Email
-            <a href={`mailto:${profile.contact.email}`}>{profile.contact.email}</a>
-          </p>
-          <p>
-            Phone
-            <a href={`tel:${profile.contact.phone}`}>{profile.contact.phone}</a>
-          </p>
+          <a
+            class="contact-link"
+            href={`mailto:${profile.contact.email}`}
+            aria-label={`Email ${profile.contact.email}`}
+          >
+            <span
+              class="link-icon"
+              style={`--icon-url: url("${profile.contact.iconUrl}")`}
+              aria-hidden="true"
+            />
+            <span class="link-value">{profile.contact.email}</span>
+          </a>
         </div>
       </div>
     </section>
@@ -62,7 +89,7 @@ const hasHiddenActivities = activities.length > activityPreviewLimit;
         <h2 id="about-title">About Me</h2>
       </div>
       <div class="about-body">
-        <p>{profile.summary}</p>
+        {profile.summary.map((paragraph) => <p>{paragraph}</p>)}
       </div>
     </section>
 
@@ -79,7 +106,7 @@ const hasHiddenActivities = activities.length > activityPreviewLimit;
             <div class="career-content">
               <h3>{item.company}</h3>
               <p class="entry-subtitle">{item.team} · {item.role}</p>
-              <p class="entry-summary">{item.summary}</p>
+              {item.summary && <p class="entry-summary">{item.summary}</p>}
               <ul class="check-list">
                 {item.details.map((detail) => <li>{detail}</li>)}
               </ul>
@@ -146,7 +173,7 @@ const hasHiddenActivities = activities.length > activityPreviewLimit;
 
     <section id="activities" class="section-block" aria-labelledby="activities-title">
       <div class="section-heading compact">
-        <h2 id="activities-title">Activities</h2>
+        <h2 id="activities-title">Demos & Workshops</h2>
       </div>
       <div id="activities-list" class="activity-list">
         {activities.map((activity, index) => (
@@ -248,6 +275,29 @@ const hasHiddenActivities = activities.length > activityPreviewLimit;
       });
     }
 
+      const themeToggle = document.querySelector("[data-theme-toggle]");
+      const themeLabel = document.querySelector("[data-theme-label]");
+      const themeMeta = document.querySelector('meta[name="theme-color"]');
+      const setTheme = (theme) => {
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+        themeToggle?.setAttribute("aria-pressed", String(theme === "dark"));
+        if (themeLabel) themeLabel.textContent = theme === "dark" ? "Light" : "Dark";
+        if (themeMeta) themeMeta.setAttribute("content", theme === "dark" ? "#11110f" : "#f7f7f5");
+      };
+
+      const currentTheme = document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+      setTheme(currentTheme);
+
+      themeToggle?.addEventListener("click", () => {
+        const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+        setTheme(nextTheme);
+        try {
+          localStorage.setItem("resume-theme", nextTheme);
+        } catch {
+          // Theme preference remains session-only when storage is unavailable.
+        }
+      });
     };
 
     if (document.readyState === "loading") {

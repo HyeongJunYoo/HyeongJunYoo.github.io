@@ -6,6 +6,8 @@ build/
 .astro/
 preview.log
 preview.err
+dev-server.log
+dev-server.err.log
 .env
 .env.*
 *.local
