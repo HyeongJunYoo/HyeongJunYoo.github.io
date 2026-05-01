@@ -11,4 +11,3 @@ Unity client developer web resume built with Astro.
 ## Content
 
 - `src/data/resume.ts`: web resume data rendered by the site
-- `resume-project-details.md`: source draft for project role, purpose, work details, and outcomes

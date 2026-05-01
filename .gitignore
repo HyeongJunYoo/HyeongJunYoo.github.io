@@ -8,6 +8,9 @@ preview.log
 preview.err
 dev-server.log
 dev-server.err.log
+local-dev-runbook.md
+resume-project-details.md
+.qodo/
 .env
 .env.*
 *.local
