@@ -440,8 +440,8 @@ li {
 
 .skill-row {
   display: grid;
-  grid-template-columns: 220px minmax(0, 1fr);
-  gap: 28px;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 40px;
   align-items: start;
   border-bottom: 1px solid var(--line);
   padding: 22px 0;
@@ -508,6 +508,11 @@ li {
   display: none;
 }
 
+.activity-item {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
 .entry-period,
 .project-meta {
   display: grid;
@@ -530,6 +535,7 @@ li {
 
 .entry-subtitle {
   margin: 4px 0 12px;
+  font-size: 0.92rem;
   font-weight: 650;
 }
 
@@ -551,6 +557,15 @@ li {
   color: var(--text);
   font-size: 1.22rem;
   line-height: 1.42;
+}
+
+.activity-content h3 {
+  font-size: 1.06rem;
+}
+
+.activity-content .entry-summary {
+  margin: 4px 0 0;
+  font-size: 0.92rem;
 }
 
 .check-list,
@@ -625,14 +640,10 @@ li {
   border-color: var(--line-strong);
 }
 
-.activity-content .entry-summary {
-  margin: 4px 0 0;
-}
-
 .activity-actions {
   display: flex;
   justify-content: center;
-  padding-top: 18px;
+  padding-top: 12px;
 }
 
 .activity-toggle {

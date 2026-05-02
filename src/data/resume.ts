@@ -288,11 +288,6 @@ export const activities = [
   },
   {
     date: "2025.11.21",
-    title: "건대 메타버스 스튜디오 시연 행사",
-    description: "메타버스 플랫폼 소개 및 시연 진행"
-  },
-  {
-    date: "2025.11.21",
     title: "일산 AI 페스티벌",
     description: "AI 기반 콘텐츠 시연 참여"
   },
@@ -300,6 +295,11 @@ export const activities = [
     date: "2025.11.12",
     title: "일산 KMF",
     description: "실감미디어 및 메타버스 콘텐츠 시연 참여"
+  },
+  {
+    date: "2025.10.21",
+    title: "건대 메타버스 스튜디오 시연 행사",
+    description: "메타버스 플랫폼 소개 및 시연 진행"
   }
 ];
 
