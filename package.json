@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "node_modules/.bin/node scripts/astro-runner.mjs dev",
-    "build": "node_modules/.bin/node scripts/astro-runner.mjs build",
-    "preview": "node_modules/.bin/node scripts/astro-runner.mjs preview"
+    "dev": "node scripts/astro-runner.mjs dev",
+    "build": "node scripts/astro-runner.mjs build",
+    "preview": "node scripts/astro-runner.mjs preview"
   },
   "dependencies": {
     "astro": "6.1.9"

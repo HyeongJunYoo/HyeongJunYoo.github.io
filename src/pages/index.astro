@@ -125,30 +125,28 @@ const hasHiddenActivities = activities.length > activityPreviewLimit;
         {projects.map((project, index) => (
           <article class="project-card" id={`project-${index + 1}`}>
             <aside class="project-meta" aria-label={`${project.title} 요약`}>
+              <h3>{project.title}</h3>
               <p class="project-period">{project.period}</p>
+              <ul class="tech-list project-meta-tech" aria-label={`${project.title} 기술 스택`}>
+                {project.tech.map((tech) => <li>{tech}</li>)}
+              </ul>
             </aside>
 
             <div class="project-content">
-              <header class="entry-header">
-                <h3>{project.title}</h3>
-              </header>
               <div class="project-detail-grid">
-                <section aria-label="설명">
+                <section aria-labelledby={`project-${index + 1}-description`}>
+                  <h4 id={`project-${index + 1}-description`}>주요 업무 내용</h4>
                   <ul>
                     {project.description.map((item) => <li>{item}</li>)}
                   </ul>
                 </section>
-                <section aria-label="성과">
+                <section aria-labelledby={`project-${index + 1}-results`}>
+                  <h4 id={`project-${index + 1}-results`}>프로젝트 성과</h4>
                   <ul>
                     {project.results.map((item) => <li>{item}</li>)}
                   </ul>
                 </section>
               </div>
-              <section class="project-tech" aria-label={`${project.title} 기술 스택`}>
-                <ul class="tech-list">
-                  {project.tech.map((tech) => <li>{tech}</li>)}
-                </ul>
-              </section>
             </div>
           </article>
         ))}
