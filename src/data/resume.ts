@@ -165,7 +165,7 @@ export const projects: Project[] = [
     results: [
       "상담 흐름과 미니게임 활동을 하나의 세션 안에서 운영할 수 있도록 진행 제어 로직 적용",
       "관리자 제어 API와 Room Property 기반 상태 동기화로 참여자별 진행 상태 불일치 방지",
-      "해당 콘텐츠 기반 연구가 아시아휴먼서비스학회 우수 연구자 장려상 수상"
+      "해당 콘텐츠 기반 연구가 국제학술대회 우수 연구자 장려상 수상"
     ],
     tags: ["Realtime", "Authority", "Session"]
   },
