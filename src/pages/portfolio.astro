@@ -1,0 +1,326 @@
+---
+import Layout from "../components/Layout.astro";
+import { profile, projects } from "../data/resume";
+import type { Project } from "../data/resume";
+import "../styles/portfolio.css";
+
+type PortfolioProject = Project & {
+  id: string;
+  displayTitle: string;
+  shortTitle: string;
+  focus: string;
+  role: string;
+  categories: string[];
+  mediaLabel: string;
+  tone: "amber" | "green" | "red" | "slate" | "violet" | "cyan";
+};
+
+const findProject = (keyword: string) => {
+  const project = projects.find((item) => item.title.includes(keyword));
+
+  if (!project) {
+    throw new Error(`Portfolio project not found: ${keyword}`);
+  }
+
+  return project;
+};
+
+const portfolioProjects: PortfolioProject[] = [
+  {
+    ...findProject("실시간 멀티"),
+    id: "realtime-multiplayer",
+    displayTitle: "실시간 멀티 콘텐츠 개발",
+    shortTitle: "Realtime Multiplayer",
+    focus: "멀티플레이 진행 로직과 룸 상태 동기화",
+    role: "주요 콘텐츠 2종 주 담당",
+    categories: ["featured", "realtime"],
+    mediaLabel: "Gameplay",
+    tone: "green"
+  },
+  {
+    ...findProject("교육용 VR"),
+    id: "vr-acupuncture",
+    displayTitle: "교육용 VR 침술 실습 콘텐츠",
+    shortTitle: "VR Training",
+    focus: "VR 상호작용, 평가 로직, 햅틱 피드백",
+    role: "Unity 클라이언트 구현",
+    categories: ["featured", "vr"],
+    mediaLabel: "VR Demo",
+    tone: "red"
+  },
+  {
+    ...findProject("UI"),
+    id: "native-ui",
+    displayTitle: "메타버스 플랫폼 UI 고도화",
+    shortTitle: "Native UI",
+    focus: "WebView UI를 UGUI/MVVM 구조로 전환",
+    role: "주요 화면 구현 및 구조 개선",
+    categories: ["featured", "platform"],
+    mediaLabel: "UI Flow",
+    tone: "amber"
+  },
+  {
+    ...findProject("마커리스"),
+    id: "avatar-tracking",
+    displayTitle: "마커리스 아바타 트래킹",
+    shortTitle: "Avatar Tracking",
+    focus: "MediaPipe/ARKit 기반 모션 데이터 처리",
+    role: "트래킹 파이프라인 구현",
+    categories: ["featured", "avatar", "vr"],
+    mediaLabel: "Tracking",
+    tone: "violet"
+  },
+  {
+    ...findProject("SDK"),
+    id: "sdk-tooling",
+    displayTitle: "SDK 배포 및 제작 환경 자동화",
+    shortTitle: "SDK Tooling",
+    focus: "UPM 배포, 초기 설정, Editor Tool 자동화",
+    role: "제작 환경 개선 담당",
+    categories: ["tooling", "platform"],
+    mediaLabel: "Tool",
+    tone: "cyan"
+  },
+  {
+    ...findProject("플랫폼 고도화"),
+    id: "platform-architecture",
+    displayTitle: "메타버스 플랫폼 고도화",
+    shortTitle: "Platform",
+    focus: "입력, 사운드, XR, Addressables 구조 개선",
+    role: "Unity 클라이언트 시스템 개선",
+    categories: ["platform", "vr"],
+    mediaLabel: "System",
+    tone: "slate"
+  }
+];
+
+const filters = [
+  { id: "all", label: "전체" },
+  { id: "featured", label: "핵심" },
+  { id: "realtime", label: "멀티" },
+  { id: "vr", label: "VR/XR" },
+  { id: "platform", label: "플랫폼" },
+  { id: "tooling", label: "툴링" }
+];
+---
+
+<Layout
+  title={`${profile.name} | Portfolio`}
+  description="Unity 클라이언트 개발자 유형준의 게임 및 XR 포트폴리오 페이지입니다."
+>
+  <header class="portfolio-header" aria-label="포트폴리오 메뉴">
+    <a class="portfolio-brand" href="/">
+      <span>YJ</span>
+      <strong>Unity Portfolio</strong>
+    </a>
+    <nav class="portfolio-nav">
+      <a href="/">Resume</a>
+      <a href="#library">Library</a>
+      <a href={profile.links[0].href} target="_blank" rel="noreferrer">GitHub</a>
+      <a href={profile.links[1].href} target="_blank" rel="noreferrer">Blog</a>
+    </nav>
+  </header>
+
+  <main id="main" class="portfolio-page" data-portfolio-root>
+    <section class="portfolio-intro" aria-labelledby="portfolio-title">
+      <div class="portfolio-intro-copy">
+        <h1 id="portfolio-title">Portfolio</h1>
+        <p>
+          Unity 기반 실시간 멀티 콘텐츠, VR/XR 상호작용, 플랫폼 구조 개선 경험을
+          프로젝트 단위로 정리했습니다.
+        </p>
+      </div>
+      <dl class="portfolio-summary">
+        <div>
+          <dt>Role</dt>
+          <dd>Unity Client Developer</dd>
+        </div>
+        <div>
+          <dt>Focus</dt>
+          <dd>Gameplay, XR, UI, Tooling</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section id="library" class="portfolio-library" aria-labelledby="library-title">
+      <div class="portfolio-toolbar">
+        <div class="portfolio-toolbar-title">
+          <span class="portfolio-grid-icon" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+          <h2 id="library-title">Projects</h2>
+        </div>
+
+        <div class="portfolio-filters" aria-label="프로젝트 필터">
+          {filters.map((filter, index) => (
+            <button
+              type="button"
+              class="portfolio-filter"
+              data-portfolio-filter={filter.id}
+              aria-pressed={index === 0 ? "true" : "false"}
+            >
+              {filter.label}
+            </button>
+          ))}
+        </div>
+
+        <p class="portfolio-count" data-portfolio-count>
+          프로젝트 {portfolioProjects.length}개
+        </p>
+      </div>
+
+      <div class="portfolio-grid" aria-label="프로젝트 선택">
+        {portfolioProjects.map((project, index) => (
+          <button
+            type="button"
+            class="portfolio-tile"
+            data-portfolio-tile
+            data-project-id={project.id}
+            data-categories={project.categories.join(" ")}
+            data-tone={project.tone}
+            aria-pressed={index === 0 ? "true" : "false"}
+          >
+            <span class="portfolio-media-slot" data-tone={project.tone}>
+              <span class="portfolio-media-frame" aria-hidden="true"></span>
+              <span class="portfolio-media-index">{String(index + 1).padStart(2, "0")}</span>
+              <span class="portfolio-media-label">{project.mediaLabel}</span>
+            </span>
+            <span class="portfolio-tile-copy">
+              <strong>{project.displayTitle}</strong>
+              <span>{project.focus}</span>
+            </span>
+          </button>
+        ))}
+      </div>
+    </section>
+
+    <section class="portfolio-detail" aria-live="polite">
+      {portfolioProjects.map((project, index) => (
+        <article
+          class="portfolio-detail-panel"
+          data-project-panel={project.id}
+          hidden={index !== 0}
+        >
+          <div class="portfolio-detail-media" data-tone={project.tone}>
+            <span class="portfolio-detail-frame" aria-hidden="true"></span>
+            <span>{project.mediaLabel}</span>
+          </div>
+
+          <div class="portfolio-detail-copy">
+            <div class="portfolio-detail-heading">
+              <p>{project.shortTitle}</p>
+              <h2>{project.displayTitle}</h2>
+            </div>
+
+            <dl class="portfolio-facts">
+              <div>
+                <dt>Period</dt>
+                <dd>{project.period}</dd>
+              </div>
+              <div>
+                <dt>Role</dt>
+                <dd>{project.role}</dd>
+              </div>
+            </dl>
+
+            <p class="portfolio-definition">{project.definition}</p>
+
+            <div class="portfolio-detail-columns">
+              <section>
+                <h3>핵심 구현</h3>
+                <ul>
+                  {project.description.slice(0, 3).map((item) => <li>{item}</li>)}
+                </ul>
+              </section>
+              <section>
+                <h3>성과</h3>
+                <ul>
+                  {project.results.slice(0, 3).map((item) => <li>{item}</li>)}
+                </ul>
+              </section>
+            </div>
+
+            <ul class="portfolio-tech-list" aria-label={`${project.displayTitle} 기술 스택`}>
+              {project.tech.map((tech) => <li>{tech}</li>)}
+            </ul>
+          </div>
+        </article>
+      ))}
+    </section>
+  </main>
+
+  <footer class="site-footer portfolio-footer">
+    <p>© {new Date().getFullYear()} {profile.name}. Portfolio draft.</p>
+    <a href="#library">Back to projects</a>
+  </footer>
+
+  <script is:inline>
+    const initPortfolioPage = () => {
+      const themeMeta = document.querySelector('meta[name="theme-color"]');
+      if (themeMeta) themeMeta.setAttribute("content", "#14120f");
+
+      const filters = [...document.querySelectorAll("[data-portfolio-filter]")];
+      const tiles = [...document.querySelectorAll("[data-portfolio-tile]")];
+      const panels = [...document.querySelectorAll("[data-project-panel]")];
+      const count = document.querySelector("[data-portfolio-count]");
+
+      const setActiveProject = (projectId) => {
+        tiles.forEach((tile) => {
+          tile.setAttribute("aria-pressed", String(tile.dataset.projectId === projectId));
+        });
+        panels.forEach((panel) => {
+          panel.hidden = panel.dataset.projectPanel !== projectId;
+        });
+      };
+
+      const applyFilter = (filterId) => {
+        filters.forEach((filter) => {
+          filter.setAttribute("aria-pressed", String(filter.dataset.portfolioFilter === filterId));
+        });
+
+        let visibleCount = 0;
+        let firstVisible = "";
+
+        tiles.forEach((tile) => {
+          const categories = tile.dataset.categories || "";
+          const isVisible = filterId === "all" || categories.split(" ").includes(filterId);
+          tile.hidden = !isVisible;
+
+          if (isVisible) {
+            visibleCount += 1;
+            firstVisible ||= tile.dataset.projectId || "";
+          }
+        });
+
+        if (count) count.textContent = `프로젝트 ${visibleCount}개`;
+
+        const activeTile = tiles.find((tile) => tile.getAttribute("aria-pressed") === "true");
+        if (activeTile?.hidden && firstVisible) {
+          setActiveProject(firstVisible);
+        }
+      };
+
+      tiles.forEach((tile) => {
+        tile.addEventListener("click", () => {
+          const projectId = tile.dataset.projectId;
+          if (projectId) setActiveProject(projectId);
+        });
+      });
+
+      filters.forEach((filter) => {
+        filter.addEventListener("click", () => {
+          applyFilter(filter.dataset.portfolioFilter || "all");
+        });
+      });
+    };
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", initPortfolioPage, { once: true });
+    } else {
+      initPortfolioPage();
+    }
+  </script>
+</Layout>

@@ -62,8 +62,8 @@ export const profile = {
     },
     {
       label: "Portfolio",
-      href: "https://hyeongjunyoo.github.io/#projects",
-      displayText: "hyeongjunyoo.github.io",
+      href: "/portfolio/",
+      displayText: "hyeongjunyoo.github.io/portfolio",
       iconUrl: "/icons/portfolio.svg",
       kind: "external"
     }
