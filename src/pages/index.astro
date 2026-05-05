@@ -20,8 +20,8 @@ const hasHiddenActivities = activities.length > activityPreviewLimit;
       <a href="#career">Career</a>
       <a href="#projects">Projects</a>
       <a href="#skills">Skills</a>
-      <a href="#activities">Demos</a>
       <a href="#education">Education</a>
+      <a href="#activities">Showcases</a>
     </nav>
     <button
       type="button"
@@ -100,11 +100,11 @@ const hasHiddenActivities = activities.length > activityPreviewLimit;
       <div class="career-list">
         {career.map((item) => (
           <article class="career-item">
-            <div class="entry-period">
-              <span>{item.period}</span>
+            <div class="entry-meta">
+              <h3>{item.company}</h3>
+              <p class="entry-period">{item.period}</p>
             </div>
             <div class="career-content">
-              <h3>{item.company}</h3>
               <p class="entry-subtitle">{item.team} · {item.role}</p>
               {item.summary && <p class="entry-summary">{item.summary}</p>}
               <ul class="check-list">
@@ -134,6 +134,13 @@ const hasHiddenActivities = activities.length > activityPreviewLimit;
 
             <div class="project-content">
               <div class="project-detail-grid">
+                <section
+                  class="project-definition"
+                  aria-labelledby={`project-${index + 1}-definition`}
+                >
+                  <h4 id={`project-${index + 1}-definition`}>업무 정의</h4>
+                  <p>{project.definition}</p>
+                </section>
                 <section aria-labelledby={`project-${index + 1}-description`}>
                   <h4 id={`project-${index + 1}-description`}>주요 업무 내용</h4>
                   <ul>
@@ -169,9 +176,33 @@ const hasHiddenActivities = activities.length > activityPreviewLimit;
       </div>
     </section>
 
+    <section id="education" class="section-block" aria-labelledby="education-title">
+      <div class="section-heading compact">
+        <h2 id="education-title">Education</h2>
+      </div>
+      <div class="education-list">
+        {education.map((item) => (
+          <article class="education-item">
+            <div class="entry-meta">
+              <h3>{item.title}</h3>
+              <p class="entry-period">{item.period}</p>
+            </div>
+            <div class="education-content">
+              <p class="entry-subtitle">{item.meta}</p>
+              {item.details.length > 0 && (
+                <ul class="check-list">
+                  {item.details.map((detail) => <li>{detail}</li>)}
+                </ul>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
     <section id="activities" class="section-block" aria-labelledby="activities-title">
       <div class="section-heading compact">
-        <h2 id="activities-title">Demos & Workshops</h2>
+        <h2 id="activities-title">Showcases & Workshops</h2>
       </div>
       <div id="activities-list" class="activity-list">
         {activities.map((activity, index) => (
@@ -180,11 +211,11 @@ const hasHiddenActivities = activities.length > activityPreviewLimit;
             data-activity-extra={index >= activityPreviewLimit ? "true" : undefined}
             hidden={index >= activityPreviewLimit}
           >
-            <div class="entry-period">
-              <span>{activity.date}</span>
+            <div class="entry-meta">
+              <h3>{activity.title}</h3>
+              <p class="entry-period">{activity.date}</p>
             </div>
             <div class="activity-content">
-              <h3>{activity.title}</h3>
               <p class="entry-summary">{activity.description}</p>
             </div>
           </article>
@@ -205,29 +236,6 @@ const hasHiddenActivities = activities.length > activityPreviewLimit;
       )}
     </section>
 
-    <section id="education" class="section-block" aria-labelledby="education-title">
-      <div class="section-heading compact">
-        <h2 id="education-title">Education</h2>
-      </div>
-      <div class="education-list">
-        {education.map((item) => (
-          <article class="education-item">
-            <div class="entry-period">
-              <span>{item.period}</span>
-            </div>
-            <div class="education-content">
-              <h3>{item.title}</h3>
-              <p class="entry-subtitle">{item.meta}</p>
-              {item.details.length > 0 && (
-                <ul class="check-list">
-                  {item.details.map((detail) => <li>{detail}</li>)}
-                </ul>
-              )}
-            </div>
-          </article>
-        ))}
-      </div>
-    </section>
   </main>
 
   <footer class="site-footer">
