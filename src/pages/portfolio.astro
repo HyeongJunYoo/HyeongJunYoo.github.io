@@ -375,6 +375,9 @@ const otherProjects = projects.slice(1);
             <p data-detail-what-i-built>{featuredProject.whatIBuilt}</p>
           </section>
 
+          <section class="detail-stats" data-detail-stats hidden>
+          </section>
+
           <div class="detail-stack" data-detail-stack>
             {featuredProject.stack.map((item) => <span>{item}</span>)}
           </div>
@@ -413,6 +416,7 @@ const otherProjects = projects.slice(1);
       const detailRole = document.querySelector("[data-detail-role]");
       const detailTeam = document.querySelector("[data-detail-team]");
       const detailWhatIBuilt = document.querySelector("[data-detail-what-i-built]");
+      const detailStats = document.querySelector("[data-detail-stats]");
       const detailStack = document.querySelector("[data-detail-stack]");
       const themeMeta = document.querySelector('meta[name="theme-color"]');
 
@@ -645,6 +649,33 @@ const otherProjects = projects.slice(1);
         if (detailTeam) detailTeam.textContent = `${card.dataset.team || ""} · ${card.dataset.period || ""}`.replace(/^·\s|\s·\s*$/g, "");
         if (detailWhatIBuilt) detailWhatIBuilt.textContent = card.dataset.whatIBuilt || "";
         replaceStack(card.dataset.stack || "");
+
+        if (detailStats) {
+          let stats = [];
+          try {
+            stats = JSON.parse(card.dataset.stats || "[]");
+          } catch (error) {
+            stats = [];
+          }
+          detailStats.replaceChildren();
+          if (stats.length > 0) {
+            detailStats.removeAttribute("hidden");
+            stats.forEach((stat) => {
+              const statEl = document.createElement("div");
+              statEl.className = "stat";
+              const value = document.createElement("span");
+              value.className = "stat-value";
+              value.textContent = stat.value;
+              const label = document.createElement("span");
+              label.className = "stat-label";
+              label.textContent = stat.label;
+              statEl.append(value, label);
+              detailStats.append(statEl);
+            });
+          } else {
+            detailStats.setAttribute("hidden", "");
+          }
+        }
 
         if (shouldPulse) {
           card.classList.remove("is-pulsing");
