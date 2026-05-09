@@ -437,10 +437,11 @@ button {
 
 .world-shell[data-mode="deck"] .world-card {
   z-index: var(--deck-z-index);
-  width: clamp(180px, 24vw, 320px);
-  height: clamp(300px, 56vh, 560px);
-  margin-top: calc(clamp(300px, 56vh, 560px) / -2);
-  margin-left: calc(clamp(180px, 24vw, 320px) / -2);
+  width: clamp(280px, 38vw, 560px);
+  height: calc(clamp(280px, 38vw, 560px) * 9 / 16);
+  aspect-ratio: 16 / 9;
+  margin-top: calc((clamp(280px, 38vw, 560px) * 9 / 16) / -2);
+  margin-left: calc(clamp(280px, 38vw, 560px) / -2);
   opacity: var(--deck-opacity);
   transform:
     translate3d(calc(var(--deck-x) + var(--deck-peek, 0px)), var(--deck-y), var(--deck-z))
@@ -1041,10 +1042,11 @@ button {
   }
 
   .world-shell[data-mode="deck"] .world-card {
-    width: 210px;
-    height: 360px;
-    margin-top: -180px;
-    margin-left: -105px;
+    width: clamp(240px, 76vw, 360px);
+    height: calc(clamp(240px, 76vw, 360px) * 9 / 16);
+    aspect-ratio: 16 / 9;
+    margin-top: calc((clamp(240px, 76vw, 360px) * 9 / 16) / -2);
+    margin-left: calc(clamp(240px, 76vw, 360px) / -2);
   }
 
   .world-shell[data-mode="deck"] .world-card .card-inner,
