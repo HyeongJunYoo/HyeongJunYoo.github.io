@@ -1,208 +1,8 @@
 ---
 import Layout from "../components/Layout.astro";
 import "../styles/portfolio.css";
+import { projects, featuredProject } from "../data/projects";
 
-const projects = [
-  {
-    id: "project-nemesis",
-    title: "PROJECT NEMESIS",
-    level: "featured",
-    eyebrow: "Featured 01",
-    period: "2025 · 9 months",
-    role: "Lead Programmer",
-    engine: "Unreal 5.3",
-    platform: "PC / Steam",
-    genre: "Multiplayer Action",
-    team: "5명",
-    status: "Shipped",
-    summary: "한 줄 요약 — 어떤 게임이고 본인이 어떤 시스템을 책임졌는지 한 문장으로.",
-    whatIBuilt: "멀티플레이어 동기화 레이어, 무기 lag-compensation, 커스텀 매치메이킹, 인벤토리 직렬화. 30 tickrate에서 64명 동시접속까지 검증.",
-    image: "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1400&q=84",
-    tone: "hot",
-    stack: ["Unreal 5.3", "C++", "Replication", "EOS", "Niagara"],
-    stats: [
-      { value: "60", label: "FPS @ 1080p" },
-      { value: "64", label: "Concurrent players" },
-      { value: "2.1GB", label: "Build size" }
-    ],
-    gallery: [
-      "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1556438064-2d7646166914?auto=format&fit=crop&w=900&q=80"
-    ],
-    links: {
-      play: "#",
-      source: "#",
-      devlog: "#"
-    },
-    theta: 0,
-    phi: -8,
-    width: 260,
-    height: 330,
-    gridX: -410,
-    gridY: -150
-  },
-  {
-    id: "echo-runner",
-    title: "ECHO RUNNER",
-    level: "core",
-    eyebrow: "Core 02",
-    period: "2024 · 4 months",
-    role: "Gameplay Programmer",
-    engine: "Unity 6",
-    platform: "PC",
-    genre: "Action",
-    team: "Solo",
-    status: "Prototype",
-    summary: "리듬 기반 액션 러너 프로토타입. 입력 윈도우와 비주얼 큐가 BPM에 맞춰 동기화.",
-    whatIBuilt: "오디오 타임라인 동기화, 입력 윈도우 시스템, ScriptableObject 기반 패턴 빌더, URP shader 핏.",
-    image: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=1400&q=84",
-    tone: "aqua",
-    stack: ["Unity 6", "C#", "URP", "DOTween", "Audio Timeline"],
-    stats: [
-      { value: "120", label: "FPS @ 1440p" },
-      { value: "<8ms", label: "Input latency" },
-      { value: "320MB", label: "Build size" }
-    ],
-    gallery: [
-      "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1542751110-97427bbecf20?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1486572788966-cfd3df1f5b42?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1493946740644-2d8a1f1a6aff?auto=format&fit=crop&w=900&q=80"
-    ],
-    links: {
-      play: "#",
-      source: "#"
-    },
-    theta: 72,
-    phi: 10,
-    width: 238,
-    height: 294,
-    gridX: -120,
-    gridY: -160
-  },
-  {
-    id: "rune-tactics",
-    title: "RUNE TACTICS",
-    level: "core",
-    eyebrow: "Core 03",
-    period: "2024 · 48-hour jam",
-    role: "Tools / Gameplay",
-    engine: "Unreal 5.3",
-    platform: "PC",
-    genre: "FPS",
-    team: "3명",
-    status: "Game Jam",
-    summary: "48시간 잼 출품작 — 룬을 조합해 무기를 만드는 FPS.",
-    whatIBuilt: "런타임 룬 결합 시스템, 데이터 드리븐 무기 빌더, 절차적 던전 청크 스폰, AI 패스 그리드.",
-    image: "https://images.unsplash.com/photo-1483058712412-4245e9b90334?auto=format&fit=crop&w=1400&q=84",
-    tone: "violet",
-    stack: ["Unreal 5.3", "Blueprints", "C++", "Behavior Tree"],
-    stats: [
-      { value: "48h", label: "Dev time" },
-      { value: "12+", label: "Rune combos" },
-      { value: "2nd", label: "Jam ranking" }
-    ],
-    gallery: [
-      "https://images.unsplash.com/photo-1542751110-97427bbecf20?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1556438064-2d7646166914?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=900&q=80"
-    ],
-    links: {
-      source: "#",
-      devlog: "#"
-    },
-    theta: 142,
-    phi: -4,
-    width: 220,
-    height: 270,
-    gridX: 150,
-    gridY: -150
-  },
-  {
-    id: "poly-drift",
-    title: "POLY DRIFT",
-    level: "core",
-    eyebrow: "Core 04",
-    period: "2023 · 6 months",
-    role: "Gameplay Programmer",
-    engine: "Godot 4",
-    platform: "PC / Mobile",
-    genre: "Puzzle",
-    team: "2명",
-    status: "Shipped",
-    summary: "로우폴리 드리프트 퍼즐. 코너 드리프트 라인을 그려 시간 경쟁.",
-    whatIBuilt: "차량 물리 컨트롤러, 시간 압축 리플레이, 모바일 터치 입력 어댑터, 리더보드 백엔드 연동.",
-    image: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1400&q=84",
-    tone: "lime",
-    stack: ["Godot 4", "GDScript", "C#", "REST"],
-    stats: [
-      { value: "60", label: "FPS @ 4K" },
-      { value: "120", label: "Tracks" },
-      { value: "180MB", label: "Build size" }
-    ],
-    gallery: [
-      "https://images.unsplash.com/photo-1486572788966-cfd3df1f5b42?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1493946740644-2d8a1f1a6aff?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=900&q=80"
-    ],
-    links: {
-      play: "#",
-      source: "#"
-    },
-    theta: 214,
-    phi: 12,
-    width: 200,
-    height: 240,
-    gridX: 400,
-    gridY: -110
-  },
-  {
-    id: "render-lab",
-    title: "RENDER LAB",
-    level: "core",
-    eyebrow: "Core 05",
-    period: "2023 · ongoing",
-    role: "Tech Programmer",
-    engine: "Custom (C++/Vulkan)",
-    platform: "PC",
-    genre: "Tech Demo",
-    team: "Solo",
-    status: "Prototype",
-    summary: "취미 프로젝트 — 자체 C++/Vulkan 렌더러로 PBR 머티리얼·쉐도우 캐스케이드 실험.",
-    whatIBuilt: "Vulkan 커맨드 그래프, GLTF 로더, PBR uber shader, CSM, 디퍼드 G-buffer.",
-    image: "https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1400&q=84",
-    tone: "orange",
-    stack: ["C++", "Vulkan", "GLSL", "GLTF"],
-    stats: [
-      { value: "144", label: "FPS @ 1440p" },
-      { value: "6", label: "Cascade splits" },
-      { value: "OSS", label: "License" }
-    ],
-    gallery: [
-      "https://images.unsplash.com/photo-1556438064-2d7646166914?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=900&q=80"
-    ],
-    links: {
-      source: "#",
-      devlog: "#"
-    },
-    theta: 288,
-    phi: -2,
-    width: 200,
-    height: 240,
-    gridX: -380,
-    gridY: 150
-  }
-];
-
-const featuredProject = projects[0];
-const otherProjects = projects.slice(1);
 ---
 
 <Layout
@@ -256,7 +56,7 @@ const otherProjects = projects.slice(1);
             {featuredProject.links?.play && (
               <a class="hero-cta-primary" href={featuredProject.links.play}>▶ Play Demo</a>
             )}
-            <button type="button" class="hero-cta-secondary" data-hero-case-study>Case Study →</button>
+            <a class="hero-cta-secondary" href={`/portfolio/${featuredProject.id}`}>Case Study →</a>
             {featuredProject.links?.source && (
               <a class="hero-cta-secondary" href={featuredProject.links.source}>Source</a>
             )}
@@ -283,31 +83,14 @@ const otherProjects = projects.slice(1);
           <div class="world-halo" aria-hidden="true"></div>
           <div class="world-rotator" data-world-rotator>
             {projects.map((project, index) => (
-              <button
-                type="button"
+              <a
+                href={`/portfolio/${project.id}`}
                 class={`world-card is-${project.level} ${project.id === featuredProject.id ? "is-hero" : ""}`}
                 data-world-card
                 data-project-index={index}
                 data-card-id={project.id}
-                data-title={project.title}
-                data-eyebrow={project.eyebrow.toUpperCase().replace(/\s+/g, "·")}
-                data-summary={project.summary}
-                data-what-i-built={project.whatIBuilt}
-                data-role={project.role}
-                data-period={project.period}
-                data-engine={project.engine}
-                data-platform={project.platform}
-                data-genre={project.genre}
-                data-team={project.team}
-                data-status={project.status}
-                data-image={project.image}
                 data-tone={project.tone}
                 data-level={project.level}
-                data-stack={project.stack.join("|")}
-                data-stats={JSON.stringify(project.stats || [])}
-                data-gallery={JSON.stringify(project.gallery || [])}
-                data-links={JSON.stringify(project.links || {})}
-                aria-pressed={index === 0 ? "true" : "false"}
                 style={`
                   --card-tone: var(--${project.tone});
                   --theta: ${project.theta}deg;
@@ -331,80 +114,25 @@ const otherProjects = projects.slice(1);
                 <span class="card-inner hud-frame">
                   <span class="hud-corner-tr"></span>
                   <span class="hud-corner-bl"></span>
-                  <img src={project.image} alt="" loading={index > 1 ? "lazy" : "eager"} decoding="async" />
+                  <img
+                    src={project.image}
+                    alt=""
+                    loading={index > 1 ? "lazy" : "eager"}
+                    decoding="async"
+                    style={`view-transition-name: hero-${project.id};`}
+                  />
                   <span class="card-scrim"></span>
                   <span class="card-meta">
-                    <strong>{project.title}</strong>
+                    <strong style={`view-transition-name: title-${project.id};`}>{project.title}</strong>
                   </span>
                 </span>
-              </button>
+              </a>
             ))}
           </div>
         </div>
 
       </section>
 
-      <section class="project-detail" data-project-detail aria-hidden="true" aria-labelledby="detail-title">
-        <button type="button" class="detail-close" data-detail-close aria-label="Back to project list">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M15 6 L9 12 L15 18"/></svg>
-          <span>Back</span>
-        </button>
-
-        <div class="detail-hero-media hud-frame" data-detail-hero-media aria-hidden="true">
-          <span class="hud-corner-tr"></span>
-          <span class="hud-corner-bl"></span>
-          <img data-detail-image src={featuredProject.image} alt="" />
-          <span class="detail-hero-scrim"></span>
-        </div>
-
-        <article class="detail-content">
-          <p class="detail-eyebrow" data-detail-eyebrow>{featuredProject.eyebrow}</p>
-          <h2 id="detail-title" data-detail-title>{featuredProject.title}</h2>
-          <p class="detail-summary" data-detail-summary>{featuredProject.summary}</p>
-
-          <div class="detail-cta" data-detail-cta hidden>
-          </div>
-
-          <dl class="detail-meta">
-            <div>
-              <dt>Engine</dt>
-              <dd data-detail-engine>{featuredProject.engine}</dd>
-            </div>
-            <div>
-              <dt>Platform</dt>
-              <dd data-detail-platform>{featuredProject.platform}</dd>
-            </div>
-            <div>
-              <dt>Role</dt>
-              <dd data-detail-role>{featuredProject.role}</dd>
-            </div>
-            <div>
-              <dt>Team / Period</dt>
-              <dd data-detail-team>{featuredProject.team} · {featuredProject.period}</dd>
-            </div>
-          </dl>
-
-          <section class="detail-narrative">
-            <h3>What I built</h3>
-            <p data-detail-what-i-built>{featuredProject.whatIBuilt}</p>
-          </section>
-
-          <section class="detail-gallery" data-detail-gallery hidden>
-          </section>
-
-          <section class="detail-stats" data-detail-stats hidden>
-          </section>
-
-          <div class="detail-stack" data-detail-stack>
-            {featuredProject.stack.map((item) => <span>{item}</span>)}
-          </div>
-        </article>
-
-        <div class="detail-nav">
-          <button type="button" data-detail-prev>Previous</button>
-          <button type="button" data-detail-next>Next</button>
-        </div>
-      </section>
     </main>
 
     <footer class="portfolio-footer" id="contact">
@@ -428,23 +156,6 @@ const otherProjects = projects.slice(1);
       const cards = [...document.querySelectorAll("[data-world-card]")];
       const cursor = document.querySelector("[data-cursor]");
       const modeButtons = [...document.querySelectorAll("[data-mode-button]")];
-      const detail = document.querySelector("[data-project-detail]");
-      const detailClose = document.querySelector("[data-detail-close]");
-      const detailPrev = document.querySelector("[data-detail-prev]");
-      const detailNext = document.querySelector("[data-detail-next]");
-      const detailImage = document.querySelector("[data-detail-image]");
-      const detailEyebrow = document.querySelector("[data-detail-eyebrow]");
-      const detailTitle = document.querySelector("[data-detail-title]");
-      const detailSummary = document.querySelector("[data-detail-summary]");
-      const detailEngine = document.querySelector("[data-detail-engine]");
-      const detailPlatform = document.querySelector("[data-detail-platform]");
-      const detailRole = document.querySelector("[data-detail-role]");
-      const detailTeam = document.querySelector("[data-detail-team]");
-      const detailWhatIBuilt = document.querySelector("[data-detail-what-i-built]");
-      const detailStats = document.querySelector("[data-detail-stats]");
-      const detailGallery = document.querySelector("[data-detail-gallery]");
-      const detailCta = document.querySelector("[data-detail-cta]");
-      const detailStack = document.querySelector("[data-detail-stack]");
       const themeMeta = document.querySelector('meta[name="theme-color"]');
 
       let spin = 0;
@@ -531,7 +242,11 @@ const otherProjects = projects.slice(1);
         });
 
         const activeCard = cards[nearestIndex];
-        if (activeCard && activeIndex !== nearestIndex) setActiveCard(activeCard, false);
+        if (activeCard && activeIndex !== nearestIndex) {
+          activeIndex = nearestIndex;
+          const tone = activeCard.dataset.tone || "acid";
+          shell?.setAttribute("data-active-tone", tone);
+        }
       };
 
       const moveDeck = (direction) => {
@@ -542,7 +257,7 @@ const otherProjects = projects.slice(1);
         if (!(target instanceof Element)) return false;
         if (target.closest("[data-world-card]")) return false;
 
-        return Boolean(target.closest("a, button, input, textarea, select, .world-header, .world-controls, [data-project-detail]"));
+        return Boolean(target.closest("button, input, textarea, select, .world-header"));
       };
 
       const getDeckCardAtPoint = (clientX, clientY) => {
@@ -586,7 +301,7 @@ const otherProjects = projects.slice(1);
         if (!card) return;
 
         if (card.hasAttribute("data-deck-current")) {
-          openDetail(card);
+          window.location.href = card.getAttribute("href") || "/portfolio";
           return;
         }
 
@@ -638,151 +353,7 @@ const otherProjects = projects.slice(1);
             skipNextCardClick = false;
           }, 0);
         }
-        openDetail(card);
-      };
-
-      const replaceStack = (value) => {
-        if (!detailStack) return;
-
-        detailStack.replaceChildren();
-        value
-          .split("|")
-          .filter(Boolean)
-          .forEach((item) => {
-            const element = document.createElement("span");
-            element.textContent = item;
-            detailStack.appendChild(element);
-          });
-      };
-
-      const setActiveCard = (card, shouldPulse = true) => {
-        activeIndex = Number(card.dataset.projectIndex || 0);
-
-        cards.forEach((item) => {
-          item.setAttribute("aria-pressed", String(item === card));
-        });
-
-        const tone = card.dataset.tone || "acid";
-        shell?.setAttribute("data-active-tone", tone);
-        detail?.setAttribute("data-tone", tone);
-
-        if (detailImage instanceof HTMLImageElement) detailImage.src = card.dataset.image || "";
-        if (detailEyebrow) detailEyebrow.textContent = card.dataset.eyebrow || "";
-        if (detailTitle) detailTitle.textContent = card.dataset.title || "";
-        if (detailSummary) detailSummary.textContent = card.dataset.summary || "";
-        if (detailEngine) detailEngine.textContent = card.dataset.engine || "";
-        if (detailPlatform) detailPlatform.textContent = card.dataset.platform || "";
-        if (detailRole) detailRole.textContent = card.dataset.role || "";
-        if (detailTeam) detailTeam.textContent = [card.dataset.team, card.dataset.period].filter(Boolean).join(" · ");
-        if (detailWhatIBuilt) detailWhatIBuilt.textContent = card.dataset.whatIBuilt || "";
-        replaceStack(card.dataset.stack || "");
-
-        if (detailStats) {
-          let stats = [];
-          try {
-            stats = JSON.parse(card.dataset.stats || "[]");
-          } catch (error) {
-            stats = [];
-          }
-          detailStats.replaceChildren();
-          if (stats.length > 0) {
-            detailStats.removeAttribute("hidden");
-            stats.forEach((stat) => {
-              const statEl = document.createElement("div");
-              statEl.className = "stat";
-              const value = document.createElement("span");
-              value.className = "stat-value";
-              value.textContent = stat.value;
-              const label = document.createElement("span");
-              label.className = "stat-label";
-              label.textContent = stat.label;
-              statEl.append(value, label);
-              detailStats.append(statEl);
-            });
-          } else {
-            detailStats.setAttribute("hidden", "");
-          }
-        }
-
-        if (detailGallery) {
-          let gallery = [];
-          try {
-            gallery = JSON.parse(card.dataset.gallery || "[]");
-          } catch (error) {
-            gallery = [];
-          }
-          detailGallery.replaceChildren();
-          if (gallery.length > 0) {
-            detailGallery.removeAttribute("hidden");
-            gallery.forEach((src) => {
-              const img = document.createElement("img");
-              img.src = src;
-              img.alt = "";
-              img.loading = "lazy";
-              img.decoding = "async";
-              detailGallery.append(img);
-            });
-          } else {
-            detailGallery.setAttribute("hidden", "");
-          }
-        }
-
-        if (detailCta) {
-          let links = {};
-          try {
-            links = JSON.parse(card.dataset.links || "{}");
-          } catch (error) {
-            links = {};
-          }
-          detailCta.replaceChildren();
-          const entries = [];
-          if (links.play) entries.push({ key: "play", label: "▶ Play", primary: true, href: links.play });
-          if (links.source) entries.push({ key: "source", label: "Source", primary: false, href: links.source });
-          if (links.devlog) entries.push({ key: "devlog", label: "Devlog", primary: false, href: links.devlog });
-
-          if (entries.length > 0) {
-            detailCta.removeAttribute("hidden");
-            entries.forEach((entry) => {
-              const a = document.createElement("a");
-              a.href = entry.href;
-              a.textContent = entry.label;
-              if (entry.primary) a.classList.add("is-primary");
-              if (entry.href.startsWith("http")) {
-                a.rel = "noreferrer noopener";
-                a.target = "_blank";
-              }
-              detailCta.append(a);
-            });
-          } else {
-            detailCta.setAttribute("hidden", "");
-          }
-        }
-
-        if (shouldPulse) {
-          card.classList.remove("is-pulsing");
-          void card.offsetWidth;
-          card.classList.add("is-pulsing");
-        }
-      };
-
-      const openDetail = (card) => {
-        setActiveCard(card);
-        shell?.classList.add("is-detail-open");
-        detail?.setAttribute("aria-hidden", "false");
-        detail?.classList.remove("is-entering");
-        if (detail) void detail.offsetWidth;
-        detail?.classList.add("is-entering");
-      };
-
-      const closeDetail = () => {
-        shell?.classList.remove("is-detail-open");
-        detail?.setAttribute("aria-hidden", "true");
-      };
-
-      const stepDetail = (direction) => {
-        const nextIndex = (activeIndex + direction + cards.length) % cards.length;
-        const nextCard = cards[nextIndex];
-        if (nextCard) setActiveCard(nextCard);
+        window.location.href = card.getAttribute("href") || "/portfolio";
       };
 
       const animate = () => {
@@ -883,11 +454,10 @@ const otherProjects = projects.slice(1);
           }
 
           if (shell?.dataset.mode === "deck" && card.getAttribute("data-deck-current") === null) {
+            event.preventDefault();
             selectDeckCard(card);
             return;
           }
-
-          openDetail(card);
         });
 
         card.addEventListener("pointerenter", () => {
@@ -1039,41 +609,15 @@ const otherProjects = projects.slice(1);
 
       modeButtons.forEach((button) => {
         button.addEventListener("click", () => {
-          closeDetail();
           setMode(button.dataset.modeButton || "world");
         });
       });
 
-      const heroCaseStudy = document.querySelector("[data-hero-case-study]");
-      heroCaseStudy?.addEventListener("click", () => {
-        const featuredCard = cards[0];
-        if (featuredCard) openDetail(featuredCard);
-      });
-
-      detailClose?.addEventListener("click", closeDetail);
-      detailPrev?.addEventListener("click", () => stepDetail(-1));
-      detailNext?.addEventListener("click", () => stepDetail(1));
-
-      document.addEventListener("keydown", (event) => {
-        if (!shell?.classList.contains("is-detail-open")) return;
-
-        if (event.key === "Escape") closeDetail();
-        if (event.key === "ArrowLeft") stepDetail(-1);
-        if (event.key === "ArrowRight") stepDetail(1);
-      });
-
-      cards[0] && setActiveCard(cards[0]);
       updateDeck();
 
       const initialMode = new URLSearchParams(window.location.search).get("mode");
       if (initialMode === "world" || initialMode === "grid" || initialMode === "deck") {
         setMode(initialMode);
-      }
-
-      const initialProjectParam = new URLSearchParams(window.location.search).get("project");
-      const initialProject = initialProjectParam === null ? NaN : Number(initialProjectParam);
-      if (Number.isInteger(initialProject) && cards[initialProject]) {
-        window.setTimeout(() => openDetail(cards[initialProject]), 240);
       }
 
       // Decoded text effect on hero title

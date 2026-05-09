@@ -1,0 +1,169 @@
+---
+import Layout from "../../components/Layout.astro";
+import "../../styles/portfolio.css";
+import { projects, getProjectBySlug, getProjectNeighbors } from "../../data/projects";
+
+export function getStaticPaths() {
+  return projects.map((project) => ({ params: { slug: project.id } }));
+}
+
+const { slug } = Astro.params;
+const project = getProjectBySlug(slug!);
+if (!project) {
+  return Astro.redirect("/portfolio");
+}
+const neighbors = getProjectNeighbors(slug!)!;
+const ctaEntries: Array<{ key: string; label: string; primary: boolean; href: string }> = [];
+if (project.links.play) ctaEntries.push({ key: "play", label: "▶ Play", primary: true, href: project.links.play });
+if (project.links.source) ctaEntries.push({ key: "source", label: "Source", primary: false, href: project.links.source });
+if (project.links.devlog) ctaEntries.push({ key: "devlog", label: "Devlog", primary: false, href: project.links.devlog });
+const teamPeriod = [project.team, project.period].filter(Boolean).join(" · ");
+const eyebrowDisplay = project.eyebrow.toUpperCase().replace(/\s+/g, "·");
+---
+
+<Layout
+  title={`${project.title} — HyeongJun Yoo`}
+  description={project.summary}
+>
+  <div class="world-shell" data-world-shell data-mode="detail" data-active-tone={project.tone}>
+    <div class="world-grain" aria-hidden="true"></div>
+    <div class="scanlines" aria-hidden="true"></div>
+
+    <div class="system-ticker" aria-hidden="true">
+      <span class="ticker-segment">
+        <span class="ticker-dot"></span>
+        <span class="ticker-label">SYS</span>
+        <span class="ticker-value">ONLINE</span>
+      </span>
+      <span class="ticker-marquee">DETAIL::{project.id.toUpperCase()} · TONE::{project.tone.toUpperCase()}</span>
+      <span class="ticker-segment">
+        <span class="ticker-label">v</span>
+        <span class="ticker-value">0.0.4</span>
+      </span>
+    </div>
+
+    <header class="world-header" aria-label="Site navigation">
+      <a class="site-mark" href="/">● HYEONGJUN YOO <span>/ Game Programmer</span></a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="/portfolio">Portfolio</a>
+        <a href="/portfolio#contact">Contact</a>
+        <a href="https://github.com/HyeongJunYoo" rel="noreferrer noopener" target="_blank">GitHub</a>
+        <a href="https://www.linkedin.com/" rel="noreferrer noopener" target="_blank">LinkedIn</a>
+      </nav>
+    </header>
+
+    <main id="main" data-tone={project.tone}>
+      <section class="project-detail-page" aria-labelledby="detail-title" data-tone={project.tone}>
+        <a class="detail-close" href="/portfolio" aria-label="Back to project list">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M15 6 L9 12 L15 18"/></svg>
+          <span>Back</span>
+        </a>
+
+        <div
+          class="detail-hero-media hud-frame"
+          aria-hidden="true"
+          style={`view-transition-name: hero-${project.id};`}
+        >
+          <span class="hud-corner-tr"></span>
+          <span class="hud-corner-bl"></span>
+          <img src={project.image} alt="" fetchpriority="high" decoding="async" />
+          <span class="detail-hero-scrim"></span>
+        </div>
+
+        <article class="detail-content">
+          <p class="detail-eyebrow">{eyebrowDisplay}</p>
+          <h1
+            id="detail-title"
+            class="detail-title"
+            style={`view-transition-name: title-${project.id};`}
+          >{project.title}</h1>
+          <p class="detail-summary">{project.summary}</p>
+
+          {ctaEntries.length > 0 && (
+            <div class="detail-cta">
+              {ctaEntries.map((entry) => (
+                <a
+                  href={entry.href}
+                  class={entry.primary ? "is-primary" : undefined}
+                  rel={entry.href.startsWith("http") ? "noreferrer noopener" : undefined}
+                  target={entry.href.startsWith("http") ? "_blank" : undefined}
+                >{entry.label}</a>
+              ))}
+            </div>
+          )}
+
+          <dl class="detail-meta">
+            <div>
+              <dt>Engine</dt>
+              <dd>{project.engine}</dd>
+            </div>
+            <div>
+              <dt>Platform</dt>
+              <dd>{project.platform}</dd>
+            </div>
+            <div>
+              <dt>Role</dt>
+              <dd>{project.role}</dd>
+            </div>
+            <div>
+              <dt>Team / Period</dt>
+              <dd>{teamPeriod}</dd>
+            </div>
+          </dl>
+
+          <section class="detail-narrative">
+            <h3>What I built</h3>
+            <p>{project.whatIBuilt}</p>
+          </section>
+
+          {project.gallery.length > 0 && (
+            <section class="detail-gallery">
+              {project.gallery.map((src) => (
+                <img src={src} alt="" loading="lazy" decoding="async" />
+              ))}
+            </section>
+          )}
+
+          {project.stats.length > 0 && (
+            <section class="detail-stats">
+              {project.stats.map((stat) => (
+                <div class="stat">
+                  <span class="stat-value">{stat.value}</span>
+                  <span class="stat-label">{stat.label}</span>
+                </div>
+              ))}
+            </section>
+          )}
+
+          {project.stack.length > 0 && (
+            <div class="detail-stack">
+              {project.stack.map((item) => <span>{item}</span>)}
+            </div>
+          )}
+        </article>
+
+        <nav class="detail-nav" aria-label="Project navigation">
+          <a class="detail-nav-prev" href={`/portfolio/${neighbors.prev.id}`}>
+            <span class="detail-nav-direction">← Previous</span>
+            <span class="detail-nav-title">{neighbors.prev.title}</span>
+          </a>
+          <a class="detail-nav-next" href={`/portfolio/${neighbors.next.id}`}>
+            <span class="detail-nav-direction">Next →</span>
+            <span class="detail-nav-title">{neighbors.next.title}</span>
+          </a>
+        </nav>
+      </section>
+    </main>
+
+    <footer class="portfolio-footer" id="contact">
+      <p class="portfolio-footer-about" id="about">
+        Game programmer. Unity / Unreal · multiplayer · tools · tech-art-friendly.
+      </p>
+      <p class="portfolio-footer-links">
+        <a href="mailto:yoojoo97@gmail.com">yoojoo97@gmail.com</a>
+        <a href="https://github.com/HyeongJunYoo" rel="noreferrer noopener" target="_blank">GitHub</a>
+        <a href="https://www.linkedin.com/" rel="noreferrer noopener" target="_blank">LinkedIn</a>
+      </p>
+    </footer>
+  </div>
+</Layout>

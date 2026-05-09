@@ -1,5 +1,6 @@
 ---
 import "../styles/global.css";
+import { ClientRouter } from "astro:transitions";
 
 type Props = {
   title?: string;
@@ -49,6 +50,7 @@ const {
     <meta name="twitter:card" content="summary" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>{title}</title>
+    <ClientRouter />
   </head>
   <body>
     <a class="skip-link" href="#main">본문으로 이동</a>
