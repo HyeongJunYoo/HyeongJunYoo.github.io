@@ -375,6 +375,9 @@ const otherProjects = projects.slice(1);
             <p data-detail-what-i-built>{featuredProject.whatIBuilt}</p>
           </section>
 
+          <section class="detail-gallery" data-detail-gallery hidden>
+          </section>
+
           <section class="detail-stats" data-detail-stats hidden>
           </section>
 
@@ -417,6 +420,7 @@ const otherProjects = projects.slice(1);
       const detailTeam = document.querySelector("[data-detail-team]");
       const detailWhatIBuilt = document.querySelector("[data-detail-what-i-built]");
       const detailStats = document.querySelector("[data-detail-stats]");
+      const detailGallery = document.querySelector("[data-detail-gallery]");
       const detailStack = document.querySelector("[data-detail-stack]");
       const themeMeta = document.querySelector('meta[name="theme-color"]');
 
@@ -674,6 +678,29 @@ const otherProjects = projects.slice(1);
             });
           } else {
             detailStats.setAttribute("hidden", "");
+          }
+        }
+
+        if (detailGallery) {
+          let gallery = [];
+          try {
+            gallery = JSON.parse(card.dataset.gallery || "[]");
+          } catch (error) {
+            gallery = [];
+          }
+          detailGallery.replaceChildren();
+          if (gallery.length > 0) {
+            detailGallery.removeAttribute("hidden");
+            gallery.forEach((src) => {
+              const img = document.createElement("img");
+              img.src = src;
+              img.alt = "";
+              img.loading = "lazy";
+              img.decoding = "async";
+              detailGallery.append(img);
+            });
+          } else {
+            detailGallery.setAttribute("hidden", "");
           }
         }
 
