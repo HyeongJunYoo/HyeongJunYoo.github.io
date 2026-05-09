@@ -368,7 +368,7 @@ import { projects, featuredProject } from "../data/projects";
         shell?.classList.add("is-dragging");
       });
 
-      scene?.addEventListener("pointermove", (event) => {
+      window.addEventListener("pointermove", (event) => {
         const mx = event.clientX / window.innerWidth - 0.5;
         const my = event.clientY / window.innerHeight - 0.5;
         root.style.setProperty("--mx", mx.toFixed(4));
@@ -377,6 +377,8 @@ import { projects, featuredProject } from "../data/projects";
         cursor?.style.setProperty("--cy", `${event.clientY}px`);
 
         if (!pointerDown || shell?.dataset.mode === "deck") return;
+        if (!event.target || !(event.target instanceof Element)) return;
+        if (!event.target.closest("[data-world-scene]")) return;
 
         dragX = startDragX + (event.clientX - startX) * 0.22;
         dragY = Math.max(-42, Math.min(34, startDragY - (event.clientY - startY) * 0.18));

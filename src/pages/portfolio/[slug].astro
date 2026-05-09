@@ -27,6 +27,7 @@ const eyebrowDisplay = project.eyebrow.toUpperCase().replace(/\s+/g, "·");
   <div class="world-shell" data-world-shell data-mode="detail" data-active-tone={project.tone}>
     <div class="world-grain" aria-hidden="true"></div>
     <div class="scanlines" aria-hidden="true"></div>
+    <div class="cursor-light" data-cursor aria-hidden="true"></div>
 
     <div class="system-ticker" aria-hidden="true">
       <span class="ticker-segment">
@@ -139,4 +140,20 @@ const eyebrowDisplay = project.eyebrow.toUpperCase().replace(/\s+/g, "·");
       </p>
     </footer>
   </div>
+
+  <script is:inline>
+    (() => {
+      const root = document.documentElement;
+      const cursor = document.querySelector("[data-cursor]");
+      if (!cursor) return;
+      window.addEventListener("pointermove", (event) => {
+        const mx = event.clientX / window.innerWidth - 0.5;
+        const my = event.clientY / window.innerHeight - 0.5;
+        root.style.setProperty("--mx", mx.toFixed(4));
+        root.style.setProperty("--my", my.toFixed(4));
+        cursor.style.setProperty("--cx", `${event.clientX}px`);
+        cursor.style.setProperty("--cy", `${event.clientY}px`);
+      });
+    })();
+  </script>
 </Layout>
