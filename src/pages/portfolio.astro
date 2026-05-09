@@ -353,12 +353,20 @@ const otherProjects = projects.slice(1);
 
           <dl class="detail-meta">
             <div>
-              <dt>Period</dt>
-              <dd data-detail-period>{featuredProject.period}</dd>
+              <dt>Engine</dt>
+              <dd data-detail-engine>{featuredProject.engine}</dd>
+            </div>
+            <div>
+              <dt>Platform</dt>
+              <dd data-detail-platform>{featuredProject.platform}</dd>
             </div>
             <div>
               <dt>Role</dt>
               <dd data-detail-role>{featuredProject.role}</dd>
+            </div>
+            <div>
+              <dt>Team / Period</dt>
+              <dd data-detail-team>{featuredProject.team} · {featuredProject.period}</dd>
             </div>
           </dl>
 
@@ -410,8 +418,10 @@ const otherProjects = projects.slice(1);
       const detailEyebrow = document.querySelector("[data-detail-eyebrow]");
       const detailTitle = document.querySelector("[data-detail-title]");
       const detailSummary = document.querySelector("[data-detail-summary]");
-      const detailPeriod = document.querySelector("[data-detail-period]");
+      const detailEngine = document.querySelector("[data-detail-engine]");
+      const detailPlatform = document.querySelector("[data-detail-platform]");
       const detailRole = document.querySelector("[data-detail-role]");
+      const detailTeam = document.querySelector("[data-detail-team]");
       const detailChallenge = document.querySelector("[data-detail-challenge]");
       const detailBuild = document.querySelector("[data-detail-build]");
       const detailOutcome = document.querySelector("[data-detail-outcome]");
@@ -641,8 +651,10 @@ const otherProjects = projects.slice(1);
         if (detailEyebrow) detailEyebrow.textContent = card.dataset.eyebrow || "";
         if (detailTitle) detailTitle.textContent = card.dataset.title || "";
         if (detailSummary) detailSummary.textContent = card.dataset.summary || "";
-        if (detailPeriod) detailPeriod.textContent = card.dataset.period || "";
+        if (detailEngine) detailEngine.textContent = card.dataset.engine || "";
+        if (detailPlatform) detailPlatform.textContent = card.dataset.platform || "";
         if (detailRole) detailRole.textContent = card.dataset.role || "";
+        if (detailTeam) detailTeam.textContent = `${card.dataset.team || ""} · ${card.dataset.period || ""}`.replace(/^·\s|\s·\s*$/g, "");
         if (detailChallenge) detailChallenge.textContent = card.dataset.challenge || "";
         if (detailBuild) detailBuild.textContent = card.dataset.build || "";
         if (detailOutcome) detailOutcome.textContent = card.dataset.outcome || "";
