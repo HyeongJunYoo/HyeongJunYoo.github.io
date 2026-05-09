@@ -276,9 +276,6 @@ const otherProjects = projects.slice(1);
               <button type="button" data-mode-button="deck" aria-pressed="false">Deck</button>
               <button type="button" data-mode-button="world" aria-pressed="false">World</button>
             </div>
-            <button type="button" class="sound-toggle" data-pause-toggle aria-pressed="false" aria-label="Pause globe motion">
-              <span></span>
-            </button>
           </div>
         </div>
 
@@ -336,11 +333,8 @@ const otherProjects = projects.slice(1);
                   <span class="hud-corner-bl"></span>
                   <img src={project.image} alt="" loading={index > 1 ? "lazy" : "eager"} decoding="async" />
                   <span class="card-scrim"></span>
-                  <span class="card-status">[{project.status.toUpperCase()}]</span>
-                  <span class="card-eyebrow">{project.eyebrow.toUpperCase().replace(/\s+/g, "·")}</span>
                   <span class="card-meta">
                     <strong>{project.title}</strong>
-                    <span>{project.engine} · {project.genre} · {project.period.split("·")[0].trim()}</span>
                   </span>
                 </span>
               </button>
@@ -348,16 +342,13 @@ const otherProjects = projects.slice(1);
           </div>
         </div>
 
-        <div class="world-controls">
-          <button type="button" class="control-primary" data-random-card>Explore</button>
-          <button type="button" class="control-secondary" data-reset-world>Reset</button>
-        </div>
-
-        <p class="world-hint">Drag the world. Hover a card. Click one project to expand it into a full-screen case study.</p>
       </section>
 
       <section class="project-detail" data-project-detail aria-hidden="true" aria-labelledby="detail-title">
-        <button type="button" class="detail-close" data-detail-close aria-label="Back to project world">Back to world</button>
+        <button type="button" class="detail-close" data-detail-close aria-label="Back to project list">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M15 6 L9 12 L15 18"/></svg>
+          <span>Back</span>
+        </button>
 
         <div class="detail-hero-media hud-frame" data-detail-hero-media aria-hidden="true">
           <span class="hud-corner-tr"></span>
@@ -436,9 +427,6 @@ const otherProjects = projects.slice(1);
       const rotator = document.querySelector("[data-world-rotator]");
       const cards = [...document.querySelectorAll("[data-world-card]")];
       const cursor = document.querySelector("[data-cursor]");
-      const randomButton = document.querySelector("[data-random-card]");
-      const resetButton = document.querySelector("[data-reset-world]");
-      const pauseButton = document.querySelector("[data-pause-toggle]");
       const modeButtons = [...document.querySelectorAll("[data-mode-button]")];
       const detail = document.querySelector("[data-project-detail]");
       const detailClose = document.querySelector("[data-detail-close]");
@@ -1048,28 +1036,6 @@ const otherProjects = projects.slice(1);
         },
         true,
       );
-
-      randomButton?.addEventListener("click", () => {
-        const next = cards[Math.floor(Math.random() * cards.length)];
-        if (next) openDetail(next);
-      });
-
-      resetButton?.addEventListener("click", () => {
-        dragX = 0;
-        dragY = -9;
-        spin = 0;
-        deckPosition = 0;
-        deckTarget = 0;
-        updateDeck();
-        setMode("grid");
-        closeDetail();
-      });
-
-      pauseButton?.addEventListener("click", () => {
-        paused = !paused;
-        pauseButton.setAttribute("aria-pressed", String(paused));
-        shell?.classList.toggle("is-paused", paused);
-      });
 
       modeButtons.forEach((button) => {
         button.addEventListener("click", () => {
