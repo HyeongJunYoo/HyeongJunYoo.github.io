@@ -666,10 +666,9 @@ button {
   position: fixed;
   inset: 0;
   z-index: 60;
-  display: grid;
-  grid-template-rows: auto 1fr;
+  display: flex;
+  flex-direction: column;
   gap: clamp(20px, 3vw, 36px);
-  align-content: start;
   overflow-x: hidden;
   overflow-y: auto;
   background:
@@ -725,8 +724,9 @@ button {
 
 .detail-hero-media {
   position: relative;
-  aspect-ratio: 16 / 9;
   width: 100%;
+  flex-shrink: 0;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   border: 1px solid color-mix(in srgb, var(--tone) 50%, rgba(244, 241, 232, 0.18));
   background: #111;
