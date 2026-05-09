@@ -209,7 +209,7 @@ const otherProjects = projects.slice(1);
   title="Floating World Portfolio Prototype"
   description="A blank-slate exploratory portfolio prototype with a floating 3D project world and full-screen case study expansion."
 >
-  <div class="world-shell" data-world-shell data-mode="world" data-active-tone={featuredProject.tone}>
+  <div class="world-shell" data-world-shell data-mode="grid" data-active-tone={featuredProject.tone}>
     <div class="world-grain" aria-hidden="true"></div>
     <div class="cursor-light" data-cursor aria-hidden="true"></div>
 
@@ -272,24 +272,31 @@ const otherProjects = projects.slice(1);
             {projects.map((project, index) => (
               <button
                 type="button"
-                class={`world-card is-${project.level}`}
+                class={`world-card is-${project.level} ${project.id === featuredProject.id ? "is-hero" : ""}`}
                 data-world-card
                 data-project-index={index}
                 data-card-id={project.id}
                 data-title={project.title}
                 data-eyebrow={project.eyebrow}
                 data-summary={project.summary}
-                data-challenge={project.challenge}
-                data-build={project.build}
-                data-outcome={project.outcome}
+                data-what-i-built={project.whatIBuilt}
                 data-role={project.role}
                 data-period={project.period}
+                data-engine={project.engine}
+                data-platform={project.platform}
+                data-genre={project.genre}
+                data-team={project.team}
+                data-status={project.status}
                 data-image={project.image}
                 data-tone={project.tone}
                 data-level={project.level}
                 data-stack={project.stack.join("|")}
+                data-stats={JSON.stringify(project.stats || [])}
+                data-gallery={JSON.stringify(project.gallery || [])}
+                data-links={JSON.stringify(project.links || {})}
                 aria-pressed={index === 0 ? "true" : "false"}
                 style={`
+                  --card-tone: var(--${project.tone});
                   --theta: ${project.theta}deg;
                   --phi: ${project.phi}deg;
                   --theta-back: ${-project.theta}deg;
@@ -298,12 +305,6 @@ const otherProjects = projects.slice(1);
                   --h: ${project.height}px;
                   --gx: ${project.gridX}px;
                   --gy: ${project.gridY}px;
-                  --grid-aligned-x: ${(index % 4 - 1.5) * 260}px;
-                  --grid-aligned-y: ${(Math.floor(index / 4) - 0.5) * 330}px;
-                  --grid-tablet-x: ${(index % 4 - 1.5) * 214}px;
-                  --grid-tablet-y: ${(Math.floor(index / 4) - 0.5) * 292}px;
-                  --grid-mobile-x: ${(index % 2 - 0.5) * 186}px;
-                  --grid-mobile-y: ${(Math.floor(index / 2) - 1.5) * 226}px;
                   --delay: ${index * -0.12}s;
                   --deck-x: 0px;
                   --deck-y: 0px;
@@ -315,12 +316,13 @@ const otherProjects = projects.slice(1);
                 `}
               >
                 <span class="card-inner">
-                  <img src={project.image} alt="" loading={index > 3 ? "lazy" : "eager"} decoding="async" />
+                  <img src={project.image} alt="" loading={index > 1 ? "lazy" : "eager"} decoding="async" />
                   <span class="card-scrim"></span>
-                  <span class="card-level">{project.level}</span>
+                  <span class="card-status">{project.status}</span>
+                  <span class="card-eyebrow">{project.eyebrow}</span>
                   <span class="card-meta">
-                    <span>{String(index + 1).padStart(2, "0")}</span>
                     <strong>{project.title}</strong>
+                    <span>{project.engine} · {project.genre} · {project.period.split("·")[0].trim()}</span>
                   </span>
                 </span>
               </button>
