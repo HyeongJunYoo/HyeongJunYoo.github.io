@@ -211,7 +211,21 @@ const otherProjects = projects.slice(1);
 >
   <div class="world-shell" data-world-shell data-mode="grid" data-active-tone={featuredProject.tone}>
     <div class="world-grain" aria-hidden="true"></div>
+    <div class="scanlines" aria-hidden="true"></div>
     <div class="cursor-light" data-cursor aria-hidden="true"></div>
+
+    <div class="system-ticker" aria-hidden="true">
+      <span class="ticker-segment">
+        <span class="ticker-dot"></span>
+        <span class="ticker-label">SYS</span>
+        <span class="ticker-value">ONLINE</span>
+      </span>
+      <span class="ticker-marquee" data-ticker-marquee>BUILD::PASS · PROJECTS_LOADED 5 · MODE::GRID · LATENCY 12ms</span>
+      <span class="ticker-segment">
+        <span class="ticker-label">v</span>
+        <span class="ticker-value">0.0.4</span>
+      </span>
+    </div>
 
     <header class="world-header" aria-label="Site navigation">
       <a class="site-mark" href="/">● HYEONGJUN YOO <span>/ Game Programmer</span></a>
@@ -225,16 +239,18 @@ const otherProjects = projects.slice(1);
 
     <main id="main">
       <section class="featured-hero" data-tone={featuredProject.tone} aria-labelledby="hero-title">
-        <div class="hero-media" aria-hidden="true">
+        <div class="hero-media hud-frame" aria-hidden="true">
+          <span class="hud-corner-tr"></span>
+          <span class="hud-corner-bl"></span>
           <img src={featuredProject.image} alt="" />
           <span class="hero-scrim"></span>
         </div>
         <div class="hero-overlay">
           <p class="hero-eyebrow">
-            <span>{featuredProject.eyebrow}</span>
+            <span>[{featuredProject.eyebrow.toUpperCase().replace(/\s+/g, "_")}]</span>
             <span>{featuredProject.period.split("·")[0].trim()} · {featuredProject.engine} · {featuredProject.genre} · {featuredProject.status}</span>
           </p>
-          <h1 id="hero-title" class="hero-title">{featuredProject.title}</h1>
+          <h1 id="hero-title" class="hero-title decoded-text" data-decode-text>{featuredProject.title}</h1>
           <p class="hero-summary">{featuredProject.summary}</p>
           <div class="hero-cta">
             {featuredProject.links?.play && (
@@ -315,11 +331,13 @@ const otherProjects = projects.slice(1);
                   --deck-z-index: ${100 - index};
                 `}
               >
-                <span class="card-inner">
+                <span class="card-inner hud-frame">
+                  <span class="hud-corner-tr"></span>
+                  <span class="hud-corner-bl"></span>
                   <img src={project.image} alt="" loading={index > 1 ? "lazy" : "eager"} decoding="async" />
                   <span class="card-scrim"></span>
-                  <span class="card-status">{project.status}</span>
-                  <span class="card-eyebrow">{project.eyebrow}</span>
+                  <span class="card-status">[{project.status.toUpperCase()}]</span>
+                  <span class="card-eyebrow">{project.eyebrow.toUpperCase().replace(/\s+/g, "·")}</span>
                   <span class="card-meta">
                     <strong>{project.title}</strong>
                     <span>{project.engine} · {project.genre} · {project.period.split("·")[0].trim()}</span>
@@ -341,7 +359,9 @@ const otherProjects = projects.slice(1);
       <section class="project-detail" data-project-detail aria-hidden="true" aria-labelledby="detail-title">
         <button type="button" class="detail-close" data-detail-close aria-label="Back to project world">Back to world</button>
 
-        <div class="detail-hero-media" data-detail-hero-media aria-hidden="true">
+        <div class="detail-hero-media hud-frame" data-detail-hero-media aria-hidden="true">
+          <span class="hud-corner-tr"></span>
+          <span class="hud-corner-bl"></span>
           <img data-detail-image src={featuredProject.image} alt="" />
           <span class="detail-hero-scrim"></span>
         </div>
@@ -1089,6 +1109,59 @@ const otherProjects = projects.slice(1);
       if (Number.isInteger(initialProject) && cards[initialProject]) {
         window.setTimeout(() => openDetail(cards[initialProject]), 240);
       }
+
+      // Decoded text effect on hero title
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const decodeTargets = document.querySelectorAll("[data-decode-text]");
+      const decodeGlyphs = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@*+";
+      decodeTargets.forEach((el) => {
+        const original = el.textContent || "";
+        el.setAttribute("aria-label", original);
+        if (reduceMotion) return;
+        el.textContent = "";
+        const chars = [...original];
+        chars.forEach((char, i) => {
+          const span = document.createElement("span");
+          span.className = "decoded-char";
+          if (char === " ") {
+            span.innerHTML = "&nbsp;";
+          } else {
+            span.textContent = char;
+            span.dataset.noise = decodeGlyphs[Math.floor(Math.random() * decodeGlyphs.length)];
+          }
+          el.appendChild(span);
+        });
+        const charsList = el.querySelectorAll(".decoded-char");
+        const total = charsList.length;
+        const start = performance.now();
+        const duration = 720;
+        const cycleNoise = (now) => {
+          const t = Math.min(1, (now - start) / duration);
+          el.style.setProperty("--decode-progress", String(t));
+          charsList.forEach((c, i) => {
+            const localT = Math.max(0, Math.min(1, (t - i / total / 1.6) * 2.4));
+            if (localT >= 1) {
+              c.dataset.noise = "";
+            } else if (c.dataset.noise !== undefined) {
+              c.dataset.noise = decodeGlyphs[Math.floor(Math.random() * decodeGlyphs.length)];
+            }
+          });
+          if (t < 1) requestAnimationFrame(cycleNoise);
+        };
+        requestAnimationFrame(cycleNoise);
+      });
+
+      // Live ticker — track current mode & visible project for the marquee
+      const tickerMarquee = document.querySelector("[data-ticker-marquee]");
+      const updateTicker = () => {
+        if (!tickerMarquee) return;
+        const mode = (shell?.dataset.mode || "grid").toUpperCase();
+        const tone = (shell?.dataset.activeTone || "").toUpperCase();
+        const fps = 60 + Math.floor(Math.random() * 5);
+        tickerMarquee.textContent = `BUILD::PASS · MODE::${mode} · TONE::${tone} · FPS ${fps} · LATENCY ${10 + Math.floor(Math.random() * 8)}ms`;
+      };
+      updateTicker();
+      if (!reduceMotion) setInterval(updateTicker, 2400);
 
       animate();
     })();
