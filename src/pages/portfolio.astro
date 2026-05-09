@@ -213,18 +213,14 @@ const otherProjects = projects.slice(1);
     <div class="world-grain" aria-hidden="true"></div>
     <div class="cursor-light" data-cursor aria-hidden="true"></div>
 
-    <header class="world-header" aria-label="World navigation">
-      <p>Eight focused projects. Two featured entries. One world to explore.</p>
-
-      <div class="mode-tabs" role="group" aria-label="View mode">
-        <button type="button" data-mode-button="grid" aria-pressed="false">Grid</button>
-        <button type="button" data-mode-button="deck" aria-pressed="false">Deck</button>
-        <button type="button" data-mode-button="world" aria-pressed="true">World</button>
-      </div>
-
-      <button type="button" class="sound-toggle" data-pause-toggle aria-pressed="false" aria-label="Pause globe motion">
-        <span></span>
-      </button>
+    <header class="world-header" aria-label="Site navigation">
+      <a class="site-mark" href="/">● HYEONGJUN YOO <span>/ Game Programmer</span></a>
+      <nav class="site-nav" aria-label="Primary">
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="https://github.com/HyeongJunYoo" rel="noreferrer noopener" target="_blank">GitHub</a>
+        <a href="https://www.linkedin.com/" rel="noreferrer noopener" target="_blank">LinkedIn</a>
+      </nav>
     </header>
 
     <main id="main">
@@ -253,9 +249,21 @@ const otherProjects = projects.slice(1);
       </section>
 
       <section class="world-stage" aria-labelledby="world-title">
-        <div class="world-title-block">
-          <p>Explore selected work</p>
-          <h1 id="world-title">Floating project world</h1>
+        <div class="projects-section-header">
+          <div class="projects-section-label">
+            <p class="eyebrow">Other projects</p>
+            <h2 id="world-title">Work archive</h2>
+          </div>
+          <div class="projects-section-controls" role="group" aria-label="Project view mode">
+            <div class="mode-tabs">
+              <button type="button" data-mode-button="grid" aria-pressed="true">Grid</button>
+              <button type="button" data-mode-button="deck" aria-pressed="false">Deck</button>
+              <button type="button" data-mode-button="world" aria-pressed="false">World</button>
+            </div>
+            <button type="button" class="sound-toggle" data-pause-toggle aria-pressed="false" aria-label="Pause globe motion">
+              <span></span>
+            </button>
+          </div>
         </div>
 
         <div class="world-scene" data-world-scene aria-label="Floating card globe">

@@ -111,54 +111,106 @@ button {
 
 .world-header {
   position: fixed;
-  inset: 18px 22px auto;
+  inset: 0 0 auto 0;
   z-index: 40;
-  display: grid;
-  grid-template-columns: minmax(190px, 320px) auto minmax(42px, 320px);
-  align-items: start;
-  gap: 20px;
-  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px max(22px, calc((100vw - 1480px) / 2));
+  background: rgba(12, 12, 12, 0.78);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(244, 241, 232, 0.06);
 }
 
-.world-header p {
-  max-width: 250px;
-  margin: 0;
+.world-header .site-mark {
   color: var(--ink);
   font-size: 0.86rem;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.world-header .site-mark span {
+  color: var(--muted);
   font-weight: 800;
-  line-height: 1.35;
+}
+
+.world-header .site-nav {
+  display: flex;
+  gap: 18px;
+}
+
+.world-header .site-nav a {
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+
+.world-header .site-nav a:hover {
+  color: var(--ink);
+}
+
+.projects-section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  width: min(100%, 1480px);
+  margin: 56px auto 18px;
+  padding: 0 max(22px, calc((100vw - 1480px) / 2));
+}
+
+.projects-section-label .eyebrow {
+  margin: 0;
+  color: var(--tone);
+  font-size: 0.74rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.projects-section-label h2 {
+  margin: 6px 0 0;
+  color: var(--ink);
+  font-size: clamp(1.2rem, 2vw, 1.7rem);
+  font-weight: 950;
+  letter-spacing: 0;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.projects-section-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .mode-tabs {
-  justify-self: center;
   display: inline-flex;
   align-items: center;
   gap: 4px;
   border: 1px solid rgba(244, 241, 232, 0.12);
   background: rgba(12, 12, 12, 0.62);
   padding: 5px;
-  pointer-events: auto;
   backdrop-filter: blur(16px);
-}
-
-.mode-tabs button,
-.sound-toggle,
-.world-controls button,
-.detail-close,
-.detail-nav button {
-  border: 0;
-  color: inherit;
-  cursor: pointer;
-  font: inherit;
 }
 
 .mode-tabs button {
   background: transparent;
+  border: 0;
   color: var(--muted);
+  font: inherit;
   font-size: 0.78rem;
   font-weight: 850;
   line-height: 1;
   padding: 7px 9px;
+  cursor: pointer;
   transition:
     background-color 160ms ease,
     color 160ms ease;
@@ -170,7 +222,6 @@ button {
 }
 
 .sound-toggle {
-  justify-self: end;
   display: grid;
   place-items: center;
   width: 34px;
@@ -178,7 +229,7 @@ button {
   border: 1px solid rgba(244, 241, 232, 0.12);
   border-radius: 999px;
   background: rgba(244, 241, 232, 0.08);
-  pointer-events: auto;
+  cursor: pointer;
 }
 
 .sound-toggle span {
@@ -201,40 +252,19 @@ button {
 .world-stage {
   position: relative;
   display: grid;
-  min-height: 100svh;
+  min-height: auto;
   place-items: center;
   overflow: hidden;
-  padding: 86px 24px 74px;
+  padding: 0 24px 74px;
   perspective: 1500px;
 }
 
-.world-title-block {
-  position: absolute;
-  left: max(22px, calc((100vw - 1500px) / 2));
-  top: 42%;
-  z-index: 5;
-  width: min(260px, 34vw);
-  pointer-events: none;
-}
-
-.world-title-block p,
 .detail-eyebrow {
   margin: 0;
   color: var(--tone);
   font-size: 0.78rem;
   font-weight: 900;
   line-height: 1.2;
-}
-
-.world-title-block h1 {
-  width: min-content;
-  margin: 8px 0 0;
-  color: rgba(244, 241, 232, 0.9);
-  font-size: clamp(1.25rem, 2vw, 2.1rem);
-  font-weight: 950;
-  letter-spacing: 0;
-  line-height: 1;
-  text-transform: uppercase;
 }
 
 .world-scene {
@@ -556,12 +586,15 @@ button {
 
 .world-controls button {
   min-width: 82px;
+  border: 0;
   background: transparent;
   color: var(--muted);
+  font: inherit;
   font-size: 0.78rem;
   font-weight: 900;
   line-height: 1;
   padding: 11px 12px;
+  cursor: pointer;
   transition:
     background-color 160ms ease,
     color 160ms ease,
@@ -639,10 +672,12 @@ button {
   border: 1px solid rgba(244, 241, 232, 0.16);
   background: rgba(12, 12, 12, 0.68);
   color: var(--ink);
+  font: inherit;
   font-size: 0.8rem;
   font-weight: 900;
   line-height: 1;
   padding: 11px 12px;
+  cursor: pointer;
   backdrop-filter: blur(16px);
   transition:
     border-color 160ms ease,
@@ -811,10 +846,12 @@ button {
   border: 1px solid rgba(244, 241, 232, 0.16);
   background: rgba(12, 12, 12, 0.68);
   color: var(--ink);
+  font: inherit;
   font-size: 0.8rem;
   font-weight: 900;
   line-height: 1;
   padding: 11px 12px;
+  cursor: pointer;
   backdrop-filter: blur(16px);
   transition:
     border-color 160ms ease,
@@ -877,33 +914,6 @@ button {
     min-height: 980px;
     place-items: start center;
     padding-top: 148px;
-  }
-
-  .world-header {
-    inset: 12px;
-    grid-template-columns: 1fr auto;
-    align-items: start;
-  }
-
-  .world-header p {
-    max-width: 210px;
-  }
-
-  .mode-tabs {
-    order: 3;
-    grid-column: 1 / -1;
-    justify-self: start;
-  }
-
-  .sound-toggle {
-    grid-column: 2;
-    grid-row: 1;
-  }
-
-  .world-title-block {
-    left: 16px;
-    top: 156px;
-    width: 210px;
   }
 
   .world-scene {
@@ -988,10 +998,6 @@ button {
   .world-scene {
     width: 118vw;
     margin-top: 128px;
-  }
-
-  .world-title-block h1 {
-    font-size: 1.2rem;
   }
 
   .world-card {
