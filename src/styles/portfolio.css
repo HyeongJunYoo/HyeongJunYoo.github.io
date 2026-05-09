@@ -15,9 +15,9 @@
   --mx: 0;
   --my: 0;
   --sphere-radius: clamp(260px, 33vw, 460px);
-  --font-display: "Bricolage Grotesque", "Pretendard Variable", Pretendard, "Noto Sans KR", system-ui, sans-serif;
+  --font-display: "Bricolage Grotesque", Pretendard, "Noto Sans KR", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", "Cascadia Mono", "Roboto Mono", monospace;
-  --font-body: "Pretendard Variable", Pretendard, "Bricolage Grotesque", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-body: Pretendard, "Bricolage Grotesque", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
 }
 
 html {
@@ -1035,10 +1035,6 @@ button {
     flex: 1 1 0;
   }
 
-  .featured-hero {
-    margin-top: 76px;
-  }
-
   .featured-hero .hero-overlay {
     left: 22px;
     right: 22px;
@@ -1159,26 +1155,6 @@ button {
 
   .detail-meta div:nth-child(n+3) {
     border-top: 1px solid rgba(244, 241, 232, 0.16);
-  }
-
-  .featured-hero {
-    margin-top: 64px;
-    display: grid;
-    gap: 16px;
-  }
-
-  .featured-hero .hero-overlay {
-    position: static;
-    padding: 0 22px;
-    gap: 10px;
-  }
-
-  .featured-hero .hero-title {
-    font-size: clamp(2rem, 8vw, 2.6rem);
-  }
-
-  .featured-hero .hero-summary {
-    font-size: 0.92rem;
   }
 
   .featured-hero .hero-cta {

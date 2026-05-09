@@ -293,7 +293,7 @@ const otherProjects = projects.slice(1);
                 data-project-index={index}
                 data-card-id={project.id}
                 data-title={project.title}
-                data-eyebrow={project.eyebrow}
+                data-eyebrow={project.eyebrow.toUpperCase().replace(/\s+/g, "·")}
                 data-summary={project.summary}
                 data-what-i-built={project.whatIBuilt}
                 data-role={project.role}
@@ -1151,17 +1151,32 @@ const otherProjects = projects.slice(1);
         requestAnimationFrame(cycleNoise);
       });
 
-      // Live ticker — track current mode & visible project for the marquee
+      // Live ticker — real FPS via rAF deltas, real project count, current mode/tone
       const tickerMarquee = document.querySelector("[data-ticker-marquee]");
+      let fpsValue = 60;
+      let fpsFrames = 0;
+      let fpsLast = performance.now();
+      const fpsTick = (now) => {
+        fpsFrames += 1;
+        const elapsed = now - fpsLast;
+        if (elapsed >= 500) {
+          fpsValue = Math.round((fpsFrames * 1000) / elapsed);
+          fpsFrames = 0;
+          fpsLast = now;
+        }
+        requestAnimationFrame(fpsTick);
+      };
+      if (!reduceMotion) requestAnimationFrame(fpsTick);
+
       const updateTicker = () => {
         if (!tickerMarquee) return;
         const mode = (shell?.dataset.mode || "grid").toUpperCase();
         const tone = (shell?.dataset.activeTone || "").toUpperCase();
-        const fps = 60 + Math.floor(Math.random() * 5);
-        tickerMarquee.textContent = `BUILD::PASS · MODE::${mode} · TONE::${tone} · FPS ${fps} · LATENCY ${10 + Math.floor(Math.random() * 8)}ms`;
+        const projectCount = cards.length;
+        tickerMarquee.textContent = `BUILD::PASS · MODE::${mode} · TONE::${tone} · FPS ${fpsValue} · PROJECTS ${projectCount}`;
       };
       updateTicker();
-      if (!reduceMotion) setInterval(updateTicker, 2400);
+      if (!reduceMotion) setInterval(updateTicker, 1000);
 
       animate();
     })();
