@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="600" viewBox="0 0 960 600" role="img" aria-label="Platform architecture thumbnail">
+  <rect width="960" height="600" fill="#111110"/>
+  <rect x="56" y="58" width="848" height="484" rx="18" fill="#181817" stroke="#4c4942"/>
+  <g fill="#22211f" stroke="#bab5aa" stroke-width="4">
+    <rect x="120" y="148" width="178" height="108" rx="12"/>
+    <rect x="390" y="116" width="180" height="108" rx="12"/>
+    <rect x="664" y="148" width="178" height="108" rx="12"/>
+    <rect x="254" y="352" width="178" height="108" rx="12"/>
+    <rect x="526" y="352" width="178" height="108" rx="12"/>
+  </g>
+  <g stroke="#bab5aa" stroke-width="8" stroke-linecap="round" fill="none">
+    <path d="M298 202h92M570 170h94M480 224v88M344 352l136-40 136 40"/>
+  </g>
+  <g fill="#bab5aa">
+    <circle cx="480" cy="312" r="16"/>
+    <circle cx="344" cy="352" r="12"/>
+    <circle cx="616" cy="352" r="12"/>
+  </g>
+  <text x="92" y="112" fill="#f0eee8" font-family="Pretendard, sans-serif" font-size="44" font-weight="900">PLATFORM</text>
+  <text x="92" y="506" fill="#bdb8ae" font-family="Pretendard, sans-serif" font-size="24" font-weight="800">Input · Sound · Resources</text>
+</svg>

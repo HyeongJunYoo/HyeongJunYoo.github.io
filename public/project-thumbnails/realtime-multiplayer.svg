@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="600" viewBox="0 0 960 600" role="img" aria-label="Realtime multiplayer thumbnail">
+  <rect width="960" height="600" fill="#101310"/>
+  <rect x="52" y="52" width="856" height="496" rx="18" fill="#151b18" stroke="#315542"/>
+  <path d="M190 404c110-160 214-232 310-216s138 122 270 72" fill="none" stroke="#68cf9d" stroke-width="10" stroke-linecap="round"/>
+  <g fill="#101310" stroke="#68cf9d" stroke-width="6">
+    <rect x="124" y="342" width="160" height="112" rx="14"/>
+    <rect x="398" y="152" width="174" height="124" rx="14"/>
+    <rect x="690" y="220" width="156" height="116" rx="14"/>
+  </g>
+  <g fill="#68cf9d">
+    <circle cx="204" cy="398" r="18"/>
+    <circle cx="485" cy="214" r="18"/>
+    <circle cx="768" cy="278" r="18"/>
+  </g>
+  <g fill="#27392f">
+    <rect x="156" y="470" width="96" height="16" rx="5"/>
+    <rect x="432" y="292" width="104" height="16" rx="5"/>
+    <rect x="720" y="352" width="94" height="16" rx="5"/>
+  </g>
+  <text x="88" y="138" fill="#eef5ef" font-family="Pretendard, sans-serif" font-size="50" font-weight="900">SYNC</text>
+  <text x="88" y="184" fill="#9fcbb6" font-family="Pretendard, sans-serif" font-size="24" font-weight="800">Room State</text>
+</svg>

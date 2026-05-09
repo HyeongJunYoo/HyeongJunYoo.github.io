@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="600" viewBox="0 0 960 600" role="img" aria-label="Avatar tracking thumbnail">
+  <rect width="960" height="600" fill="#111013"/>
+  <rect x="62" y="60" width="836" height="480" rx="20" fill="#18161d" stroke="#554875"/>
+  <g stroke="#a88de8" stroke-width="8" stroke-linecap="round" fill="none">
+    <path d="M480 162v114M480 276l-108 96M480 276l108 96M480 276v136M480 412l-88 78M480 412l88 78"/>
+  </g>
+  <g fill="#a88de8">
+    <circle cx="480" cy="132" r="42"/>
+    <circle cx="480" cy="276" r="26"/>
+    <circle cx="372" cy="372" r="22"/>
+    <circle cx="588" cy="372" r="22"/>
+    <circle cx="392" cy="490" r="22"/>
+    <circle cx="568" cy="490" r="22"/>
+  </g>
+  <g stroke="#403551" stroke-width="3" fill="none">
+    <rect x="164" y="112" width="632" height="376" rx="18"/>
+    <path d="M164 238h632M164 362h632M322 112v376M638 112v376"/>
+  </g>
+  <text x="92" y="134" fill="#f0ebf8" font-family="Pretendard, sans-serif" font-size="48" font-weight="900">TRACK</text>
+  <text x="92" y="180" fill="#bdb0dc" font-family="Pretendard, sans-serif" font-size="24" font-weight="800">Avatar Rig</text>
+</svg>

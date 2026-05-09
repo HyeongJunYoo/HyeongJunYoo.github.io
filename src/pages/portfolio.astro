@@ -237,6 +237,12 @@ const firstProject = projects[0];
                   --h: ${project.height}px;
                   --gx: ${project.gridX}px;
                   --gy: ${project.gridY}px;
+                  --grid-aligned-x: ${(index % 4 - 1.5) * 260}px;
+                  --grid-aligned-y: ${(Math.floor(index / 4) - 0.5) * 330}px;
+                  --grid-tablet-x: ${(index % 4 - 1.5) * 214}px;
+                  --grid-tablet-y: ${(Math.floor(index / 4) - 0.5) * 292}px;
+                  --grid-mobile-x: ${(index % 2 - 0.5) * 186}px;
+                  --grid-mobile-y: ${(Math.floor(index / 2) - 1.5) * 226}px;
                   --delay: ${index * -0.12}s;
                   --deck-x: 0px;
                   --deck-y: 0px;
@@ -362,13 +368,23 @@ const firstProject = projects[0];
       let deckTarget = 0;
       let deckWasDragged = false;
       let deckPointerDown = false;
+      let worldPointerDown = false;
+      let worldWasDragged = false;
+      let skipNextCardClick = false;
 
       if (themeMeta) themeMeta.setAttribute("content", "#0c0c0c");
 
       const setVars = () => {
+        const worldRotateX = -8 + dragY;
+        const worldRotateY = spin + dragX;
+
         rotator?.style.setProperty("--spin", `${spin.toFixed(3)}deg`);
         rotator?.style.setProperty("--drag-x", `${dragX.toFixed(3)}deg`);
         rotator?.style.setProperty("--drag-y", `${dragY.toFixed(3)}deg`);
+        rotator?.style.setProperty("--world-rotate-x", `${worldRotateX.toFixed(3)}deg`);
+        rotator?.style.setProperty("--world-rotate-y", `${worldRotateY.toFixed(3)}deg`);
+        rotator?.style.setProperty("--world-rotate-x-inverse", `${(-worldRotateX).toFixed(3)}deg`);
+        rotator?.style.setProperty("--world-rotate-y-inverse", `${(-worldRotateY).toFixed(3)}deg`);
       };
 
       const setMode = (mode) => {
@@ -429,9 +445,12 @@ const firstProject = projects[0];
         deckTarget += direction;
       };
 
-      const isDeckInputBlocked = (target) =>
-        target instanceof Element &&
-        Boolean(target.closest("a, input, textarea, select, .world-controls, [data-project-detail], [data-pause-toggle]"));
+      const isInterfaceInput = (target) => {
+        if (!(target instanceof Element)) return false;
+        if (target.closest("[data-world-card]")) return false;
+
+        return Boolean(target.closest("a, button, input, textarea, select, .world-header, .world-controls, [data-project-detail]"));
+      };
 
       const getDeckCardAtPoint = (clientX, clientY) => {
         let bestCard = null;
@@ -479,6 +498,54 @@ const firstProject = projects[0];
         }
 
         setDeckTarget(Number(card.dataset.projectIndex || 0));
+      };
+
+      const getWorldCardAtPoint = (clientX, clientY) => {
+        let bestCard = null;
+        let bestScore = Number.POSITIVE_INFINITY;
+
+        cards.forEach((card) => {
+          const opacity = Number.parseFloat(window.getComputedStyle(card).opacity || "1");
+          if (opacity <= 0.04) return;
+
+          const rect = card.getBoundingClientRect();
+          if (rect.width <= 0 || rect.height <= 0) return;
+
+          const padX = rect.width * 0.1;
+          const padY = rect.height * 0.1;
+          const isInside =
+            clientX >= rect.left - padX &&
+            clientX <= rect.right + padX &&
+            clientY >= rect.top - padY &&
+            clientY <= rect.bottom + padY;
+
+          if (!isInside) return;
+
+          const centerX = rect.left + rect.width / 2;
+          const centerY = rect.top + rect.height / 2;
+          const normalizedX = Math.abs(clientX - centerX) / rect.width;
+          const normalizedY = Math.abs(clientY - centerY) / rect.height;
+          const score = Math.hypot(normalizedX, normalizedY);
+
+          if (score < bestScore) {
+            bestScore = score;
+            bestCard = card;
+          }
+        });
+
+        return bestCard;
+      };
+
+      const selectWorldCard = (card, shouldSkipNativeClick = false) => {
+        if (!card) return;
+
+        skipNextCardClick = shouldSkipNativeClick;
+        if (shouldSkipNativeClick) {
+          window.setTimeout(() => {
+            skipNextCardClick = false;
+          }, 0);
+        }
+        openDetail(card);
       };
 
       const replaceStack = (value) => {
@@ -631,6 +698,11 @@ const firstProject = projects[0];
         card.addEventListener("click", (event) => {
           event.stopPropagation();
 
+          if (skipNextCardClick) {
+            skipNextCardClick = false;
+            return;
+          }
+
           if (deckWasDragged) {
             deckWasDragged = false;
             return;
@@ -655,7 +727,7 @@ const firstProject = projects[0];
           if (
             shell?.dataset.mode !== "deck" ||
             shell.classList.contains("is-detail-open") ||
-            isDeckInputBlocked(event.target)
+            isInterfaceInput(event.target)
           ) {
             return;
           }
@@ -727,6 +799,66 @@ const firstProject = projects[0];
           deckPointerDown = false;
           deckWasDragged = false;
           shell.classList.remove("is-dragging");
+        },
+        true,
+      );
+
+      document.addEventListener(
+        "pointerdown",
+        (event) => {
+          if (
+            shell?.dataset.mode !== "world" ||
+            shell.classList.contains("is-detail-open") ||
+            isInterfaceInput(event.target)
+          ) {
+            return;
+          }
+
+          startX = event.clientX;
+          startY = event.clientY;
+          worldWasDragged = false;
+          worldPointerDown = true;
+        },
+        true,
+      );
+
+      document.addEventListener(
+        "pointermove",
+        (event) => {
+          if (shell?.dataset.mode !== "world" || !worldPointerDown) return;
+
+          const distanceX = event.clientX - startX;
+          const distanceY = event.clientY - startY;
+          worldWasDragged = Math.abs(distanceX) > 10 || Math.abs(distanceY) > 12;
+        },
+        true,
+      );
+
+      document.addEventListener(
+        "pointerup",
+        (event) => {
+          if (shell?.dataset.mode !== "world" || !worldPointerDown) return;
+
+          worldPointerDown = false;
+
+          if (!worldWasDragged) {
+            const hasNativeCardClick =
+              event.target instanceof Element && Boolean(event.target.closest("[data-world-card]"));
+            selectWorldCard(getWorldCardAtPoint(event.clientX, event.clientY), hasNativeCardClick);
+          }
+
+          worldWasDragged = false;
+        },
+        true,
+      );
+
+      document.addEventListener(
+        "pointercancel",
+        () => {
+          if (shell?.dataset.mode !== "world" || !worldPointerDown) return;
+
+          worldPointerDown = false;
+          worldWasDragged = false;
         },
         true,
       );

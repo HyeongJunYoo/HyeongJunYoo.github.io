@@ -287,8 +287,8 @@ button {
   position: absolute;
   inset: 0;
   transform:
-    rotateX(calc(-8deg + var(--drag-y, 0deg)))
-    rotateY(calc(var(--spin, 0deg) + var(--drag-x, 0deg)));
+    rotateX(var(--world-rotate-x, -8deg))
+    rotateY(var(--world-rotate-y, 0deg));
   transform-style: preserve-3d;
   will-change: transform;
 }
@@ -308,7 +308,9 @@ button {
     rotateX(var(--phi))
     translateZ(var(--sphere-radius))
     rotateX(var(--phi-back))
-    rotateY(var(--theta-back));
+    rotateY(var(--theta-back))
+    rotateY(var(--world-rotate-y-inverse, 0deg))
+    rotateX(var(--world-rotate-x-inverse, 8deg));
   transform-style: preserve-3d;
   transition:
     filter 180ms ease,
@@ -335,7 +337,31 @@ button {
 }
 
 .world-shell[data-mode="grid"] .world-card {
-  transform: translate3d(var(--gx), var(--gy), 0);
+  z-index: 1;
+  width: clamp(172px, 15vw, 220px);
+  height: clamp(232px, 22vw, 292px);
+  margin-top: calc(clamp(232px, 22vw, 292px) / -2);
+  margin-left: calc(clamp(172px, 15vw, 220px) / -2);
+  opacity: 1;
+  transform: translate3d(var(--grid-aligned-x), var(--grid-aligned-y), 0);
+}
+
+.world-shell[data-mode="grid"] .world-card.is-featured,
+.world-shell[data-mode="grid"] .world-card.is-support {
+  z-index: 1;
+  opacity: 1;
+}
+
+.world-shell[data-mode="grid"] .world-card:nth-child(3n) {
+  animation: none;
+}
+
+.world-shell[data-mode="grid"] .world-card .card-inner {
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.36);
+}
+
+.world-shell[data-mode="grid"] .world-card.is-featured .card-meta strong {
+  font-size: clamp(0.86rem, 1.2vw, 1.08rem);
 }
 
 .world-shell[data-mode="deck"] .world-scene {
@@ -897,6 +923,14 @@ button {
     margin-left: calc(clamp(170px, 38vw, 260px) / -2);
   }
 
+  .world-shell[data-mode="grid"] .world-card {
+    width: 172px;
+    height: 232px;
+    margin-top: -116px;
+    margin-left: -86px;
+    transform: translate3d(var(--grid-tablet-x), var(--grid-tablet-y), 0);
+  }
+
   .world-hint {
     display: none;
   }
@@ -986,7 +1020,11 @@ button {
   }
 
   .world-shell[data-mode="grid"] .world-card {
-    transform: translate3d(calc(var(--gx) * 0.5), calc(var(--gy) * 0.5), 0);
+    width: 136px;
+    height: 178px;
+    margin-top: -89px;
+    margin-left: -68px;
+    transform: translate3d(var(--grid-mobile-x), var(--grid-mobile-y), 0);
   }
 
   .card-level {

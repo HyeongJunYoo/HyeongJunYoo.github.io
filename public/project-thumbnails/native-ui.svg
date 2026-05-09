@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="600" viewBox="0 0 960 600" role="img" aria-label="Native UI thumbnail">
+  <rect width="960" height="600" fill="#12110e"/>
+  <rect x="64" y="72" width="832" height="456" rx="18" fill="#191813" stroke="#5c4d2f"/>
+  <rect x="104" y="112" width="210" height="376" rx="10" fill="#11100e" stroke="#3a3326"/>
+  <rect x="348" y="112" width="508" height="92" rx="10" fill="#221f17" stroke="#d9b463"/>
+  <rect x="348" y="236" width="232" height="252" rx="10" fill="#171510" stroke="#3a3326"/>
+  <rect x="616" y="236" width="240" height="252" rx="10" fill="#171510" stroke="#3a3326"/>
+  <g fill="#d9b463">
+    <rect x="130" y="146" width="130" height="18" rx="5"/>
+    <rect x="130" y="202" width="150" height="18" rx="5"/>
+    <rect x="130" y="258" width="92" height="18" rx="5"/>
+    <rect x="382" y="146" width="210" height="22" rx="6"/>
+    <rect x="382" y="286" width="154" height="18" rx="5"/>
+    <rect x="650" y="286" width="158" height="18" rx="5"/>
+  </g>
+  <path d="M724 394l74 42-38 16 34 58-28 16-34-58-34 28z" fill="#f4efe1" stroke="#11100e" stroke-width="4"/>
+  <text x="104" y="544" fill="#efe8d4" font-family="Pretendard, sans-serif" font-size="48" font-weight="900">UI</text>
+</svg>
