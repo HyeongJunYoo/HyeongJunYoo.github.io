@@ -733,8 +733,8 @@ button {
   gap: clamp(20px, 3vw, 36px);
   width: min(100%, 1480px);
   max-width: 1480px;
-  margin: 0 auto;
-  padding: clamp(64px, 8vw, 96px) 22px 56px;
+  margin: 88px auto 0;
+  padding: 0 22px 56px;
   background:
     radial-gradient(circle at 24% 28%, color-mix(in srgb, var(--tone) 14%, transparent), transparent 28rem);
 }
@@ -1744,7 +1744,8 @@ button {
 
 /* === Final responsive overrides (must come after base styles) === */
 @media (max-width: 1100px) {
-  .featured-hero {
+  .featured-hero,
+  .project-detail-page {
     margin-top: 76px;
   }
 }
@@ -1753,6 +1754,11 @@ button {
   .featured-hero {
     margin: 64px auto 0;
     padding: 0 12px;
+  }
+
+  .project-detail-page {
+    margin: 64px auto 0;
+    padding: 0 12px 56px;
   }
 
   .featured-hero .hero-overlay {
