@@ -228,6 +228,30 @@ const otherProjects = projects.slice(1);
     </header>
 
     <main id="main">
+      <section class="featured-hero" data-tone={featuredProject.tone} aria-labelledby="hero-title">
+        <div class="hero-media" aria-hidden="true">
+          <img src={featuredProject.image} alt="" />
+          <span class="hero-scrim"></span>
+        </div>
+        <div class="hero-overlay">
+          <p class="hero-eyebrow">
+            <span>{featuredProject.eyebrow}</span>
+            <span>{featuredProject.period.split("·")[0].trim()} · {featuredProject.engine} · {featuredProject.genre} · {featuredProject.status}</span>
+          </p>
+          <h1 id="hero-title" class="hero-title">{featuredProject.title}</h1>
+          <p class="hero-summary">{featuredProject.summary}</p>
+          <div class="hero-cta">
+            {featuredProject.links?.play && (
+              <a class="hero-cta-primary" href={featuredProject.links.play}>▶ Play Demo</a>
+            )}
+            <button type="button" class="hero-cta-secondary" data-hero-case-study>Case Study →</button>
+            {featuredProject.links?.source && (
+              <a class="hero-cta-secondary" href={featuredProject.links.source}>Source</a>
+            )}
+          </div>
+        </div>
+      </section>
+
       <section class="world-stage" aria-labelledby="world-title">
         <div class="world-title-block">
           <p>Explore selected work</p>
@@ -919,6 +943,12 @@ const otherProjects = projects.slice(1);
           closeDetail();
           setMode(button.dataset.modeButton || "world");
         });
+      });
+
+      const heroCaseStudy = document.querySelector("[data-hero-case-study]");
+      heroCaseStudy?.addEventListener("click", () => {
+        const featuredCard = cards[0];
+        if (featuredCard) openDetail(featuredCard);
       });
 
       detailClose?.addEventListener("click", closeDetail);
