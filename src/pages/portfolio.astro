@@ -351,6 +351,9 @@ const otherProjects = projects.slice(1);
           <h2 id="detail-title" data-detail-title>{featuredProject.title}</h2>
           <p class="detail-summary" data-detail-summary>{featuredProject.summary}</p>
 
+          <div class="detail-cta" data-detail-cta hidden>
+          </div>
+
           <dl class="detail-meta">
             <div>
               <dt>Engine</dt>
@@ -421,6 +424,7 @@ const otherProjects = projects.slice(1);
       const detailWhatIBuilt = document.querySelector("[data-detail-what-i-built]");
       const detailStats = document.querySelector("[data-detail-stats]");
       const detailGallery = document.querySelector("[data-detail-gallery]");
+      const detailCta = document.querySelector("[data-detail-cta]");
       const detailStack = document.querySelector("[data-detail-stack]");
       const themeMeta = document.querySelector('meta[name="theme-color"]');
 
@@ -701,6 +705,37 @@ const otherProjects = projects.slice(1);
             });
           } else {
             detailGallery.setAttribute("hidden", "");
+          }
+        }
+
+        if (detailCta) {
+          let links = {};
+          try {
+            links = JSON.parse(card.dataset.links || "{}");
+          } catch (error) {
+            links = {};
+          }
+          detailCta.replaceChildren();
+          const entries = [];
+          if (links.play) entries.push({ key: "play", label: "▶ Play", primary: true, href: links.play });
+          if (links.source) entries.push({ key: "source", label: "Source", primary: false, href: links.source });
+          if (links.devlog) entries.push({ key: "devlog", label: "Devlog", primary: false, href: links.devlog });
+
+          if (entries.length > 0) {
+            detailCta.removeAttribute("hidden");
+            entries.forEach((entry) => {
+              const a = document.createElement("a");
+              a.href = entry.href;
+              a.textContent = entry.label;
+              if (entry.primary) a.classList.add("is-primary");
+              if (entry.href.startsWith("http")) {
+                a.rel = "noreferrer noopener";
+                a.target = "_blank";
+              }
+              detailCta.append(a);
+            });
+          } else {
+            detailCta.setAttribute("hidden", "");
           }
         }
 
