@@ -808,8 +808,7 @@ button {
   margin: 0;
 }
 
-.detail-meta dt,
-.detail-grid h3 {
+.detail-meta dt {
   color: var(--tone);
   font-size: 0.78rem;
   font-weight: 950;
@@ -825,28 +824,29 @@ button {
   overflow-wrap: anywhere;
 }
 
-.detail-grid {
+.detail-narrative {
   display: grid;
-  gap: 16px;
-}
-
-.detail-grid section {
-  display: grid;
-  gap: 7px;
+  gap: 8px;
   border-bottom: 1px solid rgba(244, 241, 232, 0.12);
-  padding-bottom: 16px;
+  padding-bottom: 18px;
 }
 
-.detail-grid h3,
-.detail-grid p {
+.detail-narrative h3 {
   margin: 0;
+  color: var(--tone);
+  font-size: 0.78rem;
+  font-weight: 950;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  text-transform: uppercase;
 }
 
-.detail-grid p {
-  color: rgba(244, 241, 232, 0.76);
-  font-size: 0.95rem;
+.detail-narrative p {
+  margin: 0;
+  color: rgba(244, 241, 232, 0.82);
+  font-size: 1rem;
   font-weight: 650;
-  line-height: 1.58;
+  line-height: 1.6;
   overflow-wrap: anywhere;
 }
 
@@ -1037,7 +1037,7 @@ button {
   }
 
   .detail-summary,
-  .detail-grid p,
+  .detail-narrative p,
   .detail-meta dd {
     max-width: min(320px, calc(100vw - 76px));
   }

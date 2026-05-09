@@ -370,20 +370,10 @@ const otherProjects = projects.slice(1);
             </div>
           </dl>
 
-          <div class="detail-grid">
-            <section>
-              <h3>Challenge</h3>
-              <p data-detail-challenge>{featuredProject.challenge}</p>
-            </section>
-            <section>
-              <h3>What I Built</h3>
-              <p data-detail-build>{featuredProject.build}</p>
-            </section>
-            <section>
-              <h3>Result</h3>
-              <p data-detail-outcome>{featuredProject.outcome}</p>
-            </section>
-          </div>
+          <section class="detail-narrative">
+            <h3>What I built</h3>
+            <p data-detail-what-i-built>{featuredProject.whatIBuilt}</p>
+          </section>
 
           <div class="detail-stack" data-detail-stack>
             {featuredProject.stack.map((item) => <span>{item}</span>)}
@@ -422,9 +412,7 @@ const otherProjects = projects.slice(1);
       const detailPlatform = document.querySelector("[data-detail-platform]");
       const detailRole = document.querySelector("[data-detail-role]");
       const detailTeam = document.querySelector("[data-detail-team]");
-      const detailChallenge = document.querySelector("[data-detail-challenge]");
-      const detailBuild = document.querySelector("[data-detail-build]");
-      const detailOutcome = document.querySelector("[data-detail-outcome]");
+      const detailWhatIBuilt = document.querySelector("[data-detail-what-i-built]");
       const detailStack = document.querySelector("[data-detail-stack]");
       const themeMeta = document.querySelector('meta[name="theme-color"]');
 
@@ -655,9 +643,7 @@ const otherProjects = projects.slice(1);
         if (detailPlatform) detailPlatform.textContent = card.dataset.platform || "";
         if (detailRole) detailRole.textContent = card.dataset.role || "";
         if (detailTeam) detailTeam.textContent = `${card.dataset.team || ""} · ${card.dataset.period || ""}`.replace(/^·\s|\s·\s*$/g, "");
-        if (detailChallenge) detailChallenge.textContent = card.dataset.challenge || "";
-        if (detailBuild) detailBuild.textContent = card.dataset.build || "";
-        if (detailOutcome) detailOutcome.textContent = card.dataset.outcome || "";
+        if (detailWhatIBuilt) detailWhatIBuilt.textContent = card.dataset.whatIBuilt || "";
         replaceStack(card.dataset.stack || "");
 
         if (shouldPulse) {
