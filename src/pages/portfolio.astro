@@ -4,19 +4,38 @@ import "../styles/portfolio.css";
 
 const projects = [
   {
-    id: "atlas-interface",
-    title: "Atlas Interface",
+    id: "project-nemesis",
+    title: "PROJECT NEMESIS",
     level: "featured",
     eyebrow: "Featured 01",
-    period: "2025 / Interactive system",
-    role: "Client architecture, interaction flow",
+    period: "2025 · 9 months",
+    role: "Lead Programmer",
+    engine: "Unreal 5.3",
+    platform: "PC / Steam",
+    genre: "Multiplayer Action",
+    team: "5명",
+    status: "Shipped",
+    summary: "한 줄 요약 — 어떤 게임이고 본인이 어떤 시스템을 책임졌는지 한 문장으로.",
+    whatIBuilt: "멀티플레이어 동기화 레이어, 무기 lag-compensation, 커스텀 매치메이킹, 인벤토리 직렬화. 30 tickrate에서 64명 동시접속까지 검증.",
     image: "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1400&q=84",
-    tone: "acid",
-    summary: "A spatial interface prototype where visitors navigate project fragments as a living world instead of a static list.",
-    challenge: "Design a portfolio entry that instantly communicates motion, technical taste, and exploratory interaction without losing clarity.",
-    build: "Built a 3D card world, pointer-aware rotation, full-screen project transitions, and a readable case-study layer.",
-    outcome: "The project becomes a memorable first screen while the expanded view still answers role, stack, and result clearly.",
-    stack: ["Astro", "CSS 3D", "Pointer Events", "Motion Design"],
+    tone: "hot",
+    stack: ["Unreal 5.3", "C++", "Replication", "EOS", "Niagara"],
+    stats: [
+      { value: "60", label: "FPS @ 1080p" },
+      { value: "64", label: "Concurrent players" },
+      { value: "2.1GB", label: "Build size" }
+    ],
+    gallery: [
+      "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1556438064-2d7646166914?auto=format&fit=crop&w=900&q=80"
+    ],
+    links: {
+      play: "#",
+      source: "#",
+      devlog: "#"
+    },
     theta: 0,
     phi: -8,
     width: 260,
@@ -25,19 +44,37 @@ const projects = [
     gridY: -150
   },
   {
-    id: "runtime-room",
-    title: "Runtime Room",
-    level: "featured",
-    eyebrow: "Featured 02",
-    period: "2025 / Real-time experience",
-    role: "Gameplay logic, state sync",
+    id: "echo-runner",
+    title: "ECHO RUNNER",
+    level: "core",
+    eyebrow: "Core 02",
+    period: "2024 · 4 months",
+    role: "Gameplay Programmer",
+    engine: "Unity 6",
+    platform: "PC",
+    genre: "Action",
+    team: "Solo",
+    status: "Prototype",
+    summary: "리듬 기반 액션 러너 프로토타입. 입력 윈도우와 비주얼 큐가 BPM에 맞춰 동기화.",
+    whatIBuilt: "오디오 타임라인 동기화, 입력 윈도우 시스템, ScriptableObject 기반 패턴 빌더, URP shader 핏.",
     image: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=1400&q=84",
-    tone: "hot",
-    summary: "A real-time content room concept focused on fast feedback, state visibility, and immersive interaction loops.",
-    challenge: "Make technical systems feel tangible: rooms, states, actions, and feedback need to read visually before the details appear.",
-    build: "Mapped project state into interaction zones, motion receipts, hover previews, and expanded technical notes.",
-    outcome: "The viewer can sense the project type first, then open the full view for implementation detail.",
-    stack: ["Unity", "Realtime", "UI State", "Interaction"],
+    tone: "aqua",
+    stack: ["Unity 6", "C#", "URP", "DOTween", "Audio Timeline"],
+    stats: [
+      { value: "120", label: "FPS @ 1440p" },
+      { value: "<8ms", label: "Input latency" },
+      { value: "320MB", label: "Build size" }
+    ],
+    gallery: [
+      "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1542751110-97427bbecf20?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1486572788966-cfd3df1f5b42?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1493946740644-2d8a1f1a6aff?auto=format&fit=crop&w=900&q=80"
+    ],
+    links: {
+      play: "#",
+      source: "#"
+    },
     theta: 72,
     phi: 10,
     width: 238,
@@ -46,141 +83,133 @@ const projects = [
     gridY: -160
   },
   {
-    id: "motion-grid",
-    title: "Motion Grid",
+    id: "rune-tactics",
+    title: "RUNE TACTICS",
     level: "core",
-    eyebrow: "Core study",
-    period: "2024 / UI motion",
-    role: "Motion system, component behavior",
+    eyebrow: "Core 03",
+    period: "2024 · 48-hour jam",
+    role: "Tools / Gameplay",
+    engine: "Unreal 5.3",
+    platform: "PC",
+    genre: "FPS",
+    team: "3명",
+    status: "Game Jam",
+    summary: "48시간 잼 출품작 — 룬을 조합해 무기를 만드는 FPS.",
+    whatIBuilt: "런타임 룬 결합 시스템, 데이터 드리븐 무기 빌더, 절차적 던전 청크 스폰, AI 패스 그리드.",
     image: "https://images.unsplash.com/photo-1483058712412-4245e9b90334?auto=format&fit=crop&w=1400&q=84",
-    tone: "aqua",
-    summary: "A motion language study for cards, menus, detail pages, and stateful controls.",
-    challenge: "Create micro interactions that feel deliberate rather than decorative.",
-    build: "Defined hover lift, magnetic buttons, click pulses, scroll hints, and reduced-motion fallbacks.",
-    outcome: "The interface gains personality without hiding content behind animation.",
-    stack: ["CSS Motion", "Interaction", "Accessibility"],
+    tone: "violet",
+    stack: ["Unreal 5.3", "Blueprints", "C++", "Behavior Tree"],
+    stats: [
+      { value: "48h", label: "Dev time" },
+      { value: "12+", label: "Rune combos" },
+      { value: "2nd", label: "Jam ranking" }
+    ],
+    gallery: [
+      "https://images.unsplash.com/photo-1542751110-97427bbecf20?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1556438064-2d7646166914?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=900&q=80"
+    ],
+    links: {
+      source: "#",
+      devlog: "#"
+    },
     theta: 142,
     phi: -4,
-    width: 190,
-    height: 230,
+    width: 220,
+    height: 270,
     gridX: 150,
     gridY: -150
   },
   {
-    id: "object-room",
-    title: "Object Room",
+    id: "poly-drift",
+    title: "POLY DRIFT",
     level: "core",
-    eyebrow: "Core study",
-    period: "2024 / Visual system",
-    role: "Visual direction, layout system",
+    eyebrow: "Core 04",
+    period: "2023 · 6 months",
+    role: "Gameplay Programmer",
+    engine: "Godot 4",
+    platform: "PC / Mobile",
+    genre: "Puzzle",
+    team: "2명",
+    status: "Shipped",
+    summary: "로우폴리 드리프트 퍼즐. 코너 드리프트 라인을 그려 시간 경쟁.",
+    whatIBuilt: "차량 물리 컨트롤러, 시간 압축 리플레이, 모바일 터치 입력 어댑터, 리더보드 백엔드 연동.",
     image: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1400&q=84",
-    tone: "violet",
-    summary: "A layout direction that treats each project as a physical object inside a dark exhibition room.",
-    challenge: "Avoid a generic project grid while keeping the portfolio scannable.",
-    build: "Used larger cards, uneven orbital placement, featured hierarchy, and a focused detail expansion.",
-    outcome: "The project list becomes exploratory, but each entry still has a direct path to information.",
-    stack: ["Layout", "Art Direction", "Responsive UI"],
+    tone: "lime",
+    stack: ["Godot 4", "GDScript", "C#", "REST"],
+    stats: [
+      { value: "60", label: "FPS @ 4K" },
+      { value: "120", label: "Tracks" },
+      { value: "180MB", label: "Build size" }
+    ],
+    gallery: [
+      "https://images.unsplash.com/photo-1486572788966-cfd3df1f5b42?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1493946740644-2d8a1f1a6aff?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=900&q=80"
+    ],
+    links: {
+      play: "#",
+      source: "#"
+    },
     theta: 214,
     phi: 12,
-    width: 184,
-    height: 226,
+    width: 200,
+    height: 240,
     gridX: 400,
     gridY: -110
   },
   {
-    id: "signal-archive",
-    title: "Signal Archive",
+    id: "render-lab",
+    title: "RENDER LAB",
     level: "core",
-    eyebrow: "Core study",
-    period: "2023 / Data display",
-    role: "Information design, filtering",
+    eyebrow: "Core 05",
+    period: "2023 · ongoing",
+    role: "Tech Programmer",
+    engine: "Custom (C++/Vulkan)",
+    platform: "PC",
+    genre: "Tech Demo",
+    team: "Solo",
+    status: "Prototype",
+    summary: "취미 프로젝트 — 자체 C++/Vulkan 렌더러로 PBR 머티리얼·쉐도우 캐스케이드 실험.",
+    whatIBuilt: "Vulkan 커맨드 그래프, GLTF 로더, PBR uber shader, CSM, 디퍼드 G-buffer.",
     image: "https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1400&q=84",
     tone: "orange",
-    summary: "A compact archive concept for turning many project details into a small set of readable signals.",
-    challenge: "Keep dense information readable after a dramatic visual entry point.",
-    build: "Grouped content into role, challenge, build, outcome, and stack fields for each expanded project.",
-    outcome: "The full-screen view becomes portfolio-friendly for recruiters and technical reviewers.",
-    stack: ["Content Model", "Case Study", "Filtering"],
+    stack: ["C++", "Vulkan", "GLSL", "GLTF"],
+    stats: [
+      { value: "144", label: "FPS @ 1440p" },
+      { value: "6", label: "Cascade splits" },
+      { value: "OSS", label: "License" }
+    ],
+    gallery: [
+      "https://images.unsplash.com/photo-1556438064-2d7646166914?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=900&q=80"
+    ],
+    links: {
+      source: "#",
+      devlog: "#"
+    },
     theta: 288,
     phi: -2,
-    width: 182,
-    height: 214,
+    width: 200,
+    height: 240,
     gridX: -380,
     gridY: 150
-  },
-  {
-    id: "tactile-feed",
-    title: "Tactile Feed",
-    level: "support",
-    eyebrow: "Support study",
-    period: "2023 / Prototype",
-    role: "Visual texture, feedback",
-    image: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1400&q=84",
-    tone: "lime",
-    summary: "A study of material feeling: grain, light, image weight, and hover response.",
-    challenge: "Make placeholder images feel intentionally art-directed.",
-    build: "Combined large photography, hard-edged cards, glow states, and subtle scene lighting.",
-    outcome: "The visual shell feels more like a designed artifact than a template.",
-    stack: ["Visual Design", "Texture", "Prototype"],
-    theta: 322,
-    phi: 28,
-    width: 160,
-    height: 190,
-    gridX: -120,
-    gridY: 165
-  },
-  {
-    id: "route-finder",
-    title: "Route Finder",
-    level: "support",
-    eyebrow: "Support study",
-    period: "2022 / Navigation",
-    role: "Navigation model",
-    image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=84",
-    tone: "aqua",
-    summary: "A project navigation experiment where orbit, grid, and detail modes work as one system.",
-    challenge: "Support playful browsing and fast direct access at the same time.",
-    build: "Added World and Grid modes, random exploration, reset behavior, and project-to-project navigation.",
-    outcome: "The viewer can browse freely or jump through projects one by one.",
-    stack: ["Navigation", "State", "UX Flow"],
-    theta: 44,
-    phi: -30,
-    width: 156,
-    height: 184,
-    gridX: 150,
-    gridY: 165
-  },
-  {
-    id: "deep-link",
-    title: "Deep Link",
-    level: "support",
-    eyebrow: "Support study",
-    period: "2022 / Detail view",
-    role: "Detail page behavior",
-    image: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1400&q=84&sat=-40",
-    tone: "acid",
-    summary: "A detail transition concept for making one selected project take over the entire page.",
-    challenge: "Move from a playful 3D overview into a focused case-study without feeling like a separate page.",
-    build: "Created a full-screen expansion layer, animated image stage, close behavior, and previous/next controls.",
-    outcome: "Project exploration becomes cinematic first, then practical and readable.",
-    stack: ["Transitions", "Case Study", "Responsive"],
-    theta: 252,
-    phi: -26,
-    width: 158,
-    height: 184,
-    gridX: 390,
-    gridY: 145
   }
 ];
 
-const firstProject = projects[0];
+const featuredProject = projects[0];
+const otherProjects = projects.slice(1);
 ---
 
 <Layout
   title="Floating World Portfolio Prototype"
   description="A blank-slate exploratory portfolio prototype with a floating 3D project world and full-screen case study expansion."
 >
-  <div class="world-shell" data-world-shell data-mode="world" data-active-tone={firstProject.tone}>
+  <div class="world-shell" data-world-shell data-mode="world" data-active-tone={featuredProject.tone}>
     <div class="world-grain" aria-hidden="true"></div>
     <div class="cursor-light" data-cursor aria-hidden="true"></div>
 
@@ -279,42 +308,42 @@ const firstProject = projects[0];
         <button type="button" class="detail-close" data-detail-close aria-label="Back to project world">Back to world</button>
 
         <div class="detail-image-stage" aria-hidden="true">
-          <img data-detail-image src={firstProject.image} alt="" />
+          <img data-detail-image src={featuredProject.image} alt="" />
         </div>
 
         <article class="detail-content">
-          <p class="detail-eyebrow" data-detail-eyebrow>{firstProject.eyebrow}</p>
-          <h2 id="detail-title" data-detail-title>{firstProject.title}</h2>
-          <p class="detail-summary" data-detail-summary>{firstProject.summary}</p>
+          <p class="detail-eyebrow" data-detail-eyebrow>{featuredProject.eyebrow}</p>
+          <h2 id="detail-title" data-detail-title>{featuredProject.title}</h2>
+          <p class="detail-summary" data-detail-summary>{featuredProject.summary}</p>
 
           <dl class="detail-meta">
             <div>
               <dt>Period</dt>
-              <dd data-detail-period>{firstProject.period}</dd>
+              <dd data-detail-period>{featuredProject.period}</dd>
             </div>
             <div>
               <dt>Role</dt>
-              <dd data-detail-role>{firstProject.role}</dd>
+              <dd data-detail-role>{featuredProject.role}</dd>
             </div>
           </dl>
 
           <div class="detail-grid">
             <section>
               <h3>Challenge</h3>
-              <p data-detail-challenge>{firstProject.challenge}</p>
+              <p data-detail-challenge>{featuredProject.challenge}</p>
             </section>
             <section>
               <h3>What I Built</h3>
-              <p data-detail-build>{firstProject.build}</p>
+              <p data-detail-build>{featuredProject.build}</p>
             </section>
             <section>
               <h3>Result</h3>
-              <p data-detail-outcome>{firstProject.outcome}</p>
+              <p data-detail-outcome>{featuredProject.outcome}</p>
             </section>
           </div>
 
           <div class="detail-stack" data-detail-stack>
-            {firstProject.stack.map((item) => <span>{item}</span>)}
+            {featuredProject.stack.map((item) => <span>{item}</span>)}
           </div>
         </article>
 
