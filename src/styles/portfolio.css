@@ -897,6 +897,27 @@ button {
   color: var(--tone);
 }
 
+.world-shell[data-mode="world"] .card-status,
+.world-shell[data-mode="world"] .card-meta span {
+  display: none;
+}
+
+.world-shell[data-mode="world"] .card-eyebrow {
+  font-size: 0.55rem;
+}
+
+.world-shell[data-mode="world"] .card-meta strong {
+  font-size: 0.78rem;
+}
+
+.world-shell[data-mode="world"] .world-card.is-featured .card-meta strong {
+  font-size: 1rem;
+}
+
+.world-shell[data-mode="world"] .world-card:hover .card-meta span {
+  display: block;
+}
+
 @keyframes card-breathe {
   from {
     filter: brightness(0.9);
