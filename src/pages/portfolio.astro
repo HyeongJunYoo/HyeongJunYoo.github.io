@@ -332,7 +332,7 @@ const otherProjects = projects.slice(1);
 
         <div class="world-controls">
           <button type="button" class="control-primary" data-random-card>Explore</button>
-          <button type="button" class="control-secondary" data-reset-world>Reset world</button>
+          <button type="button" class="control-secondary" data-reset-world>Reset</button>
         </div>
 
         <p class="world-hint">Drag the world. Hover a card. Click one project to expand it into a full-screen case study.</p>
@@ -665,7 +665,7 @@ const otherProjects = projects.slice(1);
         if (detailEngine) detailEngine.textContent = card.dataset.engine || "";
         if (detailPlatform) detailPlatform.textContent = card.dataset.platform || "";
         if (detailRole) detailRole.textContent = card.dataset.role || "";
-        if (detailTeam) detailTeam.textContent = `${card.dataset.team || ""} · ${card.dataset.period || ""}`.replace(/^·\s|\s·\s*$/g, "");
+        if (detailTeam) detailTeam.textContent = [card.dataset.team, card.dataset.period].filter(Boolean).join(" · ");
         if (detailWhatIBuilt) detailWhatIBuilt.textContent = card.dataset.whatIBuilt || "";
         replaceStack(card.dataset.stack || "");
 
@@ -1041,7 +1041,7 @@ const otherProjects = projects.slice(1);
         deckPosition = 0;
         deckTarget = 0;
         updateDeck();
-        setMode("world");
+        setMode("grid");
         closeDetail();
       });
 
