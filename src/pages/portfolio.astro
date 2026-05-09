@@ -55,9 +55,27 @@ import { projects, featuredProject } from "../data/projects";
           </div>
           <div class="projects-section-controls" role="group" aria-label="Project view mode">
             <div class="mode-tabs">
-              <button type="button" data-mode-button="grid" aria-pressed="true">Grid</button>
-              <button type="button" data-mode-button="deck" aria-pressed="false">Deck</button>
-              <button type="button" data-mode-button="world" aria-pressed="false">World</button>
+              <button type="button" data-mode-button="grid" aria-pressed="true" aria-label="Grid view" title="Grid view">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true">
+                  <rect x="3" y="3" width="7" height="7"/>
+                  <rect x="14" y="3" width="7" height="7"/>
+                  <rect x="3" y="14" width="7" height="7"/>
+                  <rect x="14" y="14" width="7" height="7"/>
+                </svg>
+              </button>
+              <button type="button" data-mode-button="deck" aria-pressed="false" aria-label="Deck view" title="Deck view">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="6" y="4" width="12" height="16" transform="rotate(-6 12 12)"/>
+                  <rect x="6" y="4" width="12" height="16" transform="rotate(6 12 12)"/>
+                </svg>
+              </button>
+              <button type="button" data-mode-button="world" aria-pressed="false" aria-label="World view" title="World view">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true">
+                  <circle cx="12" cy="12" r="9"/>
+                  <ellipse cx="12" cy="12" rx="4" ry="9"/>
+                  <line x1="3" y1="12" x2="21" y2="12"/>
+                </svg>
+              </button>
             </div>
           </div>
         </div>
@@ -243,8 +261,7 @@ import { projects, featuredProject } from "../data/projects";
       };
 
       const getDeckCardAtPoint = (clientX, clientY) => {
-        let bestCard = null;
-        let bestScore = Number.POSITIVE_INFINITY;
+        const candidates = [];
 
         cards.forEach((card) => {
           const opacity = Number.parseFloat(card.style.getPropertyValue("--deck-opacity") || "1");
@@ -253,8 +270,8 @@ import { projects, featuredProject } from "../data/projects";
           const rect = card.getBoundingClientRect();
           if (rect.width <= 0 || rect.height <= 0) return;
 
-          const padX = rect.width * 0.08;
-          const padY = rect.height * 0.06;
+          const padX = rect.width * 0.04;
+          const padY = rect.height * 0.04;
           const isInside =
             clientX >= rect.left - padX &&
             clientX <= rect.right + padX &&
@@ -265,18 +282,16 @@ import { projects, featuredProject } from "../data/projects";
 
           const centerX = rect.left + rect.width / 2;
           const centerY = rect.top + rect.height / 2;
-          const normalizedX = Math.abs(clientX - centerX) / rect.width;
-          const normalizedY = Math.abs(clientY - centerY) / rect.height;
+          const distance = Math.hypot(clientX - centerX, clientY - centerY);
           const deckDistance = Number.parseFloat(card.dataset.deckDistance || "0");
-          const score = Math.hypot(normalizedX * 1.24, normalizedY) + deckDistance * 0.04;
-
-          if (score < bestScore) {
-            bestScore = score;
-            bestCard = card;
-          }
+          // Score: closest card center wins; tiebreaker favors front cards
+          const score = distance + deckDistance * 30;
+          candidates.push({ card, score });
         });
 
-        return bestCard;
+        if (candidates.length === 0) return null;
+        candidates.sort((a, b) => a.score - b.score);
+        return candidates[0].card;
       };
 
       const selectDeckCard = (card) => {
@@ -339,7 +354,7 @@ import { projects, featuredProject } from "../data/projects";
       };
 
       const animate = () => {
-        if (!paused && shell?.dataset.mode !== "grid" && !shell?.classList.contains("is-detail-open")) {
+        if (!paused && !pointerDown && shell?.dataset.mode !== "grid" && !shell?.classList.contains("is-detail-open")) {
           spin += 0.035;
         }
 
@@ -356,6 +371,8 @@ import { projects, featuredProject } from "../data/projects";
       scene?.addEventListener("pointerdown", (event) => {
         if (shell?.classList.contains("is-detail-open")) return;
         if (shell?.dataset.mode === "deck") return;
+        // Only respond to left mouse button (0) or touch/pen
+        if (event.pointerType === "mouse" && event.button !== 0) return;
 
         if (event.target instanceof Element && event.target.closest("[data-world-card]")) return;
 
@@ -377,11 +394,9 @@ import { projects, featuredProject } from "../data/projects";
         cursor?.style.setProperty("--cy", `${event.clientY}px`);
 
         if (!pointerDown || shell?.dataset.mode === "deck") return;
-        if (!event.target || !(event.target instanceof Element)) return;
-        if (!event.target.closest("[data-world-scene]")) return;
 
-        dragX = startDragX + (event.clientX - startX) * 0.22;
-        dragY = Math.max(-42, Math.min(34, startDragY - (event.clientY - startY) * 0.18));
+        dragX = startDragX + (event.clientX - startX) * 0.32;
+        dragY = Math.max(-42, Math.min(34, startDragY - (event.clientY - startY) * 0.26));
       });
 
       scene?.addEventListener("pointerup", (event) => {
@@ -459,6 +474,8 @@ import { projects, featuredProject } from "../data/projects";
           ) {
             return;
           }
+          // Only respond to left mouse button (0) or touch/pen
+          if (event.pointerType === "mouse" && event.button !== 0) return;
 
           startX = event.clientX;
           startY = event.clientY;
@@ -483,11 +500,26 @@ import { projects, featuredProject } from "../data/projects";
 
       scene?.addEventListener("wheel", (event) => {
         if (shell?.classList.contains("is-detail-open") || shell?.dataset.mode !== "deck") return;
+        // Only rotate when wheeling directly over a deck card
+        if (!getDeckCardAtPoint(event.clientX, event.clientY)) return;
 
         event.preventDefault();
         const primaryDelta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
         deckTarget += primaryDelta * 0.006;
       }, { passive: false });
+
+      // Deck hover indication — highlight the card the pointer is over
+      scene?.addEventListener("pointermove", (event) => {
+        if (shell?.dataset.mode !== "deck") return;
+        const hovered = getDeckCardAtPoint(event.clientX, event.clientY);
+        cards.forEach((card) => {
+          card.toggleAttribute("data-deck-hover", card === hovered);
+        });
+      });
+
+      scene?.addEventListener("pointerleave", () => {
+        cards.forEach((card) => card.removeAttribute("data-deck-hover"));
+      });
 
       document.addEventListener(
         "pointerup",

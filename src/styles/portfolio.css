@@ -240,23 +240,32 @@ button {
 }
 
 .mode-tabs button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background: transparent;
   border: 0;
   color: var(--muted);
   font: inherit;
-  font-size: 0.78rem;
-  font-weight: 850;
   line-height: 1;
-  padding: 7px 9px;
+  padding: 8px 10px;
   cursor: pointer;
   transition:
     background-color 160ms ease,
     color 160ms ease;
 }
 
+.mode-tabs button:hover {
+  color: var(--ink);
+}
+
 .mode-tabs button[aria-pressed="true"] {
   background: rgba(244, 241, 232, 0.1);
-  color: var(--ink);
+  color: var(--tone);
+}
+
+.mode-tabs button svg {
+  display: block;
 }
 
 .sound-toggle {
@@ -486,11 +495,11 @@ button {
 
 .world-shell[data-mode="deck"] .world-card {
   z-index: var(--deck-z-index);
-  width: clamp(280px, 38vw, 560px);
-  height: calc(clamp(280px, 38vw, 560px) * 9 / 16);
+  width: clamp(560px, 70vw, 1120px);
+  height: calc(clamp(560px, 70vw, 1120px) * 9 / 16);
   aspect-ratio: 16 / 9;
-  margin-top: calc((clamp(280px, 38vw, 560px) * 9 / 16) / -2);
-  margin-left: calc(clamp(280px, 38vw, 560px) / -2);
+  margin-top: calc((clamp(560px, 70vw, 1120px) * 9 / 16) / -2);
+  margin-left: calc(clamp(560px, 70vw, 1120px) / -2);
   opacity: var(--deck-opacity);
   transform:
     translate3d(calc(var(--deck-x) + var(--deck-peek, 0px)), var(--deck-y), var(--deck-z))
@@ -515,6 +524,19 @@ button {
 
 .world-shell[data-mode="deck"] .world-card:not([data-deck-current]) .card-inner {
   filter: saturate(0.78) brightness(0.72);
+  transition: filter 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.world-shell[data-mode="deck"] .world-card[data-deck-hover]:not([data-deck-current]) .card-inner {
+  filter: saturate(1) brightness(0.95);
+  border-color: color-mix(in srgb, var(--card-tone, var(--tone)) 70%, rgba(244, 241, 232, 0.4));
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--card-tone, var(--tone)) 40%, transparent),
+    0 36px 100px rgba(0, 0, 0, 0.6);
+}
+
+.world-shell[data-mode="deck"] .world-card[data-deck-hover]:not([data-deck-current]) {
+  cursor: pointer;
 }
 
 .world-shell[data-mode="deck"] .card-meta {
@@ -933,6 +955,30 @@ button {
   padding: 8px 9px;
 }
 
+
+.world-shell[data-mode="world"] .world-card {
+  width: calc(var(--w) * 1.4);
+  height: calc(var(--h) * 1.4);
+  margin-top: calc((var(--h) * 1.4) / -2);
+  margin-left: calc((var(--w) * 1.4) / -2);
+  transition: transform 200ms ease;
+}
+
+.world-shell[data-mode="world"] .world-card:hover {
+  z-index: 50;
+}
+
+.world-shell[data-mode="world"] .world-card:hover .card-inner {
+  border-color: var(--card-tone, var(--tone));
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--card-tone, var(--tone)) 60%, transparent),
+    0 30px 80px rgba(0, 0, 0, 0.6),
+    0 0 60px color-mix(in srgb, var(--card-tone, var(--tone)) 40%, transparent);
+}
+
+.world-shell[data-mode="world"] .world-card:hover .card-inner.hud-frame {
+  --bracket-color: var(--card-tone, var(--tone));
+}
 
 .world-shell[data-mode="world"] .card-status,
 .world-shell[data-mode="world"] .card-meta span {
