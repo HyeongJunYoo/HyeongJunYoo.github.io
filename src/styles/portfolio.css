@@ -414,7 +414,7 @@ button {
   position: static;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+  gap: 28px;
   width: 100%;
   transform: none;
 }
@@ -443,12 +443,25 @@ button {
   box-shadow: 0 18px 42px rgba(0, 0, 0, 0.36);
 }
 
+.world-shell[data-mode="grid"] .world-card {
+  transition: transform 280ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.world-shell[data-mode="grid"] .world-card:hover {
+  transform: scale(1.03);
+  z-index: 2;
+}
+
 .world-shell[data-mode="grid"] .world-card .card-inner img {
   transition: filter 220ms ease;
 }
 
 .world-shell[data-mode="grid"] .world-card:hover .card-inner img {
   filter: saturate(1.08) brightness(1.04);
+}
+
+.world-shell[data-mode="grid"] .world-card:hover .card-inner {
+  border-color: var(--card-tone, var(--tone));
 }
 
 .world-shell[data-mode="deck"] .world-scene {
@@ -1173,7 +1186,7 @@ button {
 
   .world-shell[data-mode="grid"] .world-rotator {
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 18px;
   }
 
   .projects-section-header h2 {
