@@ -1015,6 +1015,32 @@ button {
   .detail-nav button {
     flex: 1 1 0;
   }
+
+  .featured-hero {
+    margin-top: 76px;
+  }
+
+  .featured-hero .hero-overlay {
+    left: 22px;
+    right: 22px;
+    bottom: 22px;
+    gap: 10px;
+  }
+
+  .featured-hero .hero-summary {
+    max-width: 100%;
+    font-size: 0.95rem;
+  }
+
+  .projects-section-header {
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .projects-section-header .projects-section-controls {
+    width: 100%;
+    justify-content: flex-end;
+  }
 }
 
 @media (max-width: 560px) {
@@ -1128,6 +1154,37 @@ button {
 
   .detail-meta div:nth-child(n+3) {
     border-top: 1px solid rgba(244, 241, 232, 0.16);
+  }
+
+  .featured-hero {
+    margin-top: 64px;
+  }
+
+  .featured-hero .hero-cta {
+    gap: 6px;
+  }
+
+  .featured-hero .hero-cta-primary,
+  .featured-hero .hero-cta-secondary {
+    padding: 10px 12px;
+    font-size: 0.78rem;
+  }
+
+  .world-header {
+    padding: 12px 16px;
+  }
+
+  .world-header .site-nav {
+    gap: 12px;
+  }
+
+  .world-shell[data-mode="grid"] .world-rotator {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .projects-section-header h2 {
+    font-size: 1.1rem;
   }
 
 }
