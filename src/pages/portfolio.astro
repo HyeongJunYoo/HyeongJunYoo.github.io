@@ -28,41 +28,24 @@ import { projects, featuredProject } from "../data/projects";
     </div>
 
     <header class="world-header" aria-label="Site navigation">
-      <a class="site-mark" href="/">● HYEONGJUN YOO <span>/ Game Programmer</span></a>
+      <a class="site-mark" href="/portfolio">● HYEONGJUN YOO <span>/ Game Programmer</span></a>
       <nav class="site-nav" aria-label="Primary">
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
-        <a href="https://github.com/HyeongJunYoo" rel="noreferrer noopener" target="_blank">GitHub</a>
-        <a href="https://www.linkedin.com/" rel="noreferrer noopener" target="_blank">LinkedIn</a>
+        <a href="/">Resume</a>
       </nav>
     </header>
 
     <main id="main">
-      <section class="featured-hero" data-tone={featuredProject.tone} aria-labelledby="hero-title">
+      <a class="featured-hero" href={`/portfolio/${featuredProject.id}`} data-tone={featuredProject.tone} aria-labelledby="hero-title">
         <div class="hero-media hud-frame" aria-hidden="true">
           <span class="hud-corner-tr"></span>
           <span class="hud-corner-bl"></span>
-          <img src={featuredProject.image} alt="" />
+          <img src={featuredProject.image} alt="" fetchpriority="high" />
           <span class="hero-scrim"></span>
         </div>
         <div class="hero-overlay">
-          <p class="hero-eyebrow">
-            <span>[{featuredProject.eyebrow.toUpperCase().replace(/\s+/g, "_")}]</span>
-            <span>{featuredProject.period.split("·")[0].trim()} · {featuredProject.engine} · {featuredProject.genre} · {featuredProject.status}</span>
-          </p>
-          <h1 id="hero-title" class="hero-title decoded-text" data-decode-text>{featuredProject.title}</h1>
-          <p class="hero-summary">{featuredProject.summary}</p>
-          <div class="hero-cta">
-            {featuredProject.links?.play && (
-              <a class="hero-cta-primary" href={featuredProject.links.play}>▶ Play Demo</a>
-            )}
-            <a class="hero-cta-secondary" href={`/portfolio/${featuredProject.id}`}>Case Study →</a>
-            {featuredProject.links?.source && (
-              <a class="hero-cta-secondary" href={featuredProject.links.source}>Source</a>
-            )}
-          </div>
+          <h1 id="hero-title" class="hero-title">{featuredProject.title}</h1>
         </div>
-      </section>
+      </a>
 
       <section class="world-stage" aria-labelledby="world-title">
         <div class="projects-section-header">
@@ -119,11 +102,10 @@ import { projects, featuredProject } from "../data/projects";
                     alt=""
                     loading={index > 1 ? "lazy" : "eager"}
                     decoding="async"
-                    style={`view-transition-name: hero-${project.id};`}
                   />
                   <span class="card-scrim"></span>
                   <span class="card-meta">
-                    <strong style={`view-transition-name: title-${project.id};`}>{project.title}</strong>
+                    <strong>{project.title}</strong>
                   </span>
                 </span>
               </a>
@@ -620,46 +602,7 @@ import { projects, featuredProject } from "../data/projects";
         setMode(initialMode);
       }
 
-      // Decoded text effect on hero title
       const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const decodeTargets = document.querySelectorAll("[data-decode-text]");
-      const decodeGlyphs = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@*+";
-      decodeTargets.forEach((el) => {
-        const original = el.textContent || "";
-        el.setAttribute("aria-label", original);
-        if (reduceMotion) return;
-        el.textContent = "";
-        const chars = [...original];
-        chars.forEach((char, i) => {
-          const span = document.createElement("span");
-          span.className = "decoded-char";
-          if (char === " ") {
-            span.innerHTML = "&nbsp;";
-          } else {
-            span.textContent = char;
-            span.dataset.noise = decodeGlyphs[Math.floor(Math.random() * decodeGlyphs.length)];
-          }
-          el.appendChild(span);
-        });
-        const charsList = el.querySelectorAll(".decoded-char");
-        const total = charsList.length;
-        const start = performance.now();
-        const duration = 720;
-        const cycleNoise = (now) => {
-          const t = Math.min(1, (now - start) / duration);
-          el.style.setProperty("--decode-progress", String(t));
-          charsList.forEach((c, i) => {
-            const localT = Math.max(0, Math.min(1, (t - i / total / 1.6) * 2.4));
-            if (localT >= 1) {
-              c.dataset.noise = "";
-            } else if (c.dataset.noise !== undefined) {
-              c.dataset.noise = decodeGlyphs[Math.floor(Math.random() * decodeGlyphs.length)];
-            }
-          });
-          if (t < 1) requestAnimationFrame(cycleNoise);
-        };
-        requestAnimationFrame(cycleNoise);
-      });
 
       // Live ticker — real FPS via rAF deltas, real project count, current mode/tone
       const tickerMarquee = document.querySelector("[data-ticker-marquee]");

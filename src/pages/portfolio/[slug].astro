@@ -1,7 +1,7 @@
 ---
 import Layout from "../../components/Layout.astro";
 import "../../styles/portfolio.css";
-import { projects, getProjectBySlug, getProjectNeighbors } from "../../data/projects";
+import { projects, getProjectBySlug } from "../../data/projects";
 
 export function getStaticPaths() {
   return projects.map((project) => ({ params: { slug: project.id } }));
@@ -12,7 +12,6 @@ const project = getProjectBySlug(slug!);
 if (!project) {
   return Astro.redirect("/portfolio");
 }
-const neighbors = getProjectNeighbors(slug!)!;
 const ctaEntries: Array<{ key: string; label: string; primary: boolean; href: string }> = [];
 if (project.links.play) ctaEntries.push({ key: "play", label: "▶ Play", primary: true, href: project.links.play });
 if (project.links.source) ctaEntries.push({ key: "source", label: "Source", primary: false, href: project.links.source });
@@ -43,27 +42,15 @@ const eyebrowDisplay = project.eyebrow.toUpperCase().replace(/\s+/g, "·");
     </div>
 
     <header class="world-header" aria-label="Site navigation">
-      <a class="site-mark" href="/">● HYEONGJUN YOO <span>/ Game Programmer</span></a>
+      <a class="site-mark" href="/portfolio">● HYEONGJUN YOO <span>/ Game Programmer</span></a>
       <nav class="site-nav" aria-label="Primary">
-        <a href="/portfolio">Portfolio</a>
-        <a href="/portfolio#contact">Contact</a>
-        <a href="https://github.com/HyeongJunYoo" rel="noreferrer noopener" target="_blank">GitHub</a>
-        <a href="https://www.linkedin.com/" rel="noreferrer noopener" target="_blank">LinkedIn</a>
+        <a href="/">Resume</a>
       </nav>
     </header>
 
     <main id="main" data-tone={project.tone}>
       <section class="project-detail-page" aria-labelledby="detail-title" data-tone={project.tone}>
-        <a class="detail-close" href="/portfolio" aria-label="Back to project list">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M15 6 L9 12 L15 18"/></svg>
-          <span>Back</span>
-        </a>
-
-        <div
-          class="detail-hero-media hud-frame"
-          aria-hidden="true"
-          style={`view-transition-name: hero-${project.id};`}
-        >
+        <div class="detail-hero-media hud-frame" aria-hidden="true">
           <span class="hud-corner-tr"></span>
           <span class="hud-corner-bl"></span>
           <img src={project.image} alt="" fetchpriority="high" decoding="async" />
@@ -72,11 +59,7 @@ const eyebrowDisplay = project.eyebrow.toUpperCase().replace(/\s+/g, "·");
 
         <article class="detail-content">
           <p class="detail-eyebrow">{eyebrowDisplay}</p>
-          <h1
-            id="detail-title"
-            class="detail-title"
-            style={`view-transition-name: title-${project.id};`}
-          >{project.title}</h1>
+          <h1 id="detail-title" class="detail-title">{project.title}</h1>
           <p class="detail-summary">{project.summary}</p>
 
           {ctaEntries.length > 0 && (
@@ -142,16 +125,6 @@ const eyebrowDisplay = project.eyebrow.toUpperCase().replace(/\s+/g, "·");
           )}
         </article>
 
-        <nav class="detail-nav" aria-label="Project navigation">
-          <a class="detail-nav-prev" href={`/portfolio/${neighbors.prev.id}`}>
-            <span class="detail-nav-direction">← Previous</span>
-            <span class="detail-nav-title">{neighbors.prev.title}</span>
-          </a>
-          <a class="detail-nav-next" href={`/portfolio/${neighbors.next.id}`}>
-            <span class="detail-nav-direction">Next →</span>
-            <span class="detail-nav-title">{neighbors.next.title}</span>
-          </a>
-        </nav>
       </section>
     </main>
 
