@@ -26,7 +26,11 @@ html {
 
 body {
   background:
-    radial-gradient(circle at 82% 26%, rgba(255, 60, 121, 0.08), transparent 28rem),
+    radial-gradient(ellipse 40rem 26rem at 82% 18%, rgba(255, 60, 121, 0.12), transparent 70%),
+    radial-gradient(ellipse 36rem 22rem at 12% 78%, rgba(86, 243, 255, 0.09), transparent 70%),
+    radial-gradient(ellipse 30rem 20rem at 88% 92%, rgba(157, 104, 255, 0.08), transparent 70%),
+    radial-gradient(ellipse 28rem 18rem at 6% 22%, rgba(120, 255, 139, 0.05), transparent 70%),
+    radial-gradient(ellipse 60rem 30rem at 50% 130%, rgba(255, 138, 50, 0.08), transparent 65%),
     #0c0c0c;
   color: var(--ink);
 }
