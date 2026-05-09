@@ -290,6 +290,8 @@ button {
   min-height: auto;
   place-items: center;
   overflow: hidden;
+  width: min(100%, 1480px);
+  margin: 0 auto;
   padding: 0 22px 74px;
   perspective: 1500px;
 }
@@ -398,7 +400,7 @@ button {
 }
 
 .world-shell[data-mode="grid"] .world-scene {
-  width: min(100%, 1480px);
+  width: 100%;
   aspect-ratio: auto;
   cursor: default;
   transform: none;
@@ -736,8 +738,8 @@ button {
   display: flex;
   flex-direction: column;
   gap: clamp(20px, 3vw, 36px);
-  width: min(100%, 1180px);
-  max-width: 1180px;
+  width: min(100%, 1480px);
+  max-width: 1480px;
   margin: 0 auto;
   padding: clamp(64px, 8vw, 96px) 22px 56px;
   background:
@@ -1617,8 +1619,8 @@ button {
 }
 
 .detail-hero-media.hud-frame {
-  --bracket-size: 28px;
-  --bracket-offset: 6px;
+  --bracket-size: 26px;
+  --bracket-offset: -1px;
   --bracket-color: var(--tone);
 }
 
