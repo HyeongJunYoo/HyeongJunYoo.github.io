@@ -1,326 +1,792 @@
 ---
 import Layout from "../components/Layout.astro";
-import { profile, projects } from "../data/resume";
-import type { Project } from "../data/resume";
 import "../styles/portfolio.css";
 
-type PortfolioProject = Project & {
-  id: string;
-  displayTitle: string;
-  shortTitle: string;
-  focus: string;
-  role: string;
-  categories: string[];
-  mediaLabel: string;
-  tone: "amber" | "green" | "red" | "slate" | "violet" | "cyan";
-};
-
-const findProject = (keyword: string) => {
-  const project = projects.find((item) => item.title.includes(keyword));
-
-  if (!project) {
-    throw new Error(`Portfolio project not found: ${keyword}`);
-  }
-
-  return project;
-};
-
-const portfolioProjects: PortfolioProject[] = [
+const projects = [
   {
-    ...findProject("실시간 멀티"),
-    id: "realtime-multiplayer",
-    displayTitle: "실시간 멀티 콘텐츠 개발",
-    shortTitle: "Realtime Multiplayer",
-    focus: "멀티플레이 진행 로직과 룸 상태 동기화",
-    role: "주요 콘텐츠 2종 주 담당",
-    categories: ["featured", "realtime"],
-    mediaLabel: "Gameplay",
-    tone: "green"
+    id: "atlas-interface",
+    title: "Atlas Interface",
+    level: "featured",
+    eyebrow: "Featured 01",
+    period: "2025 / Interactive system",
+    role: "Client architecture, interaction flow",
+    image: "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1400&q=84",
+    tone: "acid",
+    summary: "A spatial interface prototype where visitors navigate project fragments as a living world instead of a static list.",
+    challenge: "Design a portfolio entry that instantly communicates motion, technical taste, and exploratory interaction without losing clarity.",
+    build: "Built a 3D card world, pointer-aware rotation, full-screen project transitions, and a readable case-study layer.",
+    outcome: "The project becomes a memorable first screen while the expanded view still answers role, stack, and result clearly.",
+    stack: ["Astro", "CSS 3D", "Pointer Events", "Motion Design"],
+    theta: 0,
+    phi: -8,
+    width: 260,
+    height: 330,
+    gridX: -410,
+    gridY: -150
   },
   {
-    ...findProject("교육용 VR"),
-    id: "vr-acupuncture",
-    displayTitle: "교육용 VR 침술 실습 콘텐츠",
-    shortTitle: "VR Training",
-    focus: "VR 상호작용, 평가 로직, 햅틱 피드백",
-    role: "Unity 클라이언트 구현",
-    categories: ["featured", "vr"],
-    mediaLabel: "VR Demo",
-    tone: "red"
+    id: "runtime-room",
+    title: "Runtime Room",
+    level: "featured",
+    eyebrow: "Featured 02",
+    period: "2025 / Real-time experience",
+    role: "Gameplay logic, state sync",
+    image: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=1400&q=84",
+    tone: "hot",
+    summary: "A real-time content room concept focused on fast feedback, state visibility, and immersive interaction loops.",
+    challenge: "Make technical systems feel tangible: rooms, states, actions, and feedback need to read visually before the details appear.",
+    build: "Mapped project state into interaction zones, motion receipts, hover previews, and expanded technical notes.",
+    outcome: "The viewer can sense the project type first, then open the full view for implementation detail.",
+    stack: ["Unity", "Realtime", "UI State", "Interaction"],
+    theta: 72,
+    phi: 10,
+    width: 238,
+    height: 294,
+    gridX: -120,
+    gridY: -160
   },
   {
-    ...findProject("UI"),
-    id: "native-ui",
-    displayTitle: "메타버스 플랫폼 UI 고도화",
-    shortTitle: "Native UI",
-    focus: "WebView UI를 UGUI/MVVM 구조로 전환",
-    role: "주요 화면 구현 및 구조 개선",
-    categories: ["featured", "platform"],
-    mediaLabel: "UI Flow",
-    tone: "amber"
+    id: "motion-grid",
+    title: "Motion Grid",
+    level: "core",
+    eyebrow: "Core study",
+    period: "2024 / UI motion",
+    role: "Motion system, component behavior",
+    image: "https://images.unsplash.com/photo-1483058712412-4245e9b90334?auto=format&fit=crop&w=1400&q=84",
+    tone: "aqua",
+    summary: "A motion language study for cards, menus, detail pages, and stateful controls.",
+    challenge: "Create micro interactions that feel deliberate rather than decorative.",
+    build: "Defined hover lift, magnetic buttons, click pulses, scroll hints, and reduced-motion fallbacks.",
+    outcome: "The interface gains personality without hiding content behind animation.",
+    stack: ["CSS Motion", "Interaction", "Accessibility"],
+    theta: 142,
+    phi: -4,
+    width: 190,
+    height: 230,
+    gridX: 150,
+    gridY: -150
   },
   {
-    ...findProject("마커리스"),
-    id: "avatar-tracking",
-    displayTitle: "마커리스 아바타 트래킹",
-    shortTitle: "Avatar Tracking",
-    focus: "MediaPipe/ARKit 기반 모션 데이터 처리",
-    role: "트래킹 파이프라인 구현",
-    categories: ["featured", "avatar", "vr"],
-    mediaLabel: "Tracking",
-    tone: "violet"
+    id: "object-room",
+    title: "Object Room",
+    level: "core",
+    eyebrow: "Core study",
+    period: "2024 / Visual system",
+    role: "Visual direction, layout system",
+    image: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1400&q=84",
+    tone: "violet",
+    summary: "A layout direction that treats each project as a physical object inside a dark exhibition room.",
+    challenge: "Avoid a generic project grid while keeping the portfolio scannable.",
+    build: "Used larger cards, uneven orbital placement, featured hierarchy, and a focused detail expansion.",
+    outcome: "The project list becomes exploratory, but each entry still has a direct path to information.",
+    stack: ["Layout", "Art Direction", "Responsive UI"],
+    theta: 214,
+    phi: 12,
+    width: 184,
+    height: 226,
+    gridX: 400,
+    gridY: -110
   },
   {
-    ...findProject("SDK"),
-    id: "sdk-tooling",
-    displayTitle: "SDK 배포 및 제작 환경 자동화",
-    shortTitle: "SDK Tooling",
-    focus: "UPM 배포, 초기 설정, Editor Tool 자동화",
-    role: "제작 환경 개선 담당",
-    categories: ["tooling", "platform"],
-    mediaLabel: "Tool",
-    tone: "cyan"
+    id: "signal-archive",
+    title: "Signal Archive",
+    level: "core",
+    eyebrow: "Core study",
+    period: "2023 / Data display",
+    role: "Information design, filtering",
+    image: "https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1400&q=84",
+    tone: "orange",
+    summary: "A compact archive concept for turning many project details into a small set of readable signals.",
+    challenge: "Keep dense information readable after a dramatic visual entry point.",
+    build: "Grouped content into role, challenge, build, outcome, and stack fields for each expanded project.",
+    outcome: "The full-screen view becomes portfolio-friendly for recruiters and technical reviewers.",
+    stack: ["Content Model", "Case Study", "Filtering"],
+    theta: 288,
+    phi: -2,
+    width: 182,
+    height: 214,
+    gridX: -380,
+    gridY: 150
   },
   {
-    ...findProject("플랫폼 고도화"),
-    id: "platform-architecture",
-    displayTitle: "메타버스 플랫폼 고도화",
-    shortTitle: "Platform",
-    focus: "입력, 사운드, XR, Addressables 구조 개선",
-    role: "Unity 클라이언트 시스템 개선",
-    categories: ["platform", "vr"],
-    mediaLabel: "System",
-    tone: "slate"
+    id: "tactile-feed",
+    title: "Tactile Feed",
+    level: "support",
+    eyebrow: "Support study",
+    period: "2023 / Prototype",
+    role: "Visual texture, feedback",
+    image: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1400&q=84",
+    tone: "lime",
+    summary: "A study of material feeling: grain, light, image weight, and hover response.",
+    challenge: "Make placeholder images feel intentionally art-directed.",
+    build: "Combined large photography, hard-edged cards, glow states, and subtle scene lighting.",
+    outcome: "The visual shell feels more like a designed artifact than a template.",
+    stack: ["Visual Design", "Texture", "Prototype"],
+    theta: 322,
+    phi: 28,
+    width: 160,
+    height: 190,
+    gridX: -120,
+    gridY: 165
+  },
+  {
+    id: "route-finder",
+    title: "Route Finder",
+    level: "support",
+    eyebrow: "Support study",
+    period: "2022 / Navigation",
+    role: "Navigation model",
+    image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=84",
+    tone: "aqua",
+    summary: "A project navigation experiment where orbit, grid, and detail modes work as one system.",
+    challenge: "Support playful browsing and fast direct access at the same time.",
+    build: "Added World and Grid modes, random exploration, reset behavior, and project-to-project navigation.",
+    outcome: "The viewer can browse freely or jump through projects one by one.",
+    stack: ["Navigation", "State", "UX Flow"],
+    theta: 44,
+    phi: -30,
+    width: 156,
+    height: 184,
+    gridX: 150,
+    gridY: 165
+  },
+  {
+    id: "deep-link",
+    title: "Deep Link",
+    level: "support",
+    eyebrow: "Support study",
+    period: "2022 / Detail view",
+    role: "Detail page behavior",
+    image: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1400&q=84&sat=-40",
+    tone: "acid",
+    summary: "A detail transition concept for making one selected project take over the entire page.",
+    challenge: "Move from a playful 3D overview into a focused case-study without feeling like a separate page.",
+    build: "Created a full-screen expansion layer, animated image stage, close behavior, and previous/next controls.",
+    outcome: "Project exploration becomes cinematic first, then practical and readable.",
+    stack: ["Transitions", "Case Study", "Responsive"],
+    theta: 252,
+    phi: -26,
+    width: 158,
+    height: 184,
+    gridX: 390,
+    gridY: 145
   }
 ];
 
-const filters = [
-  { id: "all", label: "전체" },
-  { id: "featured", label: "핵심" },
-  { id: "realtime", label: "멀티" },
-  { id: "vr", label: "VR/XR" },
-  { id: "platform", label: "플랫폼" },
-  { id: "tooling", label: "툴링" }
-];
+const firstProject = projects[0];
 ---
 
 <Layout
-  title={`${profile.name} | Portfolio`}
-  description="Unity 클라이언트 개발자 유형준의 게임 및 XR 포트폴리오 페이지입니다."
+  title="Floating World Portfolio Prototype"
+  description="A blank-slate exploratory portfolio prototype with a floating 3D project world and full-screen case study expansion."
 >
-  <header class="portfolio-header" aria-label="포트폴리오 메뉴">
-    <a class="portfolio-brand" href="/">
-      <span>YJ</span>
-      <strong>Unity Portfolio</strong>
-    </a>
-    <nav class="portfolio-nav">
-      <a href="/">Resume</a>
-      <a href="#library">Library</a>
-      <a href={profile.links[0].href} target="_blank" rel="noreferrer">GitHub</a>
-      <a href={profile.links[1].href} target="_blank" rel="noreferrer">Blog</a>
-    </nav>
-  </header>
+  <div class="world-shell" data-world-shell data-mode="world" data-active-tone={firstProject.tone}>
+    <div class="world-grain" aria-hidden="true"></div>
+    <div class="cursor-light" data-cursor aria-hidden="true"></div>
 
-  <main id="main" class="portfolio-page" data-portfolio-root>
-    <section class="portfolio-intro" aria-labelledby="portfolio-title">
-      <div class="portfolio-intro-copy">
-        <h1 id="portfolio-title">Portfolio</h1>
-        <p>
-          Unity 기반 실시간 멀티 콘텐츠, VR/XR 상호작용, 플랫폼 구조 개선 경험을
-          프로젝트 단위로 정리했습니다.
-        </p>
-      </div>
-      <dl class="portfolio-summary">
-        <div>
-          <dt>Role</dt>
-          <dd>Unity Client Developer</dd>
-        </div>
-        <div>
-          <dt>Focus</dt>
-          <dd>Gameplay, XR, UI, Tooling</dd>
-        </div>
-      </dl>
-    </section>
+    <header class="world-header" aria-label="World navigation">
+      <p>Eight focused projects. Two featured entries. One world to explore.</p>
 
-    <section id="library" class="portfolio-library" aria-labelledby="library-title">
-      <div class="portfolio-toolbar">
-        <div class="portfolio-toolbar-title">
-          <span class="portfolio-grid-icon" aria-hidden="true">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-          </span>
-          <h2 id="library-title">Projects</h2>
-        </div>
-
-        <div class="portfolio-filters" aria-label="프로젝트 필터">
-          {filters.map((filter, index) => (
-            <button
-              type="button"
-              class="portfolio-filter"
-              data-portfolio-filter={filter.id}
-              aria-pressed={index === 0 ? "true" : "false"}
-            >
-              {filter.label}
-            </button>
-          ))}
-        </div>
-
-        <p class="portfolio-count" data-portfolio-count>
-          프로젝트 {portfolioProjects.length}개
-        </p>
+      <div class="mode-tabs" role="group" aria-label="View mode">
+        <button type="button" data-mode-button="grid" aria-pressed="false">Grid</button>
+        <button type="button" data-mode-button="deck" aria-pressed="false">Deck</button>
+        <button type="button" data-mode-button="world" aria-pressed="true">World</button>
       </div>
 
-      <div class="portfolio-grid" aria-label="프로젝트 선택">
-        {portfolioProjects.map((project, index) => (
-          <button
-            type="button"
-            class="portfolio-tile"
-            data-portfolio-tile
-            data-project-id={project.id}
-            data-categories={project.categories.join(" ")}
-            data-tone={project.tone}
-            aria-pressed={index === 0 ? "true" : "false"}
-          >
-            <span class="portfolio-media-slot" data-tone={project.tone}>
-              <span class="portfolio-media-frame" aria-hidden="true"></span>
-              <span class="portfolio-media-index">{String(index + 1).padStart(2, "0")}</span>
-              <span class="portfolio-media-label">{project.mediaLabel}</span>
-            </span>
-            <span class="portfolio-tile-copy">
-              <strong>{project.displayTitle}</strong>
-              <span>{project.focus}</span>
-            </span>
-          </button>
-        ))}
-      </div>
-    </section>
+      <button type="button" class="sound-toggle" data-pause-toggle aria-pressed="false" aria-label="Pause globe motion">
+        <span></span>
+      </button>
+    </header>
 
-    <section class="portfolio-detail" aria-live="polite">
-      {portfolioProjects.map((project, index) => (
-        <article
-          class="portfolio-detail-panel"
-          data-project-panel={project.id}
-          hidden={index !== 0}
-        >
-          <div class="portfolio-detail-media" data-tone={project.tone}>
-            <span class="portfolio-detail-frame" aria-hidden="true"></span>
-            <span>{project.mediaLabel}</span>
+    <main id="main">
+      <section class="world-stage" aria-labelledby="world-title">
+        <div class="world-title-block">
+          <p>Explore selected work</p>
+          <h1 id="world-title">Floating project world</h1>
+        </div>
+
+        <div class="world-scene" data-world-scene aria-label="Floating card globe">
+          <div class="world-halo" aria-hidden="true"></div>
+          <div class="world-rotator" data-world-rotator>
+            {projects.map((project, index) => (
+              <button
+                type="button"
+                class={`world-card is-${project.level}`}
+                data-world-card
+                data-project-index={index}
+                data-card-id={project.id}
+                data-title={project.title}
+                data-eyebrow={project.eyebrow}
+                data-summary={project.summary}
+                data-challenge={project.challenge}
+                data-build={project.build}
+                data-outcome={project.outcome}
+                data-role={project.role}
+                data-period={project.period}
+                data-image={project.image}
+                data-tone={project.tone}
+                data-level={project.level}
+                data-stack={project.stack.join("|")}
+                aria-pressed={index === 0 ? "true" : "false"}
+                style={`
+                  --theta: ${project.theta}deg;
+                  --phi: ${project.phi}deg;
+                  --theta-back: ${-project.theta}deg;
+                  --phi-back: ${-project.phi}deg;
+                  --w: ${project.width}px;
+                  --h: ${project.height}px;
+                  --gx: ${project.gridX}px;
+                  --gy: ${project.gridY}px;
+                  --delay: ${index * -0.12}s;
+                  --deck-x: 0px;
+                  --deck-y: 0px;
+                  --deck-z: 0px;
+                  --deck-rotate: 0deg;
+                  --deck-scale: 1;
+                  --deck-opacity: 1;
+                  --deck-z-index: ${100 - index};
+                `}
+              >
+                <span class="card-inner">
+                  <img src={project.image} alt="" loading={index > 3 ? "lazy" : "eager"} decoding="async" />
+                  <span class="card-scrim"></span>
+                  <span class="card-level">{project.level}</span>
+                  <span class="card-meta">
+                    <span>{String(index + 1).padStart(2, "0")}</span>
+                    <strong>{project.title}</strong>
+                  </span>
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div class="world-controls">
+          <button type="button" class="control-primary" data-random-card>Explore</button>
+          <button type="button" class="control-secondary" data-reset-world>Reset world</button>
+        </div>
+
+        <p class="world-hint">Drag the world. Hover a card. Click one project to expand it into a full-screen case study.</p>
+      </section>
+
+      <section class="project-detail" data-project-detail aria-hidden="true" aria-labelledby="detail-title">
+        <button type="button" class="detail-close" data-detail-close aria-label="Back to project world">Back to world</button>
+
+        <div class="detail-image-stage" aria-hidden="true">
+          <img data-detail-image src={firstProject.image} alt="" />
+        </div>
+
+        <article class="detail-content">
+          <p class="detail-eyebrow" data-detail-eyebrow>{firstProject.eyebrow}</p>
+          <h2 id="detail-title" data-detail-title>{firstProject.title}</h2>
+          <p class="detail-summary" data-detail-summary>{firstProject.summary}</p>
+
+          <dl class="detail-meta">
+            <div>
+              <dt>Period</dt>
+              <dd data-detail-period>{firstProject.period}</dd>
+            </div>
+            <div>
+              <dt>Role</dt>
+              <dd data-detail-role>{firstProject.role}</dd>
+            </div>
+          </dl>
+
+          <div class="detail-grid">
+            <section>
+              <h3>Challenge</h3>
+              <p data-detail-challenge>{firstProject.challenge}</p>
+            </section>
+            <section>
+              <h3>What I Built</h3>
+              <p data-detail-build>{firstProject.build}</p>
+            </section>
+            <section>
+              <h3>Result</h3>
+              <p data-detail-outcome>{firstProject.outcome}</p>
+            </section>
           </div>
 
-          <div class="portfolio-detail-copy">
-            <div class="portfolio-detail-heading">
-              <p>{project.shortTitle}</p>
-              <h2>{project.displayTitle}</h2>
-            </div>
-
-            <dl class="portfolio-facts">
-              <div>
-                <dt>Period</dt>
-                <dd>{project.period}</dd>
-              </div>
-              <div>
-                <dt>Role</dt>
-                <dd>{project.role}</dd>
-              </div>
-            </dl>
-
-            <p class="portfolio-definition">{project.definition}</p>
-
-            <div class="portfolio-detail-columns">
-              <section>
-                <h3>핵심 구현</h3>
-                <ul>
-                  {project.description.slice(0, 3).map((item) => <li>{item}</li>)}
-                </ul>
-              </section>
-              <section>
-                <h3>성과</h3>
-                <ul>
-                  {project.results.slice(0, 3).map((item) => <li>{item}</li>)}
-                </ul>
-              </section>
-            </div>
-
-            <ul class="portfolio-tech-list" aria-label={`${project.displayTitle} 기술 스택`}>
-              {project.tech.map((tech) => <li>{tech}</li>)}
-            </ul>
+          <div class="detail-stack" data-detail-stack>
+            {firstProject.stack.map((item) => <span>{item}</span>)}
           </div>
         </article>
-      ))}
-    </section>
-  </main>
 
-  <footer class="site-footer portfolio-footer">
-    <p>© {new Date().getFullYear()} {profile.name}. Portfolio draft.</p>
-    <a href="#library">Back to projects</a>
-  </footer>
+        <div class="detail-nav">
+          <button type="button" data-detail-prev>Previous</button>
+          <button type="button" data-detail-next>Next</button>
+        </div>
+      </section>
+    </main>
+  </div>
 
   <script is:inline>
-    const initPortfolioPage = () => {
+    (() => {
+      const root = document.documentElement;
+      const shell = document.querySelector("[data-world-shell]");
+      const scene = document.querySelector("[data-world-scene]");
+      const rotator = document.querySelector("[data-world-rotator]");
+      const cards = [...document.querySelectorAll("[data-world-card]")];
+      const cursor = document.querySelector("[data-cursor]");
+      const randomButton = document.querySelector("[data-random-card]");
+      const resetButton = document.querySelector("[data-reset-world]");
+      const pauseButton = document.querySelector("[data-pause-toggle]");
+      const modeButtons = [...document.querySelectorAll("[data-mode-button]")];
+      const detail = document.querySelector("[data-project-detail]");
+      const detailClose = document.querySelector("[data-detail-close]");
+      const detailPrev = document.querySelector("[data-detail-prev]");
+      const detailNext = document.querySelector("[data-detail-next]");
+      const detailImage = document.querySelector("[data-detail-image]");
+      const detailEyebrow = document.querySelector("[data-detail-eyebrow]");
+      const detailTitle = document.querySelector("[data-detail-title]");
+      const detailSummary = document.querySelector("[data-detail-summary]");
+      const detailPeriod = document.querySelector("[data-detail-period]");
+      const detailRole = document.querySelector("[data-detail-role]");
+      const detailChallenge = document.querySelector("[data-detail-challenge]");
+      const detailBuild = document.querySelector("[data-detail-build]");
+      const detailOutcome = document.querySelector("[data-detail-outcome]");
+      const detailStack = document.querySelector("[data-detail-stack]");
       const themeMeta = document.querySelector('meta[name="theme-color"]');
-      if (themeMeta) themeMeta.setAttribute("content", "#14120f");
 
-      const filters = [...document.querySelectorAll("[data-portfolio-filter]")];
-      const tiles = [...document.querySelectorAll("[data-portfolio-tile]")];
-      const panels = [...document.querySelectorAll("[data-project-panel]")];
-      const count = document.querySelector("[data-portfolio-count]");
+      let spin = 0;
+      let dragX = 0;
+      let dragY = -9;
+      let pointerDown = false;
+      let startX = 0;
+      let startY = 0;
+      let startDragX = 0;
+      let startDragY = 0;
+      let paused = false;
+      let activeIndex = 0;
+      let deckPosition = 0;
+      let deckTarget = 0;
+      let deckWasDragged = false;
+      let deckPointerDown = false;
 
-      const setActiveProject = (projectId) => {
-        tiles.forEach((tile) => {
-          tile.setAttribute("aria-pressed", String(tile.dataset.projectId === projectId));
-        });
-        panels.forEach((panel) => {
-          panel.hidden = panel.dataset.projectPanel !== projectId;
-        });
+      if (themeMeta) themeMeta.setAttribute("content", "#0c0c0c");
+
+      const setVars = () => {
+        rotator?.style.setProperty("--spin", `${spin.toFixed(3)}deg`);
+        rotator?.style.setProperty("--drag-x", `${dragX.toFixed(3)}deg`);
+        rotator?.style.setProperty("--drag-y", `${dragY.toFixed(3)}deg`);
       };
 
-      const applyFilter = (filterId) => {
-        filters.forEach((filter) => {
-          filter.setAttribute("aria-pressed", String(filter.dataset.portfolioFilter === filterId));
+      const setMode = (mode) => {
+        shell?.setAttribute("data-mode", mode);
+        modeButtons.forEach((button) => {
+          button.setAttribute("aria-pressed", String(button.dataset.modeButton === mode));
         });
 
-        let visibleCount = 0;
-        let firstVisible = "";
-
-        tiles.forEach((tile) => {
-          const categories = tile.dataset.categories || "";
-          const isVisible = filterId === "all" || categories.split(" ").includes(filterId);
-          tile.hidden = !isVisible;
-
-          if (isVisible) {
-            visibleCount += 1;
-            firstVisible ||= tile.dataset.projectId || "";
-          }
-        });
-
-        if (count) count.textContent = `프로젝트 ${visibleCount}개`;
-
-        const activeTile = tiles.find((tile) => tile.getAttribute("aria-pressed") === "true");
-        if (activeTile?.hidden && firstVisible) {
-          setActiveProject(firstVisible);
+        if (mode === "deck") {
+          updateDeck();
         }
       };
 
-      tiles.forEach((tile) => {
-        tile.addEventListener("click", () => {
-          const projectId = tile.dataset.projectId;
-          if (projectId) setActiveProject(projectId);
+      const wrapIndex = (index) => ((index % cards.length) + cards.length) % cards.length;
+
+      const getCircularDelta = (index, position) => {
+        const count = cards.length;
+        let delta = index - wrapIndex(position);
+
+        if (delta > count / 2) delta -= count;
+        if (delta < -count / 2) delta += count;
+
+        return delta;
+      };
+
+      const setDeckTarget = (index) => {
+        deckTarget += getCircularDelta(index, deckTarget);
+      };
+
+      const updateDeck = () => {
+        const maxVisible = 4;
+        const nearestIndex = wrapIndex(Math.round(deckPosition));
+
+        cards.forEach((card, index) => {
+          const delta = getCircularDelta(index, deckPosition);
+          const abs = Math.abs(delta);
+          const clamped = Math.max(-maxVisible, Math.min(maxVisible, delta));
+          const side = clamped < 0 ? -1 : 1;
+          const hidden = abs > maxVisible + 0.75;
+
+          card.style.setProperty("--deck-x", `${clamped * 128}px`);
+          card.style.setProperty("--deck-y", `${abs * 8}px`);
+          card.style.setProperty("--deck-z", `${abs * -82}px`);
+          card.style.setProperty("--deck-rotate", `${clamped * -9}deg`);
+          card.style.setProperty("--deck-scale", `${Math.max(0.64, 1 - abs * 0.075)}`);
+          card.style.setProperty("--deck-opacity", hidden ? "0" : `${Math.max(0.28, 1 - abs * 0.16)}`);
+          card.style.setProperty("--deck-z-index", `${100 - Math.round(abs * 10)}`);
+          card.style.setProperty("--deck-peek", `${side * Math.min(abs, maxVisible) * 16}px`);
+          card.dataset.deckDistance = abs.toFixed(3);
+          card.toggleAttribute("data-deck-current", index === nearestIndex);
+        });
+
+        const activeCard = cards[nearestIndex];
+        if (activeCard && activeIndex !== nearestIndex) setActiveCard(activeCard, false);
+      };
+
+      const moveDeck = (direction) => {
+        deckTarget += direction;
+      };
+
+      const isDeckInputBlocked = (target) =>
+        target instanceof Element &&
+        Boolean(target.closest("a, input, textarea, select, .world-controls, [data-project-detail], [data-pause-toggle]"));
+
+      const getDeckCardAtPoint = (clientX, clientY) => {
+        let bestCard = null;
+        let bestScore = Number.POSITIVE_INFINITY;
+
+        cards.forEach((card) => {
+          const opacity = Number.parseFloat(card.style.getPropertyValue("--deck-opacity") || "1");
+          if (opacity <= 0.04) return;
+
+          const rect = card.getBoundingClientRect();
+          if (rect.width <= 0 || rect.height <= 0) return;
+
+          const padX = rect.width * 0.08;
+          const padY = rect.height * 0.06;
+          const isInside =
+            clientX >= rect.left - padX &&
+            clientX <= rect.right + padX &&
+            clientY >= rect.top - padY &&
+            clientY <= rect.bottom + padY;
+
+          if (!isInside) return;
+
+          const centerX = rect.left + rect.width / 2;
+          const centerY = rect.top + rect.height / 2;
+          const normalizedX = Math.abs(clientX - centerX) / rect.width;
+          const normalizedY = Math.abs(clientY - centerY) / rect.height;
+          const deckDistance = Number.parseFloat(card.dataset.deckDistance || "0");
+          const score = Math.hypot(normalizedX * 1.24, normalizedY) + deckDistance * 0.04;
+
+          if (score < bestScore) {
+            bestScore = score;
+            bestCard = card;
+          }
+        });
+
+        return bestCard;
+      };
+
+      const selectDeckCard = (card) => {
+        if (!card) return;
+
+        if (card.hasAttribute("data-deck-current")) {
+          openDetail(card);
+          return;
+        }
+
+        setDeckTarget(Number(card.dataset.projectIndex || 0));
+      };
+
+      const replaceStack = (value) => {
+        if (!detailStack) return;
+
+        detailStack.replaceChildren();
+        value
+          .split("|")
+          .filter(Boolean)
+          .forEach((item) => {
+            const element = document.createElement("span");
+            element.textContent = item;
+            detailStack.appendChild(element);
+          });
+      };
+
+      const setActiveCard = (card, shouldPulse = true) => {
+        activeIndex = Number(card.dataset.projectIndex || 0);
+
+        cards.forEach((item) => {
+          item.setAttribute("aria-pressed", String(item === card));
+        });
+
+        const tone = card.dataset.tone || "acid";
+        shell?.setAttribute("data-active-tone", tone);
+        detail?.setAttribute("data-tone", tone);
+
+        if (detailImage instanceof HTMLImageElement) detailImage.src = card.dataset.image || "";
+        if (detailEyebrow) detailEyebrow.textContent = card.dataset.eyebrow || "";
+        if (detailTitle) detailTitle.textContent = card.dataset.title || "";
+        if (detailSummary) detailSummary.textContent = card.dataset.summary || "";
+        if (detailPeriod) detailPeriod.textContent = card.dataset.period || "";
+        if (detailRole) detailRole.textContent = card.dataset.role || "";
+        if (detailChallenge) detailChallenge.textContent = card.dataset.challenge || "";
+        if (detailBuild) detailBuild.textContent = card.dataset.build || "";
+        if (detailOutcome) detailOutcome.textContent = card.dataset.outcome || "";
+        replaceStack(card.dataset.stack || "");
+
+        if (shouldPulse) {
+          card.classList.remove("is-pulsing");
+          void card.offsetWidth;
+          card.classList.add("is-pulsing");
+        }
+      };
+
+      const openDetail = (card) => {
+        setActiveCard(card);
+        shell?.classList.add("is-detail-open");
+        detail?.setAttribute("aria-hidden", "false");
+        detail?.classList.remove("is-entering");
+        if (detail) void detail.offsetWidth;
+        detail?.classList.add("is-entering");
+      };
+
+      const closeDetail = () => {
+        shell?.classList.remove("is-detail-open");
+        detail?.setAttribute("aria-hidden", "true");
+      };
+
+      const stepDetail = (direction) => {
+        const nextIndex = (activeIndex + direction + cards.length) % cards.length;
+        const nextCard = cards[nextIndex];
+        if (nextCard) setActiveCard(nextCard);
+      };
+
+      const animate = () => {
+        if (!paused && shell?.dataset.mode !== "grid" && !shell?.classList.contains("is-detail-open")) {
+          spin += 0.035;
+        }
+
+        if (shell?.dataset.mode === "deck") {
+          deckPosition += (deckTarget - deckPosition) * 0.12;
+          if (Math.abs(deckTarget - deckPosition) < 0.001) deckPosition = deckTarget;
+          updateDeck();
+        }
+
+        setVars();
+        requestAnimationFrame(animate);
+      };
+
+      scene?.addEventListener("pointerdown", (event) => {
+        if (shell?.classList.contains("is-detail-open")) return;
+        if (shell?.dataset.mode === "deck") return;
+
+        if (event.target instanceof Element && event.target.closest("[data-world-card]")) return;
+
+        pointerDown = true;
+        startX = event.clientX;
+        startY = event.clientY;
+        startDragX = dragX;
+        startDragY = dragY;
+        scene.setPointerCapture(event.pointerId);
+        shell?.classList.add("is-dragging");
+      });
+
+      scene?.addEventListener("pointermove", (event) => {
+        const mx = event.clientX / window.innerWidth - 0.5;
+        const my = event.clientY / window.innerHeight - 0.5;
+        root.style.setProperty("--mx", mx.toFixed(4));
+        root.style.setProperty("--my", my.toFixed(4));
+        cursor?.style.setProperty("--cx", `${event.clientX}px`);
+        cursor?.style.setProperty("--cy", `${event.clientY}px`);
+
+        if (!pointerDown || shell?.dataset.mode === "deck") return;
+
+        dragX = startDragX + (event.clientX - startX) * 0.22;
+        dragY = Math.max(-42, Math.min(34, startDragY - (event.clientY - startY) * 0.18));
+      });
+
+      scene?.addEventListener("pointerup", (event) => {
+        if (!pointerDown) return;
+
+        pointerDown = false;
+        if (scene.hasPointerCapture(event.pointerId)) {
+          scene.releasePointerCapture(event.pointerId);
+        }
+        shell?.classList.remove("is-dragging");
+      });
+
+      scene?.addEventListener("pointercancel", (event) => {
+        if (shell?.dataset.mode === "deck" && deckPointerDown) {
+          deckPointerDown = false;
+          deckWasDragged = false;
+          if (scene.hasPointerCapture(event.pointerId)) {
+            scene.releasePointerCapture(event.pointerId);
+          }
+          return;
+        }
+
+        if (!pointerDown) return;
+
+        pointerDown = false;
+        if (scene.hasPointerCapture(event.pointerId)) {
+          scene.releasePointerCapture(event.pointerId);
+        }
+        shell?.classList.remove("is-dragging");
+      });
+
+      cards.forEach((card) => {
+        card.addEventListener("pointerdown", (event) => {
+          if (shell?.dataset.mode === "deck") {
+            startX = event.clientX;
+            startY = event.clientY;
+            deckWasDragged = false;
+          }
+
+          event.stopPropagation();
+        });
+
+        card.addEventListener("click", (event) => {
+          event.stopPropagation();
+
+          if (deckWasDragged) {
+            deckWasDragged = false;
+            return;
+          }
+
+          if (shell?.dataset.mode === "deck" && card.getAttribute("data-deck-current") === null) {
+            selectDeckCard(card);
+            return;
+          }
+
+          openDetail(card);
+        });
+
+        card.addEventListener("pointerenter", () => {
+          shell?.setAttribute("data-active-tone", card.dataset.tone || "acid");
         });
       });
 
-      filters.forEach((filter) => {
-        filter.addEventListener("click", () => {
-          applyFilter(filter.dataset.portfolioFilter || "all");
+      document.addEventListener(
+        "pointerdown",
+        (event) => {
+          if (
+            shell?.dataset.mode !== "deck" ||
+            shell.classList.contains("is-detail-open") ||
+            isDeckInputBlocked(event.target)
+          ) {
+            return;
+          }
+
+          startX = event.clientX;
+          startY = event.clientY;
+          deckWasDragged = false;
+          deckPointerDown = true;
+          shell.classList.add("is-dragging");
+        },
+        true,
+      );
+
+      document.addEventListener(
+        "pointermove",
+        (event) => {
+          if (shell?.dataset.mode !== "deck" || !deckPointerDown) return;
+
+          const distanceX = event.clientX - startX;
+          const distanceY = event.clientY - startY;
+          deckWasDragged = Math.abs(distanceX) > 10 || Math.abs(distanceY) > 12;
+        },
+        true,
+      );
+
+      scene?.addEventListener("wheel", (event) => {
+        if (shell?.classList.contains("is-detail-open") || shell?.dataset.mode !== "deck") return;
+
+        event.preventDefault();
+        const primaryDelta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
+        deckTarget += primaryDelta * 0.006;
+      }, { passive: false });
+
+      document.addEventListener(
+        "pointerup",
+        (event) => {
+        if (shell?.dataset.mode !== "deck" || !deckPointerDown) return;
+
+        deckPointerDown = false;
+        if (scene.hasPointerCapture(event.pointerId)) {
+          scene.releasePointerCapture(event.pointerId);
+        }
+        shell.classList.remove("is-dragging");
+
+        const distanceX = event.clientX - startX;
+        const distanceY = event.clientY - startY;
+        const didSwipe = Math.abs(distanceX) > 24 && Math.abs(distanceX) > Math.abs(distanceY) * 0.72;
+
+        if (didSwipe) {
+          deckWasDragged = false;
+          moveDeck(distanceX < 0 ? 1 : -1);
+          return;
+        }
+
+        if (!deckWasDragged) {
+          selectDeckCard(getDeckCardAtPoint(event.clientX, event.clientY));
+        }
+
+        deckWasDragged = false;
+        },
+        true,
+      );
+
+      document.addEventListener(
+        "pointercancel",
+        () => {
+          if (shell?.dataset.mode !== "deck" || !deckPointerDown) return;
+
+          deckPointerDown = false;
+          deckWasDragged = false;
+          shell.classList.remove("is-dragging");
+        },
+        true,
+      );
+
+      randomButton?.addEventListener("click", () => {
+        const next = cards[Math.floor(Math.random() * cards.length)];
+        if (next) openDetail(next);
+      });
+
+      resetButton?.addEventListener("click", () => {
+        dragX = 0;
+        dragY = -9;
+        spin = 0;
+        deckPosition = 0;
+        deckTarget = 0;
+        updateDeck();
+        setMode("world");
+        closeDetail();
+      });
+
+      pauseButton?.addEventListener("click", () => {
+        paused = !paused;
+        pauseButton.setAttribute("aria-pressed", String(paused));
+        shell?.classList.toggle("is-paused", paused);
+      });
+
+      modeButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          closeDetail();
+          setMode(button.dataset.modeButton || "world");
         });
       });
-    };
 
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", initPortfolioPage, { once: true });
-    } else {
-      initPortfolioPage();
-    }
+      detailClose?.addEventListener("click", closeDetail);
+      detailPrev?.addEventListener("click", () => stepDetail(-1));
+      detailNext?.addEventListener("click", () => stepDetail(1));
+
+      document.addEventListener("keydown", (event) => {
+        if (!shell?.classList.contains("is-detail-open")) return;
+
+        if (event.key === "Escape") closeDetail();
+        if (event.key === "ArrowLeft") stepDetail(-1);
+        if (event.key === "ArrowRight") stepDetail(1);
+      });
+
+      cards[0] && setActiveCard(cards[0]);
+      updateDeck();
+
+      const initialMode = new URLSearchParams(window.location.search).get("mode");
+      if (initialMode === "world" || initialMode === "grid" || initialMode === "deck") {
+        setMode(initialMode);
+      }
+
+      const initialProjectParam = new URLSearchParams(window.location.search).get("project");
+      const initialProject = initialProjectParam === null ? NaN : Number(initialProjectParam);
+      if (Number.isInteger(initialProject) && cards[initialProject]) {
+        window.setTimeout(() => openDetail(cards[initialProject]), 240);
+      }
+
+      animate();
+    })();
   </script>
 </Layout>
