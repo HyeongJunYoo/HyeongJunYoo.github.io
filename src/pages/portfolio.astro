@@ -371,10 +371,9 @@ import { projects, featuredProject } from "../data/projects";
       scene?.addEventListener("pointerdown", (event) => {
         if (shell?.classList.contains("is-detail-open")) return;
         if (shell?.dataset.mode === "deck") return;
+        if (shell?.dataset.mode === "grid") return;
         // Only respond to left mouse button (0) or touch/pen
         if (event.pointerType === "mouse" && event.button !== 0) return;
-
-        if (event.target instanceof Element && event.target.closest("[data-world-card]")) return;
 
         pointerDown = true;
         startX = event.clientX;
@@ -435,8 +434,12 @@ import { projects, featuredProject } from "../data/projects";
             startY = event.clientY;
             deckWasDragged = false;
           }
-
-          event.stopPropagation();
+          // In world mode, let pointerdown bubble to scene so drag can start
+          // even when starting from a card. In other modes, prevent the scene
+          // from also starting a drag when the user is interacting with a card.
+          if (shell?.dataset.mode !== "world") {
+            event.stopPropagation();
+          }
         });
 
         card.addEventListener("click", (event) => {
@@ -517,8 +520,27 @@ import { projects, featuredProject } from "../data/projects";
         });
       });
 
+      // World hover indication — uses elementsFromPoint to pick the topmost
+      // 3D-transformed card, which CSS :hover can mis-attribute on rotated
+      // elements. Works for back-of-sphere cards too.
+      window.addEventListener("pointermove", (event) => {
+        if (shell?.dataset.mode !== "world") return;
+        const stack = document.elementsFromPoint(event.clientX, event.clientY);
+        let hovered = null;
+        for (const el of stack) {
+          const card = el.closest?.("[data-world-card]");
+          if (card) { hovered = card; break; }
+        }
+        cards.forEach((card) => {
+          card.toggleAttribute("data-world-hover", card === hovered);
+        });
+      });
+
       scene?.addEventListener("pointerleave", () => {
-        cards.forEach((card) => card.removeAttribute("data-deck-hover"));
+        cards.forEach((card) => {
+          card.removeAttribute("data-deck-hover");
+          card.removeAttribute("data-world-hover");
+        });
       });
 
       document.addEventListener(
