@@ -16,6 +16,13 @@ export type ProjectChallenge = {
   problem: string;
   solution: string;
   outcome?: string;
+  /**
+   * Optional 16:9 image URL rendered inside the challenge card between
+   * the title and the first label. Leave undefined when there's no
+   * meaningful screenshot — placeholder/filler images are worse than
+   * no image. The detail template handles missing values cleanly.
+   */
+  image?: string;
 };
 
 export type Project = {
