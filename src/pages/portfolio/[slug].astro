@@ -55,42 +55,44 @@ const teamPeriod = [project.team, project.period].filter(Boolean).join(" · ");
         </div>
 
         <article class="detail-content">
-          <header class="detail-header">
-            <h1 id="detail-title" class="detail-title">{project.title}</h1>
-            {sourceHref && (
-              <a
-                class="detail-source"
-                href={sourceHref}
-                rel={sourceHref.startsWith("http") ? "noreferrer noopener" : undefined}
-                target={sourceHref.startsWith("http") ? "_blank" : undefined}
-              >▸ View Source</a>
+          <div class="detail-intro-card">
+            <header class="detail-header">
+              <h1 id="detail-title" class="detail-title">{project.title}</h1>
+              {sourceHref && (
+                <a
+                  class="detail-source"
+                  href={sourceHref}
+                  rel={sourceHref.startsWith("http") ? "noreferrer noopener" : undefined}
+                  target={sourceHref.startsWith("http") ? "_blank" : undefined}
+                >▸ View Source</a>
+              )}
+            </header>
+
+            <dl class="detail-meta">
+              <div>
+                <dt>Engine</dt>
+                <dd>{project.engine}</dd>
+              </div>
+              <div>
+                <dt>Platform</dt>
+                <dd>{project.platform}</dd>
+              </div>
+              <div>
+                <dt>Role</dt>
+                <dd>{project.role}</dd>
+              </div>
+              <div>
+                <dt>Team / Period</dt>
+                <dd>{teamPeriod}</dd>
+              </div>
+            </dl>
+
+            {project.stack.length > 0 && (
+              <div class="detail-stack">
+                {project.stack.map((item) => <span>{item}</span>)}
+              </div>
             )}
-          </header>
-
-          <dl class="detail-meta">
-            <div>
-              <dt>Engine</dt>
-              <dd>{project.engine}</dd>
-            </div>
-            <div>
-              <dt>Platform</dt>
-              <dd>{project.platform}</dd>
-            </div>
-            <div>
-              <dt>Role</dt>
-              <dd>{project.role}</dd>
-            </div>
-            <div>
-              <dt>Team / Period</dt>
-              <dd>{teamPeriod}</dd>
-            </div>
-          </dl>
-
-          {project.stack.length > 0 && (
-            <div class="detail-stack">
-              {project.stack.map((item) => <span>{item}</span>)}
-            </div>
-          )}
+          </div>
 
           <section class="detail-narrative">
             <h3>Project goal</h3>
