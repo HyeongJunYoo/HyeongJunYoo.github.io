@@ -125,14 +125,6 @@ const eyebrowDisplay = project.eyebrow.toUpperCase().replace(/\s+/g, "·");
             </section>
           )}
 
-          {project.gallery.length > 0 && (
-            <section class="detail-gallery">
-              {project.gallery.map((src) => (
-                <img src={src} alt="" loading="lazy" decoding="async" />
-              ))}
-            </section>
-          )}
-
           {project.stack.length > 0 && (
             <div class="detail-stack">
               {project.stack.map((item) => <span>{item}</span>)}
