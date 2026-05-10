@@ -1008,23 +1008,11 @@ button {
 }
 
 .detail-challenge {
-  position: relative;
   display: grid;
-  gap: 12px;
-  padding: 22px 22px 22px 28px;
-  border: 1px solid rgba(244, 241, 232, 0.1);
-  background: rgba(12, 12, 12, 0.4);
-}
-
-.detail-challenge::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background: var(--tone);
-  opacity: 0.85;
+  gap: 0;
+  padding: 32px;
+  border: 1px solid rgba(244, 241, 232, 0.12);
+  background: #1a1a1a;
 }
 
 .detail-challenge-index {
@@ -1086,7 +1074,7 @@ button {
 
 @media (max-width: 720px) {
   .detail-challenge {
-    padding: 18px 18px 18px 22px;
+    padding: 22px;
   }
 
   .detail-challenge-title {
