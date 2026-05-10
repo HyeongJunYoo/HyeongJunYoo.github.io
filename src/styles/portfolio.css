@@ -329,6 +329,11 @@ button {
     opacity 420ms ease,
     transform 420ms ease,
     filter 420ms ease;
+  /* Prevent native text-selection inside the scene from intercepting
+     drag gestures. Selecting text starts a selection-extend gesture
+     that suppresses pointermove updates to our handler. */
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .world-shell.is-dragging .world-scene {
@@ -396,6 +401,23 @@ button {
     opacity 240ms ease,
     transform 560ms cubic-bezier(0.2, 0.8, 0.2, 1);
   will-change: transform;
+  /* Prevent the browser's native text-selection and image-drag from
+     hijacking left-button gestures. Without these, the second drag in a
+     row freezes mid-motion: the browser starts a native drag-and-drop
+     for the card image (because the pointer crossed an image after the
+     first drag selected the text under it), which suppresses further
+     pointermove events and the rotator stops responding. */
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+}
+
+.world-card img {
+  -webkit-user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
+  pointer-events: none;
 }
 
 .world-card.is-featured {
@@ -446,10 +468,6 @@ button {
   z-index: auto;
 }
 
-.world-shell[data-mode="grid"] .world-card.is-hero {
-  display: none;
-}
-
 .world-shell[data-mode="grid"] .world-card .card-inner {
   border-color: color-mix(in srgb, var(--card-tone, var(--tone)) 30%, rgba(244, 241, 232, 0.16));
   box-shadow: 0 18px 42px rgba(0, 0, 0, 0.36);
@@ -495,18 +513,41 @@ button {
 
 .world-shell[data-mode="deck"] .world-card {
   z-index: var(--deck-z-index);
-  width: clamp(560px, 70vw, 1120px);
-  height: calc(clamp(560px, 70vw, 1120px) * 9 / 16);
+  /* Sized down 20% from the previous 1000px / 70vw / 560px baseline. The
+     extra horizontal headroom widens card 2's visible peek past card 1
+     (≈70px → ≈134px at 1920 viewport) while keeping the front card
+     comfortably dominant. */
+  width: clamp(448px, 56vw, 800px);
+  height: calc(clamp(448px, 56vw, 800px) * 9 / 16);
   aspect-ratio: 16 / 9;
-  margin-top: calc((clamp(560px, 70vw, 1120px) * 9 / 16) / -2);
-  margin-left: calc(clamp(560px, 70vw, 1120px) / -2);
+  margin-top: calc((clamp(448px, 56vw, 800px) * 9 / 16) / -2);
+  margin-left: calc(clamp(448px, 56vw, 800px) / -2);
   opacity: var(--deck-opacity);
   transform:
     translate3d(calc(var(--deck-x) + var(--deck-peek, 0px)), var(--deck-y), var(--deck-z))
     rotateY(var(--deck-rotate))
     rotateZ(calc(var(--deck-rotate) * -0.18))
     scale(var(--deck-scale));
-  pointer-events: none;
+  /* No transition during normal deck interaction — deckPosition is
+     already JS-interpolated each frame for smooth wheel/swipe motion.
+     A CSS transition on transform here would get reset on every frame's
+     CSS variable write and stay frozen at currentTime=0. The mode-change
+     animation is handled by the .deck-transitioning override below. */
+  transition: none;
+  cursor: pointer;
+}
+
+/* Mode-change window: when entering deck mode the JS adds
+   .deck-transitioning to the shell for ~600ms. During that window cards
+   animate from their previous (grid/world) position to their new deck
+   position via the same eased transform transition the base .world-card
+   rule defines. After the timer expires the class is removed and the
+   above transition:none takes over for JS-driven interaction. */
+.world-shell[data-mode="deck"].deck-transitioning .world-card {
+  transition:
+    filter 180ms ease,
+    opacity 240ms ease,
+    transform 560ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .world-shell[data-mode="deck"] .world-card .card-inner {
@@ -865,10 +906,11 @@ button {
 .detail-summary {
   max-width: min(620px, 100%);
   margin: 0;
-  color: rgba(244, 241, 232, 0.8);
-  font-size: clamp(1rem, 1.6vw, 1.18rem);
-  font-weight: 700;
-  line-height: 1.6;
+  color: #ffffff;
+  font-family: "Pretendard", "Noto Sans KR", system-ui, sans-serif;
+  font-size: 1.05rem;
+  font-weight: 450;
+  line-height: 1.75;
   overflow-wrap: anywhere;
 }
 
@@ -932,10 +974,11 @@ button {
 
 .detail-narrative p {
   margin: 0;
-  color: rgba(244, 241, 232, 0.82);
-  font-size: 1rem;
-  font-weight: 650;
-  line-height: 1.6;
+  color: #ffffff;
+  font-family: "Pretendard", "Noto Sans KR", system-ui, sans-serif;
+  font-size: 1.05rem;
+  font-weight: 450;
+  line-height: 1.75;
   overflow-wrap: anywhere;
 }
 
@@ -1021,10 +1064,11 @@ button {
 
 .detail-challenge-block p {
   margin: 0;
-  color: rgba(244, 241, 232, 0.82);
-  font-size: 0.96rem;
-  font-weight: 650;
-  line-height: 1.6;
+  color: #ffffff;
+  font-family: "Pretendard", "Noto Sans KR", system-ui, sans-serif;
+  font-size: 1.05rem;
+  font-weight: 450;
+  line-height: 1.75;
   overflow-wrap: anywhere;
 }
 
@@ -1075,13 +1119,20 @@ button {
 
 .world-shell[data-mode="world"] {
   --world-card-scale: 1.4;
+  /* Unified card dimensions in world mode. Per-project --w/--h still drive
+     grid mode and the world's positional theta/phi placement, but the
+     rendered tile size is constant here so the floating sphere reads as a
+     coherent set rather than five mismatched rectangles. Sized down 20%
+     from the original 240x300 baseline for a less crowded sphere. */
+  --world-card-w: 192px;
+  --world-card-h: 240px;
 }
 
 .world-shell[data-mode="world"] .world-card {
-  width: calc(var(--w) * var(--world-card-scale));
-  height: calc(var(--h) * var(--world-card-scale));
-  margin-top: calc((var(--h) * var(--world-card-scale)) / -2);
-  margin-left: calc((var(--w) * var(--world-card-scale)) / -2);
+  width: calc(var(--world-card-w) * var(--world-card-scale));
+  height: calc(var(--world-card-h) * var(--world-card-scale));
+  margin-top: calc((var(--world-card-h) * var(--world-card-scale)) / -2);
+  margin-left: calc((var(--world-card-w) * var(--world-card-scale)) / -2);
 }
 
 .world-shell[data-mode="world"] .world-card[data-world-hover] {
@@ -1262,6 +1313,13 @@ button {
     height: calc(var(--h) * 0.68);
     margin-top: calc((var(--h) * 0.68) / -2);
     margin-left: calc((var(--w) * 0.68) / -2);
+  }
+
+  /* Shrink the unified world-mode tile on small screens. Without this the
+     1.4× scale would render every card at 336×420 — far wider than the
+     360px viewport. */
+  .world-shell[data-mode="world"] {
+    --world-card-scale: 0.78;
   }
 
   .world-shell[data-mode="deck"] .world-card {
