@@ -59,7 +59,6 @@ button {
 .card-status,
 .card-meta strong,
 .card-meta span,
-.detail-eyebrow,
 .detail-meta dt,
 .detail-meta dd,
 .detail-narrative h3,
@@ -304,14 +303,6 @@ button {
   margin: 0 auto;
   padding: 0 22px 74px;
   perspective: 1500px;
-}
-
-.detail-eyebrow {
-  margin: 0;
-  color: var(--tone);
-  font-size: 0.78rem;
-  font-weight: 900;
-  line-height: 1.2;
 }
 
 .world-scene {
@@ -901,17 +892,6 @@ button {
   text-transform: uppercase;
 }
 
-.detail-summary {
-  max-width: min(620px, 100%);
-  margin: 0;
-  color: #ffffff;
-  font-family: "Pretendard", "Noto Sans KR", system-ui, sans-serif;
-  font-size: 1.05rem;
-  font-weight: 450;
-  line-height: 1.75;
-  overflow-wrap: anywhere;
-}
-
 .detail-meta {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1289,7 +1269,6 @@ button {
     padding-right: 30px;
   }
 
-  .detail-summary,
   .detail-narrative p,
   .detail-meta dd {
     max-width: min(320px, calc(100vw - 76px));

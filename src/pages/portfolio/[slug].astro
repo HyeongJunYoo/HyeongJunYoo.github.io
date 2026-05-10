@@ -17,7 +17,6 @@ if (project.links.play) ctaEntries.push({ key: "play", label: "▶ Play", primar
 if (project.links.source) ctaEntries.push({ key: "source", label: "Source", primary: false, href: project.links.source });
 if (project.links.devlog) ctaEntries.push({ key: "devlog", label: "Devlog", primary: false, href: project.links.devlog });
 const teamPeriod = [project.team, project.period].filter(Boolean).join(" · ");
-const eyebrowDisplay = project.eyebrow.toUpperCase().replace(/\s+/g, "·");
 ---
 
 <Layout
@@ -59,9 +58,7 @@ const eyebrowDisplay = project.eyebrow.toUpperCase().replace(/\s+/g, "·");
         </div>
 
         <article class="detail-content">
-          <p class="detail-eyebrow">{eyebrowDisplay}</p>
           <h1 id="detail-title" class="detail-title">{project.title}</h1>
-          <p class="detail-summary">{project.summary}</p>
 
           {ctaEntries.length > 0 && (
             <div class="detail-cta">
