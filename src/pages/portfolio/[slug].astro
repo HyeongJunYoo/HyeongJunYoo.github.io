@@ -86,6 +86,12 @@ const teamPeriod = [project.team, project.period].filter(Boolean).join(" · ");
             </div>
           </dl>
 
+          {project.stack.length > 0 && (
+            <div class="detail-stack">
+              {project.stack.map((item) => <span>{item}</span>)}
+            </div>
+          )}
+
           <section class="detail-narrative">
             <h3>Project goal</h3>
             <p>{project.goal}</p>
@@ -127,12 +133,6 @@ const teamPeriod = [project.team, project.period].filter(Boolean).join(" · ");
                 ))}
               </ol>
             </section>
-          )}
-
-          {project.stack.length > 0 && (
-            <div class="detail-stack">
-              {project.stack.map((item) => <span>{item}</span>)}
-            </div>
           )}
         </article>
 
