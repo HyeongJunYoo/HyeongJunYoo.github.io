@@ -96,9 +96,34 @@ const eyebrowDisplay = project.eyebrow.toUpperCase().replace(/\s+/g, "·");
           </dl>
 
           <section class="detail-narrative">
-            <h3>What I built</h3>
-            <p>{project.whatIBuilt}</p>
+            <h3>Project goal</h3>
+            <p>{project.goal}</p>
           </section>
+
+          {project.challenges.length > 0 && (
+            <section class="detail-challenges" aria-label="Challenges and solutions">
+              <h3 class="detail-challenges-heading">Challenges &amp; Solutions</h3>
+              <ol class="detail-challenges-list">
+                {project.challenges.map((challenge, index) => (
+                  <li class="detail-challenge">
+                    <span class="detail-challenge-index">{String(index + 1).padStart(2, "0")}</span>
+                    <h4 class="detail-challenge-title">{challenge.title}</h4>
+                    <div class="detail-challenge-block">
+                      <span class="detail-challenge-label">Problem</span>
+                      <p>{challenge.problem}</p>
+                    </div>
+                    <div class="detail-challenge-block">
+                      <span class="detail-challenge-label">Solution</span>
+                      <p>{challenge.solution}</p>
+                    </div>
+                    {challenge.outcome && (
+                      <p class="detail-challenge-outcome">→ {challenge.outcome}</p>
+                    )}
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )}
 
           {project.gallery.length > 0 && (
             <section class="detail-gallery">

@@ -939,6 +939,123 @@ button {
   overflow-wrap: anywhere;
 }
 
+/* === Challenges & Solutions === */
+.detail-challenges {
+  display: grid;
+  gap: 18px;
+  border-bottom: 1px solid rgba(244, 241, 232, 0.12);
+  padding-bottom: 24px;
+}
+
+.detail-challenges-heading {
+  margin: 0;
+  color: var(--tone);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.detail-challenges-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+}
+
+.detail-challenge {
+  position: relative;
+  display: grid;
+  gap: 12px;
+  padding: 22px 22px 22px 28px;
+  border: 1px solid rgba(244, 241, 232, 0.1);
+  background: rgba(12, 12, 12, 0.4);
+}
+
+.detail-challenge::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--tone);
+  opacity: 0.85;
+}
+
+.detail-challenge-index {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--tone);
+}
+
+.detail-challenge-title {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 2vw, 1.55rem);
+  font-weight: 800;
+  letter-spacing: -0.005em;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.detail-challenge-block {
+  display: grid;
+  gap: 6px;
+}
+
+.detail-challenge-label {
+  color: rgba(244, 241, 232, 0.62);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.detail-challenge-block p {
+  margin: 0;
+  color: rgba(244, 241, 232, 0.82);
+  font-size: 0.96rem;
+  font-weight: 650;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.detail-challenge-outcome {
+  margin: 4px 0 0;
+  padding: 10px 14px;
+  border-left: 2px solid var(--tone);
+  background: color-mix(in srgb, var(--tone) 8%, transparent);
+  color: var(--tone);
+  font-family: var(--font-mono);
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 720px) {
+  .detail-challenge {
+    padding: 18px 18px 18px 22px;
+  }
+
+  .detail-challenge-title {
+    font-size: clamp(1rem, 4.4vw, 1.25rem);
+  }
+
+  .detail-challenge-block p {
+    font-size: 0.92rem;
+  }
+}
+
 .detail-stack {
   display: flex;
   flex-wrap: wrap;
