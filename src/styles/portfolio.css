@@ -1045,18 +1045,29 @@ button {
 }
 
 .detail-challenge-index {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.6rem;
   font-weight: 700;
-  letter-spacing: 0.1em;
   color: var(--tone);
-  margin-bottom: 12px;
+  line-height: 1;
+  margin: 0;
+}
+
+.detail-challenge-head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 36px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(244, 241, 232, 0.1);
 }
 
 .detail-challenge-title {
-  margin: 0 0 36px 0;
-  padding-bottom: 18px;
-  border-bottom: 1px solid rgba(244, 241, 232, 0.1);
+  margin: 0;
+  padding: 0;
+  border: none;
   color: var(--ink);
   font-family: var(--font-display);
   font-size: 1.35rem;
@@ -1115,6 +1126,9 @@ button {
 
   .detail-challenge-title {
     font-size: 1.15rem;
+  }
+
+  .detail-challenge-head {
     margin-bottom: 24px;
     padding-bottom: 14px;
   }

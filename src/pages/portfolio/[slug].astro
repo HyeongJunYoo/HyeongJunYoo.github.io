@@ -105,8 +105,10 @@ const teamPeriod = [project.team, project.period].filter(Boolean).join(" · ");
               <ol class="detail-challenges-list">
                 {project.challenges.map((challenge, index) => (
                   <li class="detail-challenge">
-                    <span class="detail-challenge-index">{String(index + 1).padStart(2, "0")}</span>
-                    <h4 class="detail-challenge-title">{challenge.title}</h4>
+                    <header class="detail-challenge-head">
+                      <span class="detail-challenge-index">{String(index + 1).padStart(2, "0")}</span>
+                      <h4 class="detail-challenge-title">{challenge.title}</h4>
+                    </header>
                     {challenge.image && (
                       <img
                         class="detail-challenge-image"
