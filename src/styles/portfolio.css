@@ -909,6 +909,11 @@ button {
   background: color-mix(in srgb, var(--tone) 14%, transparent);
 }
 
+.detail-source:focus-visible {
+  outline: 2px solid var(--tone);
+  outline-offset: 2px;
+}
+
 .detail-content h2 {
   max-width: 760px;
   margin: 0;
