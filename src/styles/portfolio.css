@@ -1107,9 +1107,9 @@ button {
 }
 
 .detail-stack span {
-  border: 1px solid rgba(244, 241, 232, 0.16);
-  background: rgba(244, 241, 232, 0.07);
-  color: rgba(244, 241, 232, 0.82);
+  border: 1px solid var(--tone);
+  background: color-mix(in srgb, var(--tone) 8%, transparent);
+  color: var(--tone);
   font-size: 0.8rem;
   font-weight: 850;
   line-height: 1;
