@@ -1039,16 +1039,24 @@ button {
 
 .detail-challenge-block {
   display: grid;
-  gap: 6px;
+  gap: 14px;
+}
+
+.detail-challenge-block + .detail-challenge-block {
+  margin-top: 36px;
 }
 
 .detail-challenge-label {
-  color: rgba(244, 241, 232, 0.62);
+  align-self: start;
+  justify-self: start;
+  color: var(--tone);
   font-family: var(--font-mono);
-  font-size: 0.66rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  font-size: 0.88rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
+  padding-bottom: 6px;
+  border-bottom: 1px solid color-mix(in srgb, var(--tone) 40%, transparent);
 }
 
 .detail-challenge-block p {
@@ -1084,10 +1092,6 @@ button {
     font-size: 1.15rem;
     margin-bottom: 24px;
     padding-bottom: 14px;
-  }
-
-  .detail-challenge-block p {
-    font-size: 0.92rem;
   }
 }
 
