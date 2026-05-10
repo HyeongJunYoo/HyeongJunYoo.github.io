@@ -133,17 +133,6 @@ const eyebrowDisplay = project.eyebrow.toUpperCase().replace(/\s+/g, "·");
             </section>
           )}
 
-          {project.stats.length > 0 && (
-            <section class="detail-stats">
-              {project.stats.map((stat) => (
-                <div class="stat">
-                  <span class="stat-value">{stat.value}</span>
-                  <span class="stat-label">{stat.label}</span>
-                </div>
-              ))}
-            </section>
-          )}
-
           {project.stack.length > 0 && (
             <div class="detail-stack">
               {project.stack.map((item) => <span>{item}</span>)}

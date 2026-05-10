@@ -63,8 +63,6 @@ button {
 .detail-meta dt,
 .detail-meta dd,
 .detail-narrative h3,
-.detail-stats .stat-value,
-.detail-stats .stat-label,
 .detail-cta a,
 .detail-stack span,
 .portfolio-footer-links a,
@@ -1585,50 +1583,6 @@ button {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
-  }
-}
-
-.detail-stats {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
-}
-
-.detail-stats[hidden] {
-  display: none;
-}
-
-.detail-stats .stat {
-  display: grid;
-  align-content: center;
-  justify-items: center;
-  gap: 6px;
-  border: 1px solid color-mix(in srgb, var(--tone) 35%, rgba(244, 241, 232, 0.16));
-  background: color-mix(in srgb, var(--tone) 6%, transparent);
-  padding: 18px 12px;
-  text-align: center;
-}
-
-.detail-stats .stat-value {
-  color: var(--tone);
-  font-size: clamp(1.4rem, 2.6vw, 2.1rem);
-  font-weight: 950;
-  letter-spacing: -0.02em;
-  line-height: 1;
-}
-
-.detail-stats .stat-label {
-  color: rgba(244, 241, 232, 0.64);
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  line-height: 1.2;
-  text-transform: uppercase;
-}
-
-@media (max-width: 560px) {
-  .detail-stats {
-    grid-template-columns: 1fr;
   }
 }
 
