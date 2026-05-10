@@ -109,15 +109,18 @@ const eyebrowDisplay = project.eyebrow.toUpperCase().replace(/\s+/g, "·");
                     <span class="detail-challenge-index">{String(index + 1).padStart(2, "0")}</span>
                     <h4 class="detail-challenge-title">{challenge.title}</h4>
                     <div class="detail-challenge-block">
-                      <span class="detail-challenge-label">Problem</span>
+                      <span class="detail-challenge-label">문제 원인</span>
                       <p>{challenge.problem}</p>
                     </div>
                     <div class="detail-challenge-block">
-                      <span class="detail-challenge-label">Solution</span>
+                      <span class="detail-challenge-label">해결 과정</span>
                       <p>{challenge.solution}</p>
                     </div>
                     {challenge.outcome && (
-                      <p class="detail-challenge-outcome">→ {challenge.outcome}</p>
+                      <div class="detail-challenge-block">
+                        <span class="detail-challenge-label">결과</span>
+                        <p>{challenge.outcome}</p>
+                      </div>
                     )}
                   </li>
                 ))}
