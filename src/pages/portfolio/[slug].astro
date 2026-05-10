@@ -12,10 +12,7 @@ const project = getProjectBySlug(slug!);
 if (!project) {
   return Astro.redirect("/portfolio");
 }
-const ctaEntries: Array<{ key: string; label: string; primary: boolean; href: string }> = [];
-if (project.links.play) ctaEntries.push({ key: "play", label: "▶ Play", primary: true, href: project.links.play });
-if (project.links.source) ctaEntries.push({ key: "source", label: "Source", primary: false, href: project.links.source });
-if (project.links.devlog) ctaEntries.push({ key: "devlog", label: "Devlog", primary: false, href: project.links.devlog });
+const sourceHref = project.links.source;
 const teamPeriod = [project.team, project.period].filter(Boolean).join(" · ");
 ---
 
@@ -58,20 +55,17 @@ const teamPeriod = [project.team, project.period].filter(Boolean).join(" · ");
         </div>
 
         <article class="detail-content">
-          <h1 id="detail-title" class="detail-title">{project.title}</h1>
-
-          {ctaEntries.length > 0 && (
-            <div class="detail-cta">
-              {ctaEntries.map((entry) => (
-                <a
-                  href={entry.href}
-                  class={entry.primary ? "is-primary" : undefined}
-                  rel={entry.href.startsWith("http") ? "noreferrer noopener" : undefined}
-                  target={entry.href.startsWith("http") ? "_blank" : undefined}
-                >{entry.label}</a>
-              ))}
-            </div>
-          )}
+          <header class="detail-header">
+            <h1 id="detail-title" class="detail-title">{project.title}</h1>
+            {sourceHref && (
+              <a
+                class="detail-source"
+                href={sourceHref}
+                rel={sourceHref.startsWith("http") ? "noreferrer noopener" : undefined}
+                target={sourceHref.startsWith("http") ? "_blank" : undefined}
+              >▸ View Source</a>
+            )}
+          </header>
 
           <dl class="detail-meta">
             <div>
