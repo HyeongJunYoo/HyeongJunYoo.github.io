@@ -108,6 +108,16 @@ const eyebrowDisplay = project.eyebrow.toUpperCase().replace(/\s+/g, "·");
                   <li class="detail-challenge">
                     <span class="detail-challenge-index">{String(index + 1).padStart(2, "0")}</span>
                     <h4 class="detail-challenge-title">{challenge.title}</h4>
+                    {challenge.image && (
+                      <img
+                        class="detail-challenge-image"
+                        src={challenge.image}
+                        alt=""
+                        loading="lazy"
+                        decoding="async"
+                        draggable={false}
+                      />
+                    )}
                     <div class="detail-challenge-block">
                       <span class="detail-challenge-label">문제 원인</span>
                       <p>{challenge.problem}</p>
