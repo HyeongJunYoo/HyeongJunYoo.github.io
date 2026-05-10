@@ -221,6 +221,11 @@ import { projects, featuredProject } from "../data/projects";
       const updateDeck = () => {
         const maxVisible = 4;
         const nearestIndex = wrapIndex(Math.round(deckPosition));
+        // Deck spacing scales with the actual card width so the fan stays
+        // visually consistent from 560px (mobile) to 1120px (wide desktop).
+        const cardWidth = cards[0]?.getBoundingClientRect().width || 560;
+        const xUnit = cardWidth * 0.32;
+        const peekUnit = cardWidth * 0.04;
 
         cards.forEach((card, index) => {
           const delta = getCircularDelta(index, deckPosition);
@@ -229,14 +234,14 @@ import { projects, featuredProject } from "../data/projects";
           const side = clamped < 0 ? -1 : 1;
           const hidden = abs > maxVisible + 0.75;
 
-          card.style.setProperty("--deck-x", `${clamped * 128}px`);
+          card.style.setProperty("--deck-x", `${clamped * xUnit}px`);
           card.style.setProperty("--deck-y", `${abs * 8}px`);
           card.style.setProperty("--deck-z", `${abs * -82}px`);
           card.style.setProperty("--deck-rotate", `${clamped * -9}deg`);
           card.style.setProperty("--deck-scale", `${Math.max(0.64, 1 - abs * 0.075)}`);
           card.style.setProperty("--deck-opacity", hidden ? "0" : `${Math.max(0.28, 1 - abs * 0.16)}`);
           card.style.setProperty("--deck-z-index", `${100 - Math.round(abs * 10)}`);
-          card.style.setProperty("--deck-peek", `${side * Math.min(abs, maxVisible) * 16}px`);
+          card.style.setProperty("--deck-peek", `${side * Math.min(abs, maxVisible) * peekUnit}px`);
           card.dataset.deckDistance = abs.toFixed(3);
           card.toggleAttribute("data-deck-current", index === nearestIndex);
         });
@@ -261,37 +266,20 @@ import { projects, featuredProject } from "../data/projects";
       };
 
       const getDeckCardAtPoint = (clientX, clientY) => {
-        const candidates = [];
-
-        cards.forEach((card) => {
+        if (clientX < 0 || clientY < 0) return null;
+        // Use elementsFromPoint so only the visible (non-occluded) portion of
+        // each card responds to hover and click. The browser's pixel-level
+        // hit-test respects 3D z-order automatically, so a back card hidden
+        // beneath a front card doesn't claim the hover.
+        const stack = document.elementsFromPoint(clientX, clientY);
+        for (const el of stack) {
+          const card = el.closest?.("[data-world-card]");
+          if (!card) continue;
           const opacity = Number.parseFloat(card.style.getPropertyValue("--deck-opacity") || "1");
-          if (opacity <= 0.04) return;
-
-          const rect = card.getBoundingClientRect();
-          if (rect.width <= 0 || rect.height <= 0) return;
-
-          const padX = rect.width * 0.04;
-          const padY = rect.height * 0.04;
-          const isInside =
-            clientX >= rect.left - padX &&
-            clientX <= rect.right + padX &&
-            clientY >= rect.top - padY &&
-            clientY <= rect.bottom + padY;
-
-          if (!isInside) return;
-
-          const centerX = rect.left + rect.width / 2;
-          const centerY = rect.top + rect.height / 2;
-          const distance = Math.hypot(clientX - centerX, clientY - centerY);
-          const deckDistance = Number.parseFloat(card.dataset.deckDistance || "0");
-          // Score: closest card center wins; tiebreaker favors front cards
-          const score = distance + deckDistance * 30;
-          candidates.push({ card, score });
-        });
-
-        if (candidates.length === 0) return null;
-        candidates.sort((a, b) => a.score - b.score);
-        return candidates[0].card;
+          if (opacity <= 0.04) continue;
+          return card;
+        }
+        return null;
       };
 
       const selectDeckCard = (card) => {
