@@ -1224,6 +1224,24 @@ button {
   }
 }
 
+.detail-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(244, 241, 232, 0.04);
+  z-index: 100;
+  pointer-events: none;
+}
+
+.detail-progress-fill {
+  height: 100%;
+  background: var(--tone);
+  width: 0%;
+  transform-origin: left;
+}
+
 .detail-stack {
   display: flex;
   flex-wrap: wrap;
