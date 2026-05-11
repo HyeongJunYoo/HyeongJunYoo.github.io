@@ -66,7 +66,7 @@ const renderMetrics = (text: string): MetricPart[] =>
         </div>
 
         <article class="detail-content">
-          <div class="detail-intro-card">
+          <div class="detail-intro-card" id="top">
             <header class="detail-header">
               <h1 id="detail-title" class="detail-title">{project.title}</h1>
               {sourceHref && (
@@ -107,7 +107,7 @@ const renderMetrics = (text: string): MetricPart[] =>
 
           <div class="detail-divider" aria-hidden="true">◆ ◆ ◆</div>
 
-          <section class="detail-narrative">
+          <section class="detail-narrative" id="goal">
             <h3>Project goal</h3>
             <p>{project.goal}</p>
           </section>
@@ -116,7 +116,7 @@ const renderMetrics = (text: string): MetricPart[] =>
 
           {project.challenges.length > 0 && (
             <section class="detail-challenges" aria-label="Challenges and solutions">
-              <div class="detail-challenges-intro">
+              <div class="detail-challenges-intro" id="cases">
                 <h3 class="detail-challenges-heading">Challenges &amp; Solutions</h3>
                 {project.challengeIntro && (
                   <p>{project.challengeIntro}</p>
@@ -177,19 +177,34 @@ const renderMetrics = (text: string): MetricPart[] =>
                   </li>
                 ))}
               </ol>
-              {project.challenges.length > 1 && (
-                <nav class="detail-challenge-nav" aria-label="Challenge navigation">
-                  {project.challenges.map((_c, i) => (
-                    <a href={`#challenge-${i + 1}`} data-challenge-target={i + 1}>
-                      <span class="nav-dot" aria-hidden="true"></span>
-                      <span class="nav-label">{String(i + 1).padStart(2, "0")}</span>
-                    </a>
-                  ))}
-                </nav>
-              )}
             </section>
           )}
         </article>
+
+        <nav class="detail-challenge-nav" aria-label="Page navigation">
+          <a href="#top" data-nav-target="top">
+            <span class="nav-dot" aria-hidden="true"></span>
+            <span class="nav-label">TOP</span>
+          </a>
+          <a href="#goal" data-nav-target="goal">
+            <span class="nav-dot" aria-hidden="true"></span>
+            <span class="nav-label">GOAL</span>
+          </a>
+          {project.challenges.length > 0 && (
+            <>
+              <a href="#cases" data-nav-target="cases">
+                <span class="nav-dot" aria-hidden="true"></span>
+                <span class="nav-label">CASES</span>
+              </a>
+              {project.challenges.map((_c, i) => (
+                <a href={`#challenge-${i + 1}`} data-nav-target={`challenge-${i + 1}`}>
+                  <span class="nav-dot" aria-hidden="true"></span>
+                  <span class="nav-label">{String(i + 1).padStart(2, "0")}</span>
+                </a>
+              ))}
+            </>
+          )}
+        </nav>
 
       </section>
     </main>
@@ -221,21 +236,48 @@ const renderMetrics = (text: string): MetricPart[] =>
       });
     })();
     (() => {
-      const challenges = document.querySelectorAll('.detail-challenge[id]');
+      // Page-wide TOC scrollspy — picks the section whose top is the most
+      // recent to cross the 35% line from viewport top. Position-based
+      // (not IntersectionObserver) so a short section like CASES doesn't
+      // get skipped over by a taller challenge below it.
       const navLinks = document.querySelectorAll('.detail-challenge-nav a');
-      if (challenges.length === 0 || navLinks.length === 0) return;
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const id = entry.target.id;
-            const targetNum = id.replace('challenge-', '');
-            navLinks.forEach((a) => {
-              a.classList.toggle('is-active', a.dataset.challengeTarget === targetNum);
-            });
+      if (navLinks.length === 0) return;
+      const targets = [
+        document.getElementById('top'),
+        document.getElementById('goal'),
+        document.getElementById('cases'),
+        ...document.querySelectorAll('.detail-challenge[id]'),
+      ].filter(Boolean);
+      if (targets.length === 0) return;
+      let raf = 0;
+      const update = () => {
+        // Threshold = top 10% of viewport. A section becomes active when
+        // its top crosses this line going up; the section above stays
+        // active until the next one crosses. Tighter than 35% so short
+        // sections (CASES is ~150px) aren't shadowed by taller ones.
+        const threshold = window.innerHeight * 0.1;
+        let active = targets[0].id;
+        for (const t of targets) {
+          if (t.getBoundingClientRect().top <= threshold) {
+            active = t.id;
           }
+        }
+        // Near-bottom snap: when user has scrolled to within 80px of the
+        // page bottom, force-active the last section. Without this, the
+        // last section's top often can't reach the threshold (page runs
+        // out of scroll first) and the previous section stays highlighted.
+        if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 80) {
+          active = targets[targets.length - 1].id;
+        }
+        navLinks.forEach((a) => {
+          a.classList.toggle('is-active', a.dataset.navTarget === active);
         });
-      }, { rootMargin: '-40% 0px -40% 0px', threshold: 0 });
-      challenges.forEach((c) => observer.observe(c));
+        raf = 0;
+      };
+      window.addEventListener('scroll', () => {
+        if (!raf) raf = requestAnimationFrame(update);
+      }, { passive: true });
+      update();
     })();
     (() => {
       const progressFill = document.querySelector('.detail-progress-fill');
