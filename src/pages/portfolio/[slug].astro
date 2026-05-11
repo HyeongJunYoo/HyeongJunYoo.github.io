@@ -122,7 +122,6 @@ const renderMetrics = (text: string): MetricPart[] =>
                   <li
                     class="detail-challenge"
                     id={`challenge-${index + 1}`}
-                    style={`--challenge-tint: ${[8, 12, 16][Math.min(index, 2)]}%;`}
                   >
                     <header class="detail-challenge-head">
                       <span class="detail-challenge-index">{String(index + 1).padStart(2, "0")}</span>

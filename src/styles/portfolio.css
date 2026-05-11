@@ -1068,11 +1068,7 @@ button {
   gap: 0;
   padding: 32px;
   border: 1px solid rgba(244, 241, 232, 0.12);
-  background: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--tone) var(--challenge-tint, 8%), #1a1a1a) 0%,
-    #1a1a1a 70%
-  );
+  background: #1a1a1a;
 }
 
 .detail-challenge-index {
