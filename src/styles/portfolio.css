@@ -1044,6 +1044,28 @@ button {
   padding-bottom: 24px;
 }
 
+/* Section intro card — matches Project goal card visual (solid #1a1a1a
+   panel with same padding/border) so the section heading sits on the
+   same elevation as the cards below. Optional challengeIntro paragraph
+   below the heading frames the 'what kind of problems' question. */
+.detail-challenges-intro {
+  display: grid;
+  gap: 12px;
+  background: #1a1a1a;
+  border: 1px solid rgba(244, 241, 232, 0.12);
+  padding: 32px;
+}
+
+.detail-challenges-intro p {
+  margin: 0;
+  color: #ffffff;
+  font-family: "Pretendard", "Noto Sans KR", system-ui, sans-serif;
+  font-size: 1.05rem;
+  font-weight: 450;
+  line-height: 1.75;
+  overflow-wrap: anywhere;
+}
+
 .detail-challenges-heading {
   margin: 0;
   color: var(--tone);

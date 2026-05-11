@@ -116,7 +116,12 @@ const renderMetrics = (text: string): MetricPart[] =>
 
           {project.challenges.length > 0 && (
             <section class="detail-challenges" aria-label="Challenges and solutions">
-              <h3 class="detail-challenges-heading">Challenges &amp; Solutions</h3>
+              <div class="detail-challenges-intro">
+                <h3 class="detail-challenges-heading">Challenges &amp; Solutions</h3>
+                {project.challengeIntro && (
+                  <p>{project.challengeIntro}</p>
+                )}
+              </div>
               <ol class="detail-challenges-list">
                 {project.challenges.map((challenge, index) => (
                   <li

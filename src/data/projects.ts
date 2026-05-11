@@ -39,6 +39,12 @@ export type Project = {
   status: string;
   summary: string;
   goal: string;
+  /**
+   * Optional 1-sentence intro shown above the Challenges & Solutions
+   * card list. Frames "what kind of problems" without repeating the
+   * Project goal text. Leave undefined to render just the heading.
+   */
+  challengeIntro?: string;
   challenges: ProjectChallenge[];
   image: string;
   tone: ProjectTone;
@@ -69,6 +75,7 @@ export const projects: Project[] = [
     status: "Shipped",
     summary: "PvPvE 멀티플레이어 액션. 30 tickrate에서 64명 동시접속까지 검증한 동기화 레이어를 직접 책임졌습니다.",
     goal: "스팀 출시를 목표로 한 시즌 기반 PvPvE 멀티플레이어 액션. 매치당 64명 동시접속과 30 tickrate에서의 정확한 hit detection을 핵심 가치로 잡고, 5인 팀 환경에서 9개월 안에 alpha → shipped까지 빌드를 다듬은 프로젝트입니다. 본인은 lead programmer로 멀티플레이어 동기화 전반(Replication, lag compensation, matchmaking, state persistence)과 클라이언트 ↔ 데디케이티드 서버 architecture 설계를 책임졌고, EOS(Epic Online Services)와 자체 게임 백엔드를 함께 운용하는 구조를 마무리했습니다. 콘솔 출시 검토를 위해 cross-platform input 호환성도 초기부터 고려했고, 베타 테스트 기간 동안 동시접속 1만 명 부하 테스트까지 통과시켰습니다.",
+    challengeIntro: "멀티플레이어 동기화에서 부딪힌 세 가지 핵심 문제 — hit detection, 패킷 폭증, 입력 추상화 — 와 그 해결 과정.",
     challenges: [
       {
         title: "30 tickrate hit detection 1프레임 흔들림",
@@ -129,6 +136,7 @@ export const projects: Project[] = [
     status: "Prototype",
     summary: "BPM 기반 입력 윈도우와 비주얼 큐가 동기화되는 1인 개발 리듬 액션 러너 프로토타입.",
     goal: "사이드 스크롤 러너 장르에 리듬 게임의 정확한 입력 판정 시스템을 결합한 1인 개발 프로토타입. 음악에 맞춰 점프와 슬라이드를 입력하는 4단계 난이도의 트랙 5개를 만들었습니다. Unity 6와 URP를 처음부터 깊게 사용해보는 학습 목표도 함께 두고, 오디오 타임라인 ↔ 게임플레이 동기화의 모든 단계를 본인이 설계해 4개월 안에 playable build를 만들었습니다. 결과물은 itch.io에 무료 공개해 100명 이상의 플레이어 데이터를 수집해 input window 튜닝의 기반 자료로 사용했습니다.",
+    challengeIntro: "오디오 ↔ 입력 윈도우 동기화 정확도와 모바일 GPU 성능을 끌어올린 두 가지 엔지니어링 케이스.",
     challenges: [
       {
         title: "오디오 타임라인 ↔ 입력 윈도우 동기화 정확도",
@@ -182,6 +190,7 @@ export const projects: Project[] = [
     status: "Game Jam",
     summary: "48시간 게임잼 2위 출품작. 룬 결합 기반 FPS를 데이터 드리븐 무기 시스템으로 단기간에 구현.",
     goal: "48시간 게임잼 출품작으로 만든 룬 결합 시스템 기반 1인칭 슈터. 플레이어가 던전을 클리어하며 7가지 기본 룬을 모으고, 이를 2-3개씩 결합해 12개 이상의 무기 변형을 만들어내는 데이터 드리븐 무기 시스템을 단기간에 구현해 잼 2위에 랭크되었습니다. 3인 팀이었지만 본인이 모든 코드(C++ + Blueprint)와 절차적 던전 생성을 담당했고, 디자이너 동료가 룬 조합 룰을 DataAsset으로 직접 편집할 수 있는 in-editor 툴까지 만들어 협업 속도를 끌어올렸습니다. 게임잼 후 Steam Greenlight 진행 검토 단계입니다.",
+    challengeIntro: "48시간 잼 제약 안에서 데이터 드리븐 무기 빌더와 절차적 던전 + AI 네비게이션을 동시에 굴린 두 가지 케이스.",
     challenges: [
       {
         title: "48시간 안에 데이터 드리븐 무기 빌더 구현",
@@ -235,6 +244,7 @@ export const projects: Project[] = [
     status: "Shipped",
     summary: "로우폴리 드리프트 퍼즐. PC + 모바일 동시 출시, 첫 달 12K DAU 달성.",
     goal: "로우폴리 미감의 모바일/PC 동시 출시 드리프트 퍼즐 게임. 코너에서 그리는 드리프트 라인의 길이/각도가 점수가 되고, 시간 압축 리플레이로 자기 베스트와 경쟁하는 솔로 모드 + 글로벌 리더보드를 핵심 루프로 잡았습니다. 2인 팀에서 본인은 차량 물리 컨트롤러, 트랙 데이터 시스템, 모바일 터치 입력 어댑터, 리플레이 직렬화/재생, REST 백엔드 연동까지 클라이언트 전반을 담당했고, 디자이너 파트너가 트랙 디자인과 UI/UX를 맡았습니다. 6개월 개발 후 Steam과 Google Play 동시 출시했고, 출시 첫 달에 두 플랫폼 합산 12,000 DAU를 기록했습니다.",
+    challengeIntro: "크로스 플랫폼 입력 일관성과 리플레이 데이터/백엔드 비용을 동시에 잡은 두 가지 케이스.",
     challenges: [
       {
         title: "터치 ↔ 키보드/게임패드 입력 일관성",
@@ -288,6 +298,7 @@ export const projects: Project[] = [
     status: "Prototype",
     summary: "자체 C++/Vulkan 렌더링 엔진. PBR · CSM · 디퍼드 G-buffer를 직접 구현한 OSS 사이드 프로젝트.",
     goal: "취미 프로젝트로 시작한 자체 C++/Vulkan 렌더링 엔진. PBR 머티리얼, cascaded shadow map, 디퍼드 G-buffer까지 직접 구현하면서 modern GPU pipeline의 동작 방식을 깊이 이해하는 게 목표입니다. 게임 엔진을 만들려는 게 아니라, 그래픽스 인터뷰에서 자신 있게 설명할 수 있는 수준의 baseline 코드를 갖는 것이 핵심 동기였습니다. 1년차 현재 GLTF 2.0 모델 로딩, IBL 기반 PBR, 6 cascade shadow, post-process(bloom, tonemap) 파이프라인이 동작하고, GitHub에 OSS로 공개해 contributors 3명을 받았습니다.",
+    challengeIntro: "Vulkan command graph 추상화와 PBR uber shader + 6 cascade shadow 파이프라인을 다듬은 두 가지 그래픽스 케이스.",
     challenges: [
       {
         title: "Vulkan command graph 추상화",
