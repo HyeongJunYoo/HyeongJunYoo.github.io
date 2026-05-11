@@ -1461,10 +1461,6 @@ button {
     flex: 1 1 0;
   }
 
-  .detail-meta {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .detail-meta div {
     padding: 14px;
   }
