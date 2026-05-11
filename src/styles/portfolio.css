@@ -1461,24 +1461,6 @@ button {
     flex: 1 1 0;
   }
 
-  .detail-meta div {
-    padding: 14px;
-  }
-
-  .detail-meta div:nth-child(2n) {
-    border-left: 1px solid rgba(244, 241, 232, 0.16);
-    padding-left: 14px;
-  }
-
-  .detail-meta div:nth-child(2n+1) {
-    border-left: 0;
-    padding-left: 0;
-  }
-
-  .detail-meta div:nth-child(n+3) {
-    border-top: 1px solid rgba(244, 241, 232, 0.16);
-  }
-
   .featured-hero .hero-cta {
     gap: 6px;
   }
