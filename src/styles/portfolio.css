@@ -927,44 +927,58 @@ button {
 }
 
 .detail-meta {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0;
+  display: block;
+  background: rgba(0, 0, 0, 0.32);
+  border: 1px solid rgba(244, 241, 232, 0.08);
+  padding: 14px 18px 12px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
   margin: 0;
-  border-top: 1px solid rgba(244, 241, 232, 0.16);
-  border-bottom: 1px solid rgba(244, 241, 232, 0.16);
+}
+
+.detail-meta::before {
+  content: "$ project --info";
+  display: block;
+  color: var(--tone);
+  font-weight: 700;
+  margin-bottom: 8px;
 }
 
 .detail-meta div {
   display: grid;
-  gap: 6px;
-  padding: 14px 0;
+  grid-template-columns: 130px 1fr;
+  gap: 0;
+  padding: 2px 0;
+  border: none;
 }
 
 .detail-meta div + div {
-  border-left: 1px solid rgba(244, 241, 232, 0.16);
-  padding-left: 18px;
+  border-left: none;
+  padding-left: 0;
 }
 
 .detail-meta dt,
 .detail-meta dd {
   margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.4;
 }
 
 .detail-meta dt {
   color: var(--tone);
-  font-size: 0.78rem;
-  font-weight: 950;
-  line-height: 1;
-  text-transform: uppercase;
+  font-weight: 700;
+  text-transform: lowercase;
+}
+
+.detail-meta dt::before {
+  content: "  --";
+  color: rgba(244, 241, 232, 0.5);
 }
 
 .detail-meta dd {
   color: var(--ink);
-  font-size: 0.94rem;
-  font-weight: 780;
-  line-height: 1.35;
-  overflow-wrap: anywhere;
+  font-weight: 700;
 }
 
 /* Top intro card — wraps header (H1 + Source) + meta + stack chips on a
