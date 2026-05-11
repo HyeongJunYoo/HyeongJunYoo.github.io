@@ -14,6 +14,14 @@ if (!project) {
 }
 const sourceHref = project.links.source;
 const teamPeriod = [project.team, project.period].filter(Boolean).join(" · ");
+type MetricPart = { type: "metric" | "text"; value: string };
+const renderMetrics = (text: string): MetricPart[] =>
+  text.split(/(\[\[.+?\]\])/g).map((part) => {
+    const match = part.match(/^\[\[(.+)\]\]$/);
+    return match
+      ? { type: "metric" as const, value: match[1] }
+      : { type: "text" as const, value: part };
+  });
 ---
 
 <Layout
@@ -125,16 +133,34 @@ const teamPeriod = [project.team, project.period].filter(Boolean).join(" · ");
                     )}
                     <div class="detail-challenge-block">
                       <span class="detail-challenge-label">문제 원인</span>
-                      <p>{challenge.problem}</p>
+                      <p>
+                        {renderMetrics(challenge.problem).map((part) =>
+                          part.type === "metric"
+                            ? <span class="metric">{part.value}</span>
+                            : part.value
+                        )}
+                      </p>
                     </div>
                     <div class="detail-challenge-block">
                       <span class="detail-challenge-label">해결 과정</span>
-                      <p>{challenge.solution}</p>
+                      <p>
+                        {renderMetrics(challenge.solution).map((part) =>
+                          part.type === "metric"
+                            ? <span class="metric">{part.value}</span>
+                            : part.value
+                        )}
+                      </p>
                     </div>
                     {challenge.outcome && (
                       <div class="detail-challenge-block">
                         <span class="detail-challenge-label">결과</span>
-                        <p>{challenge.outcome}</p>
+                        <p>
+                          {renderMetrics(challenge.outcome).map((part) =>
+                            part.type === "metric"
+                              ? <span class="metric">{part.value}</span>
+                              : part.value
+                          )}
+                        </p>
                       </div>
                     )}
                   </li>

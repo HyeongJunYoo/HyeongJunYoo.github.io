@@ -1185,6 +1185,18 @@ button {
   overflow-wrap: anywhere;
 }
 
+.detail-challenge-block .metric {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.95em;
+  font-weight: 700;
+  color: var(--tone);
+  background: color-mix(in srgb, var(--tone) 12%, transparent);
+  padding: 0 5px;
+  margin: 0 1px;
+  letter-spacing: 0;
+}
+
 @media (max-width: 720px) {
   .detail-challenge {
     padding: 22px;
