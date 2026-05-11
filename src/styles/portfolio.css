@@ -1195,6 +1195,7 @@ button {
   padding: 0 5px;
   margin: 0 1px;
   letter-spacing: 0;
+  vertical-align: baseline;
 }
 
 @media (max-width: 720px) {
