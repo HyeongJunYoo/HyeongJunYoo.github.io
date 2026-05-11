@@ -1035,6 +1035,18 @@ button {
   user-select: none;
 }
 
+/* Per-tone ornament glyph — gives each project a small unique
+   signature in its section dividers. Default ◆ for hot, distinct
+   shapes for the other 4 tones. CSS-only via ::before content
+   so the template stays clean. */
+.detail-divider::before { content: "◆ ◆ ◆"; }
+.detail-divider[data-tone="hot"]::before { content: "◆ ◆ ◆"; }
+.detail-divider[data-tone="aqua"]::before { content: "◇ ◇ ◇"; }
+.detail-divider[data-tone="violet"]::before { content: "✦ ✦ ✦"; }
+.detail-divider[data-tone="lime"]::before { content: "❉ ❉ ❉"; }
+.detail-divider[data-tone="orange"]::before { content: "❋ ❋ ❋"; }
+.detail-divider[data-tone="acid"]::before { content: "❍ ❍ ❍"; }
+
 /* === Challenges & Solutions === */
 .detail-challenges {
   display: grid;
@@ -1225,6 +1237,15 @@ button {
   margin: 0 1px;
   letter-spacing: 0;
   vertical-align: baseline;
+}
+
+/* Thesis = first sentence of each problem/solution/outcome block.
+   Gets weight + slight size bump so a fast scanner catches the
+   core claim without reading the whole paragraph. */
+.detail-challenge-block .thesis {
+  font-size: 1.06em;
+  font-weight: 550;
+  color: #ffffff;
 }
 
 @media (max-width: 720px) {
