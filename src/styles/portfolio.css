@@ -902,11 +902,12 @@ button {
   padding: 10px 14px;
   text-decoration: none;
   text-transform: uppercase;
-  transition: background 160ms ease, color 160ms ease;
+  transition: background 160ms ease, color 160ms ease, box-shadow 200ms ease;
 }
 
 .detail-source:hover {
-  background: color-mix(in srgb, var(--tone) 14%, transparent);
+  background: color-mix(in srgb, var(--tone) 18%, transparent);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--tone) 36%, transparent);
 }
 
 .detail-source:focus-visible {
@@ -1103,6 +1104,18 @@ button {
   padding: 32px;
   border: 1px solid rgba(244, 241, 232, 0.12);
   background: #1a1a1a;
+  transition:
+    border-color 200ms ease,
+    transform 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.detail-challenge:hover {
+  border-color: color-mix(in srgb, var(--tone) 45%, transparent);
+  transform: translateY(-2px);
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.32),
+    0 0 0 1px color-mix(in srgb, var(--tone) 14%, transparent);
 }
 
 .detail-challenge-index {
@@ -1190,7 +1203,12 @@ button {
   height: 8px;
   border: 1.5px solid rgba(244, 241, 232, 0.3);
   background: transparent;
-  transition: background 160ms ease, border-color 160ms ease;
+  transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+}
+
+.detail-challenge-nav a:hover .nav-dot {
+  transform: scale(1.35);
+  border-color: rgba(244, 241, 232, 0.8);
 }
 
 .detail-challenge-nav a.is-active { color: var(--tone); }
@@ -1237,15 +1255,6 @@ button {
   margin: 0 1px;
   letter-spacing: 0;
   vertical-align: baseline;
-}
-
-/* Thesis = first sentence of each problem/solution/outcome block.
-   Gets weight + slight size bump so a fast scanner catches the
-   core claim without reading the whole paragraph. */
-.detail-challenge-block .thesis {
-  font-size: 1.06em;
-  font-weight: 550;
-  color: #ffffff;
 }
 
 @media (max-width: 720px) {

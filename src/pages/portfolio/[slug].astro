@@ -22,19 +22,6 @@ const renderMetrics = (text: string): MetricPart[] =>
       ? { type: "metric" as const, value: match[1] }
       : { type: "text" as const, value: part };
   });
-
-// Split body text at the first sentence boundary. The thesis (first
-// sentence) gets visual weight in the rendered output. Looks for
-// `[.!?]` followed by whitespace OR end of string so that mid-word
-// dots like "AudioSource.time" don't trigger a split.
-const splitThesis = (text: string): { thesis: string; rest: string } => {
-  const idx = text.search(/[.!?](?:\s|$)/);
-  if (idx === -1) return { thesis: text, rest: "" };
-  return {
-    thesis: text.slice(0, idx + 1),
-    rest: text.slice(idx + 1).trim(),
-  };
-};
 ---
 
 <Layout
@@ -158,71 +145,32 @@ const splitThesis = (text: string): { thesis: string; rest: string } => {
                     <div class="detail-challenge-block">
                       <span class="detail-challenge-label">문제 원인</span>
                       <p>
-                        {(() => {
-                          const { thesis, rest } = splitThesis(challenge.problem);
-                          return [
-                            <span class="thesis">
-                              {renderMetrics(thesis).map((p) =>
-                                p.type === "metric"
-                                  ? <span class="metric">{p.value}</span>
-                                  : p.value
-                              )}
-                            </span>,
-                            rest && " ",
-                            rest && renderMetrics(rest).map((p) =>
-                              p.type === "metric"
-                                ? <span class="metric">{p.value}</span>
-                                : p.value
-                            ),
-                          ];
-                        })()}
+                        {renderMetrics(challenge.problem).map((part) =>
+                          part.type === "metric"
+                            ? <span class="metric">{part.value}</span>
+                            : part.value
+                        )}
                       </p>
                     </div>
                     <div class="detail-challenge-block">
                       <span class="detail-challenge-label">해결 과정</span>
                       <p>
-                        {(() => {
-                          const { thesis, rest } = splitThesis(challenge.solution);
-                          return [
-                            <span class="thesis">
-                              {renderMetrics(thesis).map((p) =>
-                                p.type === "metric"
-                                  ? <span class="metric">{p.value}</span>
-                                  : p.value
-                              )}
-                            </span>,
-                            rest && " ",
-                            rest && renderMetrics(rest).map((p) =>
-                              p.type === "metric"
-                                ? <span class="metric">{p.value}</span>
-                                : p.value
-                            ),
-                          ];
-                        })()}
+                        {renderMetrics(challenge.solution).map((part) =>
+                          part.type === "metric"
+                            ? <span class="metric">{part.value}</span>
+                            : part.value
+                        )}
                       </p>
                     </div>
                     {challenge.outcome && (
                       <div class="detail-challenge-block">
                         <span class="detail-challenge-label">결과</span>
                         <p>
-                          {(() => {
-                            const { thesis, rest } = splitThesis(challenge.outcome);
-                            return [
-                              <span class="thesis">
-                                {renderMetrics(thesis).map((p) =>
-                                  p.type === "metric"
-                                    ? <span class="metric">{p.value}</span>
-                                    : p.value
-                                )}
-                              </span>,
-                              rest && " ",
-                              rest && renderMetrics(rest).map((p) =>
-                                p.type === "metric"
-                                  ? <span class="metric">{p.value}</span>
-                                  : p.value
-                              ),
-                            ];
-                          })()}
+                          {renderMetrics(challenge.outcome).map((part) =>
+                            part.type === "metric"
+                              ? <span class="metric">{part.value}</span>
+                              : part.value
+                          )}
                         </p>
                       </div>
                     )}
