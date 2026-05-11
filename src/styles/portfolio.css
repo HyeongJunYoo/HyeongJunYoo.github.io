@@ -1024,6 +1024,17 @@ button {
   overflow-wrap: anywhere;
 }
 
+.detail-divider {
+  text-align: center;
+  color: var(--tone);
+  font-size: 0.9rem;
+  letter-spacing: 1.4em;
+  padding-left: 1.4em;
+  margin: 4px 0;
+  opacity: 0.55;
+  user-select: none;
+}
+
 /* === Challenges & Solutions === */
 .detail-challenges {
   display: grid;

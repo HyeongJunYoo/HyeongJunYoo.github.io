@@ -102,10 +102,14 @@ const renderMetrics = (text: string): MetricPart[] =>
             )}
           </div>
 
+          <div class="detail-divider" aria-hidden="true">◆ ◆ ◆</div>
+
           <section class="detail-narrative">
             <h3>Project goal</h3>
             <p>{project.goal}</p>
           </section>
+
+          <div class="detail-divider" aria-hidden="true">◆ ◆ ◆</div>
 
           {project.challenges.length > 0 && (
             <section class="detail-challenges" aria-label="Challenges and solutions">
