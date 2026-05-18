@@ -154,7 +154,7 @@ export const projects: Project[] = [
     tags: ["Realtime", "Game Logic", "Sync"]
   },
   {
-    title: "메타버스 플랫폼 UI 고도화",
+    title: "메타버스 플랫폼 UI 네이티브 전환",
     period: "2025.01 ~ 2025.04",
     tech: ["Unity", "C#", "UGUI", "MVVM", "Repository Pattern", "UniTask"],
     definition: "WebView 기반 UI의 로딩 지연과 높은 메모리 사용 문제를 개선하기 위해 주요 화면을 Unity 네이티브 UI로 전환",
@@ -188,7 +188,7 @@ export const projects: Project[] = [
     tags: ["Motion Capture", "Avatar", "MediaPipe"]
   },
   {
-    title: "메타버스 플랫폼 고도화",
+    title: "메타버스 플랫폼 시스템 고도화",
     period: "2023.09 ~ 2024.09",
     tech: ["Unity", "C#", "OpenXR", "XR Interaction Toolkit", "New Input System", "FMOD", "Addressables"],
     definition: "PC/VR/모바일 환경 확장을 위해 입력, 사운드, 리소스 로드 구조를 공통화하고 개선",
@@ -262,9 +262,9 @@ export const education = [
     details: ["학점 4.2 / 4.5 · 차석 졸업"]
   },
   {
-    title: "트웬티온스 / 연구개발팀",
+    title: "트웬티온스 / ICT 학점 연계 인턴십",
     period: "2023.03 ~ 2023.08",
-    meta: "ICT 학점 연계 인턴십 · C#, Unity, Physics Drone Simulation",
+    meta: "연구개발팀 · C#, Unity, Physics Drone Simulation",
     details: [
       "Unity 엔진을 사용하여 PID Controller를 적용한 물리 기반 드론 시뮬레이션 프로젝트 개발"
     ]

@@ -63,46 +63,46 @@ export type Project = {
 export const projects: Project[] = [
   {
     id: "project-nemesis",
-    title: "PROJECT NEMESIS",
+    title: "METAVERSE CORE",
     level: "featured",
     eyebrow: "Featured 01",
-    period: "2025 · 9 months",
-    role: "Lead Programmer",
-    engine: "Unreal 5.3",
-    platform: "PC / Steam",
-    genre: "Multiplayer Action",
-    team: "5명",
-    status: "Shipped",
-    summary: "PvPvE 멀티플레이어 액션. 30 tickrate에서 64명 동시접속까지 검증한 동기화 레이어를 직접 책임졌습니다.",
-    goal: "스팀 출시를 목표로 한 시즌 기반 PvPvE 멀티플레이어 액션. 매치당 64명 동시접속과 30 tickrate에서의 정확한 hit detection을 핵심 가치로 잡고, 5인 팀 환경에서 9개월 안에 alpha → shipped까지 빌드를 다듬은 프로젝트입니다. 본인은 lead programmer로 멀티플레이어 동기화 전반(Replication, lag compensation, matchmaking, state persistence)과 클라이언트 ↔ 데디케이티드 서버 architecture 설계를 책임졌고, EOS(Epic Online Services)와 자체 게임 백엔드를 함께 운용하는 구조를 마무리했습니다. 콘솔 출시 검토를 위해 cross-platform input 호환성도 초기부터 고려했고, 베타 테스트 기간 동안 동시접속 1만 명 부하 테스트까지 통과시켰습니다.",
-    challengeIntro: "멀티플레이어 동기화에서 부딪힌 세 가지 핵심 문제 — hit detection, 패킷 폭증, 입력 추상화 — 와 그 해결 과정.",
+    period: "2023–2025 · 19 months",
+    role: "Client Developer / Team Lead",
+    engine: "Unity 2022 LTS",
+    platform: "PC / VR / Mobile",
+    genre: "Metaverse Platform",
+    team: "개발팀",
+    status: "Live",
+    summary: "트웬티온스 PC/VR/모바일 메타버스 플랫폼. UI 네이티브 전환·입력/사운드/리소스 통합·마커리스 모션 캡처까지 클라이언트 핵심 영역을 책임졌습니다.",
+    goal: "트웬티온스 PC/VR 메타버스 플랫폼의 클라이언트 핵심 영역을 1년 7개월에 걸쳐 다듬은 작업입니다. 화면 진입 지연을 줄이고 메모리를 절감하기 위한 UI 네이티브 전환, 입력·사운드·리소스 로드 구조를 환경 무관하게 만든 플랫폼 고도화, 별도 마커 없이 카메라 입력만으로 아바타가 사용자 움직임을 따라가는 마커리스 모션 캡처까지 세 가지 핵심 영역을 차례로 개선했습니다. 개발팀 리더 역할로 일정 관리·작업 분배·기술 방향성 조율과 운영 배포·이슈 대응을 함께 책임졌습니다.",
+    challengeIntro: "UI 네이티브 전환, 입력·사운드·리소스 구조 통합, 마커리스 아바타 트래킹 — 메타버스 플랫폼 클라이언트의 세 가지 케이스.",
     challenges: [
       {
-        title: "30 tickrate hit detection 1프레임 흔들림",
-        problem: "초기 빌드는 모든 hit 판정을 server-authoritative로 처리했습니다. [[30 tickrate]] 환경에서 latency가 [[80ms]]를 넘으면 클라이언트가 보는 적의 위치와 서버가 검증하는 위치 사이에 [[1-2 프레임]] 어긋남이 발생해, '분명히 맞췄는데 데미지 안 들어감' 신고가 베타 첫 주에 [[130건+]] 들어왔습니다. Discord 커뮤니티 분위기가 빠르게 부정적으로 흘러 즉시 대응이 필요한 상황이었습니다.",
-        solution: "Valve의 lag compensation 패턴을 참고해 client-side prediction + server-side rewind 시스템을 구축했습니다. 각 클라이언트는 자기 입력을 즉시 시뮬레이션하면서 서버에 input을 보내고, 서버는 해당 input을 받은 시점에 그 클라이언트의 RTT만큼 과거로 모든 적의 위치를 되돌려 hit detection을 수행합니다. Rewind window는 최대 [[200ms]]로 캡, 그 이상의 비정상 latency는 클라이언트 부정으로 간주해 무효화합니다. 클라이언트 측에선 prediction이 서버 결과와 다르면 부드럽게 보정(reconciliation) 처리합니다.",
-        outcome: "perceived hit latency [[60-80ms → 8-12ms]], 'hit not registered' 신고 [[130건/주 → 4건/주]]"
+        title: "UI 고도화 · WebView → 네이티브 (10+ 화면, 4개월)",
+        problem: "메타버스 플랫폼 주요 화면이 WebView 기반이라 매 진입마다 [[1-2초]] 로딩 지연이 발생했고, WebView 인스턴스가 [[수십~수백 MB]] 메모리를 점유했습니다. Home·Room 같은 자주 진입하는 화면의 누적 지연이 체감 속도를 크게 떨어뜨리고, 모바일 확장 시 메모리 한계가 가장 큰 병목이었습니다.",
+        solution: "Unity 네이티브 UGUI로 Home·Room·Chat·Emote·Setting 등 [[10개+ 화면]]을 재구현했습니다. MVVM 패턴으로 View / ViewModel / Repository 계층을 분리하고, Repository에서 UniTask 비동기 처리, ViewModel이 View에 바인딩하는 흐름. 화면 객체는 초기 1회 생성 후 활성/비활성 토글로 재사용. Canvas Scaler·Auto Layout·EventTrigger 추상화로 PC/VR/모바일 해상도와 입력 방식까지 단일 codebase로 대응.",
+        outcome: "화면 진입 대기 [[1-2초 → 약 0.1초]], 클라이언트 메모리 [[약 -50%]] 절감, 모바일 확장 가능 베이스 확보"
       },
       {
-        title: "64명 매치 인벤토리 동기화 패킷 폭증",
-        problem: "초기 디자인은 모든 클라이언트가 모든 플레이어의 inventory 변경을 broadcast로 받는 구조였습니다. [[64명 매치]]에서 한 번에 다수가 인벤토리를 열거나 줍기/버리기 액션을 하면 서버 → 클라이언트 업로드가 [[초당 10MB]]를 초과해, 중하위 ISP 사용자가 패킷 드롭과 함께 게임에서 튕기는 현상이 발생했습니다. 빌드 안정성 지표(Steam crash report)에서 'connection lost'가 매치당 [[3-4건]]으로 급증했습니다.",
-        solution: "두 가지 최적화를 결합했습니다. 첫째, delta replication — inventory 전체 상태가 아니라 변경분만 보내고 sequence number 기반 reliable delivery 채널을 만들었습니다. 둘째, AOI(Area of Interest) 필터링 — 본인 시야 안의 플레이어 inventory만 풀 동기화하고, 시야 밖은 metadata(존재 여부, 클래스만)만 동기화합니다. AOI 갱신 주기는 클라이언트 카메라 frustum 기준 [[200ms]]마다 재계산했습니다.",
-        outcome: "평균 업로드 트래픽 [[10.4MB/s → 1.6MB/s]] [[(-85%)]], connection lost [[3-4건/매치 → 0.2건/매치]]"
+        title: "플랫폼 고도화 · 입력·사운드·리소스 구조 공통화 (1년)",
+        problem: "기존 입력 처리는 PC·모바일·XR 환경별로 분리되어 신규 입력 기기 추가 시 [[3개 환경]] 코드를 모두 수정해야 했습니다. PC/VR 음성 기기 전환은 [[프로그램 재실행]]이 강제됐고, 리소스는 prefab/scene이 직접 참조되어 클라이언트 메모리 사용량이 [[16GB 이상]]까지 상승, 모바일 한계로 즉시 충돌하는 수준이었습니다.",
+        solution: "세 영역을 차례로 통합했습니다. New Input System 기반 공통 action map으로 PC/모바일/XR 입력을 일원화하고 device 변경 시 UI prompt도 자동 전환. FMOD 기반 audio bus 계층 + OS device enumeration 감시로 음성 기기 런타임 전환. 직접 참조를 AssetReference로 교체하고 Addressables group으로 dependency 자동 추적·unload.",
+        outcome: "신규 입력 기기 확장 시 수정 범위 [[3곳 → 1곳]], 음성 기기 [[재실행 없이]] 런타임 전환, 메모리 [[16GB+ → 4GB 이하]]"
       },
       {
-        title: "Cross-platform input prompt 추상화",
-        problem: "PC 키보드/마우스, Steam Controller, Xbox/PS 컨트롤러까지 지원하면서, 입력 방식이 바뀌면 UI prompt(키 표시)가 즉시 바뀌어야 했습니다. UE5 기본 EnhancedInput 시스템은 device 변경 감지와 prompt 자동 전환을 지원하지 않아, in-game UI에서 'E to interact'와 'X to interact' 같은 표기가 컨트롤러 연결 후에도 키보드 표기로 남는 버그가 있었습니다.",
-        solution: "InputDeviceObserver subsystem을 만들어 마지막 input event의 device source를 추적하고, UI widget이 binding한 PromptToken에 글로벌 broadcast하는 구조로 만들었습니다. UI 측은 PromptToken을 키 텍스트가 아닌 추상 액션 이름('Interact')으로 받고, observer가 device 변경을 알리면 token 매핑 테이블에서 현재 device 기준 표기를 자동 교체합니다. 추가로 Steam Input API를 통해 사용자가 컨트롤러 prompt 스타일(Xbox/PS/Switch)을 강제 지정할 수 있도록 지원했습니다.",
-        outcome: "QA 발견 prompt 관련 버그 [[27건 → 0건]], controller hot-swap [[1프레임]] 안에 반영"
+        title: "마커리스 모션 캡처 · PC/iOS/Android 통합 (3개월)",
+        problem: "MediaPipe는 정규화 keypoint coordinate를, ARKit은 ARFaceAnchor blend shape weight를 반환합니다. 두 데이터는 좌표계·단위·축 정의가 모두 달라 source별로 별도 아바타 리깅 로직을 만들면 [[3개 환경]]에 코드 중복이 빠르게 늘어나는 구조였습니다. 또 손목·손가락은 평면 좌표 + depth 추정 기반이라 3D rotation 변환 시 [[비현실적 꼬임]](impossible joint angle)이 자주 발생했습니다.",
+        solution: "중간 추상 계층 'AvatarMotionFrame'을 정의해 모든 source가 일단 이 구조로 변환되고, 아바타 리깅은 이 구조만 소비하도록 분리. AvatarMotionFrame은 표준 좌표계(Unity 좌표 + meter 단위)와 표준 본 매핑을 가지고, source별 adapter(MediaPipeAdapter / ARKitAdapter)가 conversion을 책임집니다. 본 단위 회전 constraint를 human anatomy 기준으로 clamp, 손가락은 인접 본 회전 의존성을 IK 후처리로 보정, frame jitter는 1-Euro filter로 부드럽게 처리.",
+        outcome: "PC·iOS·Android 모션 데이터를 [[단일 처리 흐름]]으로 통합, 손목·손가락 회전 자연스러움 시각적으로 개선"
       }
     ],
     image: "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1400&q=84",
     tone: "hot",
-    stack: ["Unreal 5.3", "C++", "Replication", "EOS", "Niagara"],
+    stack: ["Unity 2022", "C#", "MVVM", "OpenXR", "FMOD", "Addressables", "MediaPipe", "ARKit"],
     stats: [
-      { value: "60", label: "FPS @ 1080p" },
-      { value: "64", label: "Concurrent players" },
-      { value: "2.1GB", label: "Build size" }
+      { value: "0.1s", label: "Entry latency" },
+      { value: "4GB", label: "Memory ceiling" },
+      { value: "3", label: "Platform targets" }
     ],
     gallery: [
       "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=900&q=80",
@@ -124,40 +124,40 @@ export const projects: Project[] = [
   },
   {
     id: "echo-runner",
-    title: "ECHO RUNNER",
+    title: "VR ACUPUNCTURE LAB",
     level: "core",
     eyebrow: "Core 02",
-    period: "2024 · 4 months",
-    role: "Gameplay Programmer",
-    engine: "Unity 6",
-    platform: "PC",
-    genre: "Action",
-    team: "Solo",
-    status: "Prototype",
-    summary: "BPM 기반 입력 윈도우와 비주얼 큐가 동기화되는 1인 개발 리듬 액션 러너 프로토타입.",
-    goal: "사이드 스크롤 러너 장르에 리듬 게임의 정확한 입력 판정 시스템을 결합한 1인 개발 프로토타입. 음악에 맞춰 점프와 슬라이드를 입력하는 4단계 난이도의 트랙 5개를 만들었습니다. Unity 6와 URP를 처음부터 깊게 사용해보는 학습 목표도 함께 두고, 오디오 타임라인 ↔ 게임플레이 동기화의 모든 단계를 본인이 설계해 4개월 안에 playable build를 만들었습니다. 결과물은 itch.io에 무료 공개해 100명 이상의 플레이어 데이터를 수집해 input window 튜닝의 기반 자료로 사용했습니다.",
-    challengeIntro: "오디오 ↔ 입력 윈도우 동기화 정확도와 모바일 GPU 성능을 끌어올린 두 가지 엔지니어링 케이스.",
+    period: "2025–2026 · 4 months",
+    role: "Client Developer",
+    engine: "Unity 2022 LTS",
+    platform: "VR (Meta Horizon)",
+    genre: "Educational VR",
+    team: "개발팀",
+    status: "Shipped",
+    summary: "VR 환경에서 침술 학습·실습·평가를 진행하는 교육용 콘텐츠. 한의대 수업에 실제 적용해 만족도 4.20/5.0을 기록했습니다.",
+    goal: "VR 헤드셋에서 침술 학습→실습→평가까지 하나의 시나리오로 연결되는 교육용 콘텐츠를 클라이언트 측에서 책임진 4개월 프로젝트입니다. 학습/실습/관찰 3가지 모드를 환자 문진·치료 단계·결과 UI 흐름으로 연결하고, 침의 위치·각도·깊이 데이터를 기준으로 실습 결과를 평가하는 시각화 로직을 직접 구현했습니다. 경혈 데이터 동기화, 햅틱 피드백, 메뉴/룸 UI, Meta Horizon 비공개 앱 빌드와 배포까지 콘텐츠 완성에 필요한 클라이언트 작업을 수행했고, 완성된 빌드를 실제 한의대 수업에 적용해 교육 현장 활용 가능성을 검증했습니다.",
+    challengeIntro: "VR 침술 실습 평가 시스템과 멀티 참여자 동기화에서 부딪힌 두 가지 케이스.",
     challenges: [
       {
-        title: "오디오 타임라인 ↔ 입력 윈도우 동기화 정확도",
-        problem: "Unity의 AudioSource.time은 audio thread와 game thread 사이에서 [[±20ms]] 정도 jitter가 발생해, [[60Hz 게임플레이]] 입력 판정 윈도우([[±33ms]])와 비교했을 때 무시할 수 없는 오차였습니다. 결과적으로 '딱 박자에 맞춰 눌렀는데 perfect 안 됨' 같은 false negative가 트랙당 [[5-10회]]씩 발생해 게임이 부당하게 느껴졌습니다.",
-        solution: "AudioSettings.dspTime을 기준 시각으로 사용하고, AudioSource.time은 시각 큐 갱신용으로만 사용하도록 분리했습니다. dspTime은 audio engine 내부 시계라 jitter가 [[µs 단위]]로 줄어듭니다. 또한 입력 시각도 frame 시각이 아닌 input event timestamp를 기록해 dsp 시각과 비교하는 구조로 변경했습니다. 트랙 데이터(노트 타이밍)는 ScriptableObject로 BPM과 offset만 가지고, 런타임에 dsp 시각과 비교하는 방식입니다.",
-        outcome: "input window 판정 오차 [[±20ms → ±2ms]], [[100명 플레이 데이터]] 기준 false negative [[0%]]"
+        title: "침 위치·각도·깊이 평가 시각화",
+        problem: "침술 실습 평가는 침이 경혈에 정확히 들어갔는지를 위치·각도·깊이 [[세 축]]에서 판정해야 했습니다. 초기 구현은 단순히 [[hit/miss]]만 boolean으로 표시했는데, 강사진 피드백에서 '왜 틀렸는지' 학생이 이해할 단서가 부족하다는 의견이 반복됐습니다. 학습 콘텐츠 본래 목적과 어긋나는 상황.",
+        solution: "침 데이터를 위치(경혈 중심점과의 거리), 각도(권장 각도와의 편차), 깊이(권장 깊이와의 편차) 세 축으로 분해해 평가하고, 각 축마다 시각화 피드백을 다르게 줬습니다. 위치는 평면 marker, 각도는 3D arrow, 깊이는 단면도 indicator로 표시하고 권장 범위 안에 들어오면 점진적으로 색이 바뀌도록 구현했습니다.",
+        outcome: "한의대 수업 적용 결과 만족도 [[4.20 / 5.0]], 강사진 피드백에서 '학습 단서가 풍부하다' 평가 확보"
       },
       {
-        title: "URP shader fit + 모바일 GPU stuttering",
-        problem: "기본 URP lit shader는 셀룰로이드 풍 게임의 외곽선 강조 + 채도 높은 컬러 그레이딩에 맞지 않았습니다. 또 itch.io 빌드를 모바일 브라우저에서도 돌려보고 싶었는데, 일부 안드로이드 GPU(Mali-G52)에서 발견된 stuttering이 frame time [[30ms]]를 넘기는 spike를 만들었습니다.",
-        solution: "URP custom render feature로 outline pass를 추가하고, 외곽선은 stencil + dilated normal 기반으로 처리했습니다. 컬러 그레이딩은 LUT texture로 분리해 디자이너가 photoshop에서 직접 조정 가능한 워크플로우를 만들었습니다. 모바일은 GPU profiler로 stuttering 원인을 찾았는데, post-process volume이 frame마다 reallocation을 일으키는 게 원인이었습니다. volume profile을 정적 ScriptableObject로 캐시해 spike를 제거했습니다.",
-        outcome: "프레임 타임 변동 [[30ms → 8ms]], Mali-G52 평균 [[60FPS]] 유지"
+        title: "멀티 실습 룸 동기화 + Meta Horizon 배포",
+        problem: "여러 학생이 동일한 환자 데이터를 보며 침술 실습을 진행할 때, 룸 상태(현재 시나리오 단계, 환자 상태, 선택된 경혈)가 클라이언트 간에 즉시 동기화되어야 했습니다. 초기 구현은 매 단계 변경마다 [[전체 상태]]를 브로드캐스트해 네트워크 대역폭과 latency 둘 다 부담이 컸습니다. 또 Meta Horizon 비공개 앱 빌드/배포는 팀 내 첫 경험으로 procedure도 함께 정리 필요.",
+        solution: "Netcode 기반 변경분(delta) 동기화로 전환했습니다. 시나리오 단계·환자 상태·선택 경혈을 각각 NetworkVariable로 분리해 변경된 항목만 send. Meta Horizon 배포는 Quest 전용 IL2CPP build profile 분리, 앱 서명, 비공개 채널 업로드 과정을 internal wiki에 정리해 이후 팀이 동일 프로세스를 재사용할 수 있게 했습니다.",
+        outcome: "룸 상태 동기화 패킷량 감소, Meta Horizon 비공개 채널 [[첫 배포 성공]]"
       }
     ],
     image: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=1400&q=84",
     tone: "aqua",
-    stack: ["Unity 6", "C#", "URP", "DOTween", "Audio Timeline"],
+    stack: ["Unity 2022", "C#", "OpenXR", "XR Interaction Toolkit", "Netcode", "Meta Horizon"],
     stats: [
-      { value: "120", label: "FPS @ 1440p" },
-      { value: "<8ms", label: "Input latency" },
-      { value: "320MB", label: "Build size" }
+      { value: "4.20", label: "Satisfaction / 5.0" },
+      { value: "3", label: "Practice modes" },
+      { value: "4mo", label: "Dev period" }
     ],
     gallery: [
       "https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?auto=format&fit=crop&w=900&q=80",
@@ -178,40 +178,40 @@ export const projects: Project[] = [
   },
   {
     id: "rune-tactics",
-    title: "RUNE TACTICS",
+    title: "HAPTIC COOKING",
     level: "core",
     eyebrow: "Core 03",
-    period: "2024 · 48-hour jam",
-    role: "Tools / Gameplay",
-    engine: "Unreal 5.3",
-    platform: "PC",
-    genre: "FPS",
-    team: "3명",
-    status: "Game Jam",
-    summary: "48시간 게임잼 2위 출품작. 룬 결합 기반 FPS를 데이터 드리븐 무기 시스템으로 단기간에 구현.",
-    goal: "48시간 게임잼 출품작으로 만든 룬 결합 시스템 기반 1인칭 슈터. 플레이어가 던전을 클리어하며 7가지 기본 룬을 모으고, 이를 2-3개씩 결합해 12개 이상의 무기 변형을 만들어내는 데이터 드리븐 무기 시스템을 단기간에 구현해 잼 2위에 랭크되었습니다. 3인 팀이었지만 본인이 모든 코드(C++ + Blueprint)와 절차적 던전 생성을 담당했고, 디자이너 동료가 룬 조합 룰을 DataAsset으로 직접 편집할 수 있는 in-editor 툴까지 만들어 협업 속도를 끌어올렸습니다. 게임잼 후 Steam Greenlight 진행 검토 단계입니다.",
-    challengeIntro: "48시간 잼 제약 안에서 데이터 드리븐 무기 빌더와 절차적 던전 + AI 네비게이션을 동시에 굴린 두 가지 케이스.",
+    period: "2025 · 6 months",
+    role: "Client Developer (Lead)",
+    engine: "Unity 2022 LTS",
+    platform: "VR",
+    genre: "Realtime Multiplayer",
+    team: "개발팀",
+    status: "Shipped",
+    summary: "주문·조리 흐름과 햅틱 피드백을 동기화하는 실시간 멀티 요리형 콘텐츠. 행사·시연에 활용.",
+    goal: "플랫폼 SDK 기반으로 여러 참여자가 함께 요리 미션을 수행하는 실시간 멀티 콘텐츠를 개발 주도한 작업입니다. 룸 상태(현재 주문, 조리 단계, 완료 여부), 주문→조리→서빙으로 이어지는 진행 흐름, 그리고 햅틱 피드백을 함께 동기화하는 클라이언트 로직을 책임졌습니다. 결과적으로 행사 및 시연에 활용해 실시간 협력형 콘텐츠의 사용 경험을 검증했고, 동시에 플랫폼 SDK의 개선 필요 기능을 정리할 수 있었습니다.",
+    challengeIntro: "주문·조리 흐름과 햅틱 피드백을 멀티 환경에서 동기화한 두 가지 케이스.",
     challenges: [
       {
-        title: "48시간 안에 데이터 드리븐 무기 빌더 구현",
-        problem: "기본/공격/효과 3가지 카테고리의 룬을 다양하게 조합하면 [[12개 이상]]의 무기가 나와야 했는데, hard-coded로 짜면 디자이너가 룬 추가할 때마다 프로그래머 작업이 필요했습니다. 잼 환경에서 [[24시간]] 내내 디자이너가 룬을 새로 추가하고 싶어 할 게 뻔했고, 매번 빌드 받아주면 다른 작업이 멈추는 문제.",
-        solution: "DataAsset 기반 RuneAsset(이름/카테고리/효과 파라미터) + WeaponCombinationRule(룬 카테고리 조합 → 무기 클래스 매핑) 두 가지 자료를 정의했습니다. 런타임에 player가 룬 [[3개]]를 들고 결합 액션을 하면 RuleSet에서 매칭 무기 클래스를 lookup하고 spawn합니다. 새 룬은 디자이너가 ContentBrowser에서 RuneAsset 우클릭 → Create로 직접 추가하고, RuleSet에 ID만 넣으면 끝.",
-        outcome: "디자이너가 잼 [[24시간 차]]에 룬 [[4종]]을 본인이 직접 추가, 프로그래머 개입 [[0회]]"
+        title: "멀티 주문·조리 흐름 동기화",
+        problem: "여러 참여자가 동시에 다른 요리를 진행하고 같은 재료를 공유하는 환경에서, 주문→조리→서빙 단계가 클라이언트 간에 즉시 동기화되어야 했습니다. 초기 구현은 매 단계마다 전체 룸 상태를 브로드캐스트해 네트워크 부담이 컸고, 동시 동작 시 [[race condition]]으로 같은 재료를 두 사람이 동시에 집어드는 충돌이 발생했습니다.",
+        solution: "주문·재료·요리 상태를 도메인별로 분리해 변경된 항목만 전송하도록 SDK 동기화 API를 정리했습니다. 재료 점유는 atomic 단위로 처리 — 한 클라이언트가 집어드는 순간 lock을 걸고 권한 검증을 거쳐야 다른 클라이언트가 동일 재료를 집을 수 없게 했습니다. 조리 단계 전환은 host-authoritative 검증으로 일관성 보장.",
+        outcome: "동시 동작 시 [[재료 충돌]] 제거, 룸 상태 동기화 패킷량 감소"
       },
       {
-        title: "절차적 던전 + AI 네비게이션 동시 보장",
-        problem: "런타임에 던전이 매번 다르게 생성되어야 했지만, AI는 NavMesh 기반이라 BuildAtRuntime이 [[30초]] 이상 걸리면 게임 시작 전에 시간 너무 오래 잡혔습니다. 잼 평가 빌드는 빠르게 시작해야 했고, 매번 NavMesh 빌드를 기다리게 할 순 없었습니다.",
-        solution: "사전 베이크된 청크([[15x15m unit]])를 [[30개]] 만들고, 청크 단위로 NavMesh를 미리 굽고 child volume으로 묶었습니다. 런타임에는 청크를 랜덤 조합해 placement만 하고, 청크 간 연결 portal에 manual NavLink를 붙여 NavMesh를 새로 굽지 않고도 patrol/chase가 동작합니다. 적 spawn은 청크별 spawn point 메타데이터로 관리.",
-        outcome: "던전 생성 시간 [[30초+ → 0.4초]], 매 게임 다른 레이아웃"
+        title: "VR 컨트롤러 햅틱 피드백 연동",
+        problem: "요리 콘텐츠의 핵심은 '손에 닿는 감각'이라 단순 buzz 진동이 아니라 동작별로 다른 햅틱 패턴이 필요했습니다. 칼질·끓이기·붓기 같은 동작이 모두 동일한 진동으로 들리면 몰입이 깨지는 문제. 또 햅틱 트리거 타이밍이 시각 피드백과 [[수십 ms]] 어긋나도 사용자가 즉시 인지하는 민감도.",
+        solution: "동작 카테고리별 햅틱 프로필(amplitude curve + frequency + duration)을 ScriptableObject로 정리. 시각 피드백 trigger와 햅틱 trigger를 같은 frame에 묶어 timing drift 최소화. VR 컨트롤러 양손에 독립 채널로 보내, 양손 동작(예: 도마+칼)이 자연스럽게 분리되도록 했습니다.",
+        outcome: "동작별 햅틱 차별화로 몰입감 향상, 행사 시연에서 사용자 반응 [[즉각적 피드백]] 확보"
       }
     ],
     image: "https://images.unsplash.com/photo-1483058712412-4245e9b90334?auto=format&fit=crop&w=1400&q=84",
     tone: "violet",
-    stack: ["Unreal 5.3", "Blueprints", "C++", "Behavior Tree"],
+    stack: ["Unity 2022", "Lua", "Metaverse SDK", "OpenXR", "Haptic", "Room State Sync"],
     stats: [
-      { value: "48h", label: "Dev time" },
-      { value: "12+", label: "Rune combos" },
-      { value: "2nd", label: "Jam ranking" }
+      { value: "VR", label: "Platform" },
+      { value: "Realtime", label: "Sync mode" },
+      { value: "6mo", label: "Dev period" }
     ],
     gallery: [
       "https://images.unsplash.com/photo-1542751110-97427bbecf20?auto=format&fit=crop&w=900&q=80",
@@ -232,40 +232,40 @@ export const projects: Project[] = [
   },
   {
     id: "poly-drift",
-    title: "POLY DRIFT",
+    title: "THERAPY MINIS",
     level: "core",
     eyebrow: "Core 04",
-    period: "2023 · 6 months",
-    role: "Gameplay Programmer",
-    engine: "Godot 4",
-    platform: "PC / Mobile",
-    genre: "Puzzle",
-    team: "2명",
+    period: "2025 · 6 months",
+    role: "Client Developer (Lead)",
+    engine: "Unity 2022 LTS",
+    platform: "PC / VR",
+    genre: "Realtime Multiplayer",
+    team: "개발팀",
     status: "Shipped",
-    summary: "로우폴리 드리프트 퍼즐. PC + 모바일 동시 출시, 첫 달 12K DAU 달성.",
-    goal: "로우폴리 미감의 모바일/PC 동시 출시 드리프트 퍼즐 게임. 코너에서 그리는 드리프트 라인의 길이/각도가 점수가 되고, 시간 압축 리플레이로 자기 베스트와 경쟁하는 솔로 모드 + 글로벌 리더보드를 핵심 루프로 잡았습니다. 2인 팀에서 본인은 차량 물리 컨트롤러, 트랙 데이터 시스템, 모바일 터치 입력 어댑터, 리플레이 직렬화/재생, REST 백엔드 연동까지 클라이언트 전반을 담당했고, 디자이너 파트너가 트랙 디자인과 UI/UX를 맡았습니다. 6개월 개발 후 Steam과 Google Play 동시 출시했고, 출시 첫 달에 두 플랫폼 합산 12,000 DAU를 기록했습니다.",
-    challengeIntro: "크로스 플랫폼 입력 일관성과 리플레이 데이터/백엔드 비용을 동시에 잡은 두 가지 케이스.",
+    summary: "심리상담 세션을 위한 미니게임 4종 + 관리자 제어 + 참여자 상태 동기화 실시간 콘텐츠.",
+    goal: "심리상담사가 내담자와 함께 진행할 수 있는 미니게임 4종과 관리자 제어, 참여자 상태 동기화를 책임진 실시간 멀티 콘텐츠입니다. 상담사 측에서는 관리자 모드로 게임 진행을 통제하고 참여자 상태를 모니터링하며, 참여자는 상담 세션 중 미니게임을 수행하는 비대칭 구조. 4종의 미니게임은 각자 다른 규칙과 입력 방식을 가지지만, 동일한 상태 동기화·관리자 제어 인터페이스를 따르는 공통 레이어 위에 올렸습니다.",
+    challengeIntro: "비대칭 관리자/참여자 구조와 미니게임 4종 공통 레이어를 다듬은 두 가지 케이스.",
     challenges: [
       {
-        title: "터치 ↔ 키보드/게임패드 입력 일관성",
-        problem: "PC는 좌/우 키와 아날로그 스틱(점진적 입력), 모바일은 좌/우 화면 터치(이산 입력)가 들어옵니다. 같은 코너에서 PC는 부드러운 드리프트가 나오는데 모바일은 핸들이 갑자기 꺾여 드리프트 라인이 끊겨 점수가 절반 이하로 떨어지는 형평성 문제가 있었습니다. 리더보드 1위가 모두 PC 사용자로 쏠리면 모바일 사용자 이탈이 우려됐습니다.",
-        solution: "터치 입력을 InputAdapter에서 가상 아날로그 신호로 변환했습니다. 터치 시작 ~ 종료 사이의 시간을 곡선으로 mapping해(touch hold time [[0~250ms]] 동안 0→1로 ease-out), 게임 측은 항상 0~1 사이의 analog steering 값을 받습니다. 같은 코너 통과 시 PC와 모바일이 거의 동일한 드리프트 라인이 그려지도록 튜닝했고, 모바일에서도 분기 가능한 advanced flicking 동작도 지원합니다.",
-        outcome: "동일 트랙 PC vs 모바일 평균 점수 격차 [[47% → 4%]]"
+        title: "미니게임 4종 공통 레이어",
+        problem: "미니게임 [[4종]]은 각자 다른 규칙·입력·진행 방식을 가졌지만, 모두 동일한 관리자 제어와 참여자 상태 동기화를 필요로 했습니다. 게임마다 별도 구현하면 동일 로직이 [[4번]] 중복되고, 룰만 다른데 동기화 코드가 분기점이 되면 유지보수 비용이 빠르게 늘어나는 구조였습니다.",
+        solution: "MiniGameBase 추상 클래스에 공통 인터페이스(StartGame / PauseGame / SubmitInput / GetState)를 정의하고, 4종 미니게임이 각자 상속해 게임별 로직만 구현했습니다. 관리자 제어와 상태 동기화는 base class 레벨에서 처리되어, 신규 미니게임 추가 시에도 동일하게 동작합니다.",
+        outcome: "미니게임 [[4종]]을 공통 인터페이스 위에 구현, 신규 미니게임 추가 시 동기화 코드 재구현 불필요"
       },
       {
-        title: "리플레이 데이터 사이즈 + 백엔드 비용",
-        problem: "리플레이를 매 프레임 raw position으로 저장하니 [[60초]] 트랙이 [[800KB]]가 되고, 글로벌 리더보드 백엔드 S3 저장 + 다운로드 비용이 무시 못할 수준이었습니다. 모바일 사용자 데이터 비용 부담도 있어 출시 후 운영비가 매출보다 빠르게 늘어날 위험.",
-        solution: "delta-encoded keyframe 방식으로 변경했습니다. 위치/회전을 [[100ms]] 간격으로 keyframe하고 사이는 spline interpolation. 입력 변화가 없는 구간은 더 듬성듬성 keyframe. quaternion은 [[8-byte]] fixed-point로 압축. 추가로 zstd(level 5)로 후처리 압축까지 적용해 평균 사이즈를 대폭 줄였습니다.",
-        outcome: "리플레이 평균 사이즈 [[800KB → 18KB]] [[(-97.7%)]], S3 비용 월 [[$40 → $2]]"
+        title: "관리자/참여자 비대칭 동기화",
+        problem: "상담사(관리자)와 내담자(참여자)는 같은 세션을 보지만 권한과 화면 구성이 완전히 다릅니다. 관리자는 미니게임 시작·정지·난이도 조정·결과 확인 권한, 참여자는 게임 입력 권한만. 동기화 시 권한 검증을 빼먹으면 참여자가 임의로 게임을 정지하거나 결과를 조작할 수 있는 [[보안 허점]].",
+        solution: "권한 모델을 Authority 단위로 분리했습니다. 관리자 권한 변수는 host(상담사) 전용 write, 참여자 입력 변수는 client write 후 host validate. UI도 권한 모델에 따라 자동 분기 — 관리자 클라이언트는 control panel, 참여자 클라이언트는 게임 화면만 보이도록 했습니다.",
+        outcome: "관리자/참여자 권한 분리로 [[보안 허점]] 제거, 동일 codebase로 비대칭 UI 자동 분기"
       }
     ],
     image: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1400&q=84",
     tone: "lime",
-    stack: ["Godot 4", "GDScript", "C#", "REST"],
+    stack: ["Unity 2022", "Lua", "Metaverse SDK", "UGUI", "Authority Model"],
     stats: [
-      { value: "60", label: "FPS @ 4K" },
-      { value: "120", label: "Tracks" },
-      { value: "180MB", label: "Build size" }
+      { value: "4", label: "Mini-games" },
+      { value: "Realtime", label: "Sync mode" },
+      { value: "6mo", label: "Dev period" }
     ],
     gallery: [
       "https://images.unsplash.com/photo-1486572788966-cfd3df1f5b42?auto=format&fit=crop&w=900&q=80",
@@ -286,40 +286,40 @@ export const projects: Project[] = [
   },
   {
     id: "render-lab",
-    title: "RENDER LAB",
+    title: "SDK TOOLING",
     level: "core",
     eyebrow: "Core 05",
-    period: "2023 · ongoing",
-    role: "Tech Programmer",
-    engine: "Custom (C++/Vulkan)",
-    platform: "PC",
-    genre: "Tech Demo",
-    team: "Solo",
-    status: "Prototype",
-    summary: "자체 C++/Vulkan 렌더링 엔진. PBR · CSM · 디퍼드 G-buffer를 직접 구현한 OSS 사이드 프로젝트.",
-    goal: "취미 프로젝트로 시작한 자체 C++/Vulkan 렌더링 엔진. PBR 머티리얼, cascaded shadow map, 디퍼드 G-buffer까지 직접 구현하면서 modern GPU pipeline의 동작 방식을 깊이 이해하는 게 목표입니다. 게임 엔진을 만들려는 게 아니라, 그래픽스 인터뷰에서 자신 있게 설명할 수 있는 수준의 baseline 코드를 갖는 것이 핵심 동기였습니다. 1년차 현재 GLTF 2.0 모델 로딩, IBL 기반 PBR, 6 cascade shadow, post-process(bloom, tonemap) 파이프라인이 동작하고, GitHub에 OSS로 공개해 contributors 3명을 받았습니다.",
-    challengeIntro: "Vulkan command graph 추상화와 PBR uber shader + 6 cascade shadow 파이프라인을 다듬은 두 가지 그래픽스 케이스.",
+    period: "2026 · ongoing",
+    role: "Client Developer / Tools",
+    engine: "Unity 2022 LTS",
+    platform: "Internal Tooling",
+    genre: "Dev Pipeline",
+    team: "개발팀",
+    status: "Ongoing",
+    summary: "Unity Package Manager + Editor Tool 3개 버튼으로 SDK 초기 설정 6~8단계를 자동화한 사내 도구.",
+    goal: "신규 콘텐츠 개발자가 SDK 설치와 초기 프로젝트 설정에 매번 6~8단계를 반복해야 하는 문제를 줄이고, 제작 환경을 표준화하기 위해 진행 중인 사내 도구 작업입니다. Git URL 기반 SDK 설치와 버전 관리 흐름을 정리하고, 콘텐츠 제작에 필요한 프로젝트 설정과 빌드 관련 초기 작업을 Editor Tool로 옮겼습니다. 샘플 Scene과 템플릿 Scene을 정리해 신규 콘텐츠 제작의 시작점을 표준화했고, 결과적으로 환경 차이로 인한 초기 셋업 버그를 줄이는 게 목표입니다.",
+    challengeIntro: "SDK 설치 마찰과 환경 차이로 인한 셋업 버그를 줄이기 위한 두 가지 케이스.",
     challenges: [
       {
-        title: "Vulkan command graph 추상화",
-        problem: "Vulkan은 raw API라서 command buffer 빌딩, descriptor set, render pass synchronization을 직접 다 관리해야 합니다. 초기엔 모든 frame의 command를 매번 새로 빌드했는데, 이러면 [[60FPS @ 1440p]]에서 CPU에 [[30%]] 이상 시간을 쓰는 비효율이 발생했습니다. [[144Hz]] 목표는커녕 [[60Hz]]도 위태로운 상황.",
-        solution: "frame graph 패턴을 도입해 pass 간 의존성을 그래프로 선언하고, 매 프레임 command 빌드를 cache 가능한 형태로 분리했습니다. 변경된 pass만 재빌드하고, descriptor set도 pass 단위로 pre-allocated pool에서 리사이클합니다. synchronization barrier는 frame graph가 자동으로 추론해 삽입합니다. 결과적으로 일반 frame은 빌드 비용이 거의 0에 가깝습니다.",
-        outcome: "프레임당 CPU 시간 [[12.4ms → 3.1ms]], [[144Hz]] 안정 유지"
+        title: "SDK 초기 설정 6~8단계 → Editor Tool 3개 버튼",
+        problem: "신규 콘텐츠 개발자가 SDK를 처음 적용할 때 [[6-8단계]]의 수동 설정(패키지 설치, 프로젝트 설정 조정, Addressables 그룹 생성, build profile 추가, 샘플 scene 복사 등)이 필요했습니다. 한 단계라도 놓치면 빌드 실패나 런타임 에러가 발생해, 신규 개발자가 환경 셋업에만 [[하루 이상]] 쓰는 일이 반복됐습니다.",
+        solution: "Editor Tool로 'Install SDK', 'Configure Project', 'Create Template'의 3개 버튼을 만들었습니다. Install SDK 버튼은 Unity Package Manager로 Git URL을 통해 패키지를 추가하고 의존 패키지까지 자동 설치. Configure Project 버튼은 PlayerSettings·GraphicsSettings·Addressables 기본 group을 한 번에 적용. Create Template 버튼은 표준 sample scene과 빈 콘텐츠 scene을 생성합니다.",
+        outcome: "SDK 초기 설정 [[6-8단계 → 3버튼]], 설정 누락으로 인한 환경 오류 대폭 감소"
       },
       {
-        title: "PBR uber shader + 6 cascade shadow",
-        problem: "metallic-roughness 모델을 표준 GLTF 그대로 따르되, 동시에 emissive, clearcoat, transmission까지 옵션 확장하려니 shader variants가 폭발했습니다. 또 [[6 cascade]] shadow는 cascade 경계에서 acne와 peter-panning이 동시에 발생해 시각적 아티팩트가 두드러졌습니다.",
-        solution: "uber shader를 작성하고 shader variant를 spec constant로 컴파일 타임에 선택하도록 했습니다. cascade shadow는 Variance Shadow Map의 cascading 변형을 적용해 경계 부드럽게 처리하고, normal-bias + slope-scale depth-bias 조합으로 acne 제거. 추가로 cascade 간 blend region을 [[8%]] 폭으로 두어 갑작스러운 해상도 변화도 가렸습니다.",
-        outcome: "shader binary [[21개 → 1개]], shadow 경계 artifact 시각적으로 제거"
+        title: "SDK 버전 관리 + 패키지 갱신",
+        problem: "기존 워크플로우에서 SDK 업데이트는 폴더 단위 [[수동 재설치]]였습니다. 신규 SDK 버전이 나올 때마다 모든 콘텐츠 개발자가 SDK 폴더를 삭제 후 재배치하는 절차를 거쳐야 했고, 그 과정에서 로컬 수정사항이 덮어쓰이거나 의존 패키지 버전 mismatch가 발생했습니다.",
+        solution: "Unity Package Manager의 Git URL 의존 기능을 활용해 SDK 자체를 패키지로 패키징했습니다. manifest.json에 SDK Git URL과 commit hash가 기록되고, Update 버튼은 manifest 항목의 hash를 최신 release tag로 변경 + Package Manager에 reload 요청. 의존 패키지는 SDK 패키지의 package.json dependencies에서 자동 해석.",
+        outcome: "SDK 갱신이 수동 재설치 → [[Update 버튼 1회 클릭]]으로 단축, 버전 mismatch 가능성 감소"
       }
     ],
     image: "https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1400&q=84",
     tone: "orange",
-    stack: ["C++", "Vulkan", "GLSL", "GLTF"],
+    stack: ["Unity 2022", "C#", "Lua", "Unity Package Manager", "Addressables", "Editor Tooling"],
     stats: [
-      { value: "144", label: "FPS @ 1440p" },
-      { value: "6", label: "Cascade splits" },
-      { value: "OSS", label: "License" }
+      { value: "3", label: "Tool buttons" },
+      { value: "6~8", label: "Steps automated" },
+      { value: "Ongoing", label: "Status" }
     ],
     gallery: [
       "https://images.unsplash.com/photo-1556438064-2d7646166914?auto=format&fit=crop&w=900&q=80",

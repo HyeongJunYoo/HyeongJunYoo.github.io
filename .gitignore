@@ -11,6 +11,7 @@ dev-server.err.log
 local-dev-runbook.md
 resume-project-details.md
 .qodo/
+.superpowers/
 .env
 .env.*
 *.local

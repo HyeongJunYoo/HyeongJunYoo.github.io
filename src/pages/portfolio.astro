@@ -39,7 +39,7 @@ import { projects, featuredProject } from "../data/projects";
         <div class="hero-media hud-frame" aria-hidden="true">
           <span class="hud-corner-tr"></span>
           <span class="hud-corner-bl"></span>
-          <img src={featuredProject.image} alt="" fetchpriority="high" />
+          <img src={featuredProject.image} alt="" fetchpriority="high" draggable={false} />
           <span class="hero-scrim"></span>
         </div>
         <div class="hero-overlay">
@@ -50,8 +50,8 @@ import { projects, featuredProject } from "../data/projects";
       <section class="world-stage" aria-labelledby="world-title">
         <div class="projects-section-header">
           <div class="projects-section-label">
-            <p class="eyebrow">Other projects</p>
-            <h2 id="world-title">Work archive</h2>
+            <p class="eyebrow">All projects</p>
+            <h2 id="world-title">Project archive</h2>
           </div>
           <div class="projects-section-controls" role="group" aria-label="Project view mode">
             <div class="mode-tabs">
@@ -120,6 +120,7 @@ import { projects, featuredProject } from "../data/projects";
                     alt=""
                     loading={index > 1 ? "lazy" : "eager"}
                     decoding="async"
+                    draggable={false}
                   />
                   <span class="card-scrim"></span>
                   <span class="card-meta">
@@ -172,7 +173,6 @@ import { projects, featuredProject } from "../data/projects";
       let deckTarget = 0;
       let deckWasDragged = false;
       let deckPointerDown = false;
-      let worldPointerDown = false;
       let worldWasDragged = false;
       let skipNextCardClick = false;
 
@@ -191,6 +191,7 @@ import { projects, featuredProject } from "../data/projects";
         rotator?.style.setProperty("--world-rotate-y-inverse", `${(-worldRotateY).toFixed(3)}deg`);
       };
 
+      let deckTransitionTimer = 0;
       const setMode = (mode) => {
         shell?.setAttribute("data-mode", mode);
         modeButtons.forEach((button) => {
@@ -198,8 +199,33 @@ import { projects, featuredProject } from "../data/projects";
         });
 
         if (mode === "deck") {
+          // Allow CSS transition during the mode-change window so cards
+          // animate from their previous grid/world position into the deck
+          // stack. After 600ms the class is removed and JS interpolation
+          // takes over for wheel/swipe scrolling (transition:none kicks
+          // in to prevent the stuck-transform bug from CSS-variable
+          // updates restarting the transition every frame).
+          shell?.classList.add("deck-transitioning");
+          window.clearTimeout(deckTransitionTimer);
+          deckTransitionTimer = window.setTimeout(() => {
+            shell?.classList.remove("deck-transitioning");
+          }, 600);
           updateDeck();
+        } else {
+          // Switching away from deck — clear the transition window so a
+          // future deck entry gets a fresh animation.
+          window.clearTimeout(deckTransitionTimer);
+          shell?.classList.remove("deck-transitioning");
         }
+
+        // Persist current view in the URL so the browser back button
+        // from a project detail page returns the user to the same mode
+        // (Grid / Deck / World) instead of always defaulting to Grid.
+        try {
+          const url = new URL(window.location.href);
+          url.searchParams.set("mode", mode);
+          window.history.replaceState(window.history.state, "", url.toString());
+        } catch (_) { /* URL update is non-critical */ }
       };
 
       const wrapIndex = (index) => ((index % cards.length) + cards.length) % cards.length;
@@ -221,11 +247,15 @@ import { projects, featuredProject } from "../data/projects";
       const updateDeck = () => {
         const maxVisible = 4;
         const nearestIndex = wrapIndex(Math.round(deckPosition));
-        // Deck spacing scales with the actual card width so the fan stays
-        // visually consistent from 560px (mobile) to 1120px (wide desktop).
-        const cardWidth = cards[0]?.getBoundingClientRect().width || 560;
-        const xUnit = cardWidth * 0.32;
-        const peekUnit = cardWidth * 0.04;
+        // Deck spacing scales with the actual card width. 0.18 keeps two
+        // back cards visible on each side without pushing card index 2
+        // outside the world-stage clip boundary at wide desktop viewports.
+        // Round to integers to avoid floating-point jitter from
+        // getBoundingClientRect retriggering the transform transition every
+        // frame and freezing it at currentTime=0.
+        const cardWidth = Math.round(cards[0]?.getBoundingClientRect().width || 560);
+        const xUnit = Math.round(cardWidth * 0.18);
+        const peekUnit = Math.round(cardWidth * 0.025);
 
         cards.forEach((card, index) => {
           const delta = getCircularDelta(index, deckPosition);
@@ -342,11 +372,12 @@ import { projects, featuredProject } from "../data/projects";
       };
 
       const animate = () => {
-        if (!paused && !pointerDown && shell?.dataset.mode !== "grid" && !shell?.classList.contains("is-detail-open")) {
+        const isDeck = shell?.dataset.mode === "deck";
+        if (!paused && !pointerDown && !isDeck && shell?.dataset.mode !== "grid" && !shell?.classList.contains("is-detail-open")) {
           spin += 0.035;
         }
 
-        if (shell?.dataset.mode === "deck") {
+        if (isDeck) {
           deckPosition += (deckTarget - deckPosition) * 0.12;
           if (Math.abs(deckTarget - deckPosition) < 0.001) deckPosition = deckTarget;
           updateDeck();
@@ -363,12 +394,23 @@ import { projects, featuredProject } from "../data/projects";
         // Only respond to left mouse button (0) or touch/pen
         if (event.pointerType === "mouse" && event.button !== 0) return;
 
+        // Suppress the browser's default pointerdown behavior — text
+        // selection start, image drag-and-drop initiation, focus moves.
+        // The actual root cause of the "second drag freezes mid-drag"
+        // bug: after the first drag, the browser thought the next press
+        // on a card image was the start of a native image drag-and-drop
+        // gesture, and once that gesture began the browser stopped
+        // dispatching pointermove to us. preventDefault here, plus
+        // CSS user-select:none / draggable=false on cards, eliminates
+        // all three native gestures.
+        event.preventDefault();
+
         pointerDown = true;
         startX = event.clientX;
         startY = event.clientY;
         startDragX = dragX;
         startDragY = dragY;
-        scene.setPointerCapture(event.pointerId);
+        worldWasDragged = false;
         shell?.classList.add("is-dragging");
       });
 
@@ -382,36 +424,50 @@ import { projects, featuredProject } from "../data/projects";
 
         if (!pointerDown || shell?.dataset.mode === "deck") return;
 
+        // Track sticky drag-vs-click distinction for world mode here so we
+        // don't depend on a separate document-level pointermove handler
+        // that might race with this one.
+        if (shell?.dataset.mode === "world") {
+          const dx = event.clientX - startX;
+          const dy = event.clientY - startY;
+          if (Math.abs(dx) > 10 || Math.abs(dy) > 12) {
+            worldWasDragged = true;
+          }
+        }
+
         dragX = startDragX + (event.clientX - startX) * 0.32;
         dragY = Math.max(-42, Math.min(34, startDragY - (event.clientY - startY) * 0.26));
       });
 
-      scene?.addEventListener("pointerup", (event) => {
+      // Window-level pointerup: fires regardless of where the pointer is
+      // when released, and regardless of any prior capture state. This is
+      // the single end-of-gesture cleanup for world drag.
+      window.addEventListener("pointerup", (event) => {
         if (!pointerDown) return;
 
         pointerDown = false;
-        if (scene.hasPointerCapture(event.pointerId)) {
-          scene.releasePointerCapture(event.pointerId);
-        }
         shell?.classList.remove("is-dragging");
+
+        // World-mode click-to-navigate: if the user pressed and released
+        // without crossing the drag threshold, route to the visually-
+        // topmost card under the pointer.
+        if (shell?.dataset.mode === "world" && !worldWasDragged) {
+          const hasNativeCardClick =
+            event.target instanceof Element && Boolean(event.target.closest("[data-world-card]"));
+          selectWorldCard(getWorldCardAtPoint(event.clientX, event.clientY), hasNativeCardClick);
+        }
+        worldWasDragged = false;
       });
 
-      scene?.addEventListener("pointercancel", (event) => {
+      window.addEventListener("pointercancel", () => {
         if (shell?.dataset.mode === "deck" && deckPointerDown) {
           deckPointerDown = false;
           deckWasDragged = false;
-          if (scene.hasPointerCapture(event.pointerId)) {
-            scene.releasePointerCapture(event.pointerId);
-          }
           return;
         }
-
         if (!pointerDown) return;
-
         pointerDown = false;
-        if (scene.hasPointerCapture(event.pointerId)) {
-          scene.releasePointerCapture(event.pointerId);
-        }
+        worldWasDragged = false;
         shell?.classList.remove("is-dragging");
       });
 
@@ -484,19 +540,35 @@ import { projects, featuredProject } from "../data/projects";
 
           const distanceX = event.clientX - startX;
           const distanceY = event.clientY - startY;
-          deckWasDragged = Math.abs(distanceX) > 10 || Math.abs(distanceY) > 12;
+          // Sticky: once the user drags far enough to count as a drag, stay
+          // flagged. Otherwise dragging right then back to origin would
+          // re-flag this as a click, triggering navigation on release.
+          if (Math.abs(distanceX) > 10 || Math.abs(distanceY) > 12) {
+            deckWasDragged = true;
+          }
         },
         true,
       );
 
+      // Wheel snaps the deck by exactly one project per scroll. A short
+      // cooldown (180ms) absorbs the rapid event burst that touchpads and
+      // some mice emit per physical scroll, so one swipe = one project.
+      let lastWheelTime = 0;
       scene?.addEventListener("wheel", (event) => {
         if (shell?.classList.contains("is-detail-open") || shell?.dataset.mode !== "deck") return;
         // Only rotate when wheeling directly over a deck card
         if (!getDeckCardAtPoint(event.clientX, event.clientY)) return;
 
         event.preventDefault();
+        const now = performance.now();
+        if (now - lastWheelTime < 180) return;
         const primaryDelta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
-        deckTarget += primaryDelta * 0.006;
+        if (primaryDelta === 0) return;
+        lastWheelTime = now;
+        // Snap to the nearest integer position before stepping so the deck
+        // never settles between two projects (which would show two front
+        // cards overlapping like the user's screenshot).
+        deckTarget = Math.round(deckTarget) + (primaryDelta > 0 ? 1 : -1);
       }, { passive: false });
 
       // Deck hover indication — highlight the card the pointer is over
@@ -573,65 +645,13 @@ import { projects, featuredProject } from "../data/projects";
         true,
       );
 
-      document.addEventListener(
-        "pointerdown",
-        (event) => {
-          if (
-            shell?.dataset.mode !== "world" ||
-            shell.classList.contains("is-detail-open") ||
-            isInterfaceInput(event.target)
-          ) {
-            return;
-          }
-
-          startX = event.clientX;
-          startY = event.clientY;
-          worldWasDragged = false;
-          worldPointerDown = true;
-        },
-        true,
-      );
-
-      document.addEventListener(
-        "pointermove",
-        (event) => {
-          if (shell?.dataset.mode !== "world" || !worldPointerDown) return;
-
-          const distanceX = event.clientX - startX;
-          const distanceY = event.clientY - startY;
-          worldWasDragged = Math.abs(distanceX) > 10 || Math.abs(distanceY) > 12;
-        },
-        true,
-      );
-
-      document.addEventListener(
-        "pointerup",
-        (event) => {
-          if (shell?.dataset.mode !== "world" || !worldPointerDown) return;
-
-          worldPointerDown = false;
-
-          if (!worldWasDragged) {
-            const hasNativeCardClick =
-              event.target instanceof Element && Boolean(event.target.closest("[data-world-card]"));
-            selectWorldCard(getWorldCardAtPoint(event.clientX, event.clientY), hasNativeCardClick);
-          }
-
-          worldWasDragged = false;
-        },
-        true,
-      );
-
-      document.addEventListener(
-        "pointercancel",
-        () => {
-          if (shell?.dataset.mode !== "world" || !worldPointerDown) return;
-
-          worldPointerDown = false;
-          worldWasDragged = false;
-        },
-        true,
-      );
+      // World-mode pointerdown/pointermove/pointerup are handled in the
+      // scene-level handlers above (scene.pointerdown sets pointerDown,
+      // window.pointermove updates worldWasDragged + dragX/dragY,
+      // scene.pointerup performs click-to-navigate). Splitting them across
+      // scene + document handlers led to a state machine where pointerDown
+      // (scene) and worldPointerDown (document) could get out of sync,
+      // causing the second drag after a click to silently fail.
 
       modeButtons.forEach((button) => {
         button.addEventListener("click", () => {
