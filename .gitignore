@@ -12,6 +12,7 @@ local-dev-runbook.md
 resume-project-details.md
 .qodo/
 .superpowers/
+docs/superpowers/
 .env
 .env.*
 *.local

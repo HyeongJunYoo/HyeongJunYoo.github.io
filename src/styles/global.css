@@ -17,6 +17,11 @@
   --project-max: 1180px;
   --content-max: var(--project-max);
   --entry-meta-width: 400px;
+  --reading-measure: 40rem;
+  --reading-leading: 1.8;
+  --reading-size: 1.08rem;
+  --reading-gap: 1.3em;
+  --reading-tracking: -0.01em;
 }
 
 :root[data-theme="dark"] {
@@ -51,12 +56,14 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family:
-    Pretendard, "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic",
-    sans-serif;
+    "Pretendard Variable", Pretendard, "Noto Sans KR",
+    "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   font-size: 16px;
   line-height: 1.68;
   letter-spacing: 0;
   text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   transition:
     background-color 180ms ease,
     color 180ms ease;
@@ -418,15 +425,18 @@ li {
 }
 
 .about-body > p {
-  max-width: 100%;
   margin-bottom: 0;
   color: var(--text);
-  font-size: 1.02rem;
+  font-size: var(--reading-size);
+  line-height: var(--reading-leading);
+  letter-spacing: var(--reading-tracking);
+  word-break: keep-all;
+  overflow-wrap: anywhere;
 }
 
 .about-body {
   display: grid;
-  gap: 10px;
+  gap: var(--reading-gap);
 }
 
 .about-body,
@@ -439,6 +449,13 @@ li {
   width: min(100%, var(--content-max));
   margin-right: auto;
   margin-left: auto;
+}
+
+/* Must stay after the shared centering rule above: equal specificity, source order left-aligns #about at the reading measure. */
+.about-body {
+  max-width: var(--reading-measure);
+  margin-left: 0;
+  margin-right: auto;
 }
 
 .project-timeline {
@@ -1162,6 +1179,9 @@ li {
     margin: 0;
     font-size: var(--print-body-size);
     line-height: 1.42;
+    letter-spacing: 0;
+    word-break: normal;
+    overflow-wrap: normal;
   }
 
   .career-item,
