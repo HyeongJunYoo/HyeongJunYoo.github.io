@@ -14,11 +14,17 @@ public/projects/
     challenge-03.jpg            ← (있으면)
 ```
 
+## 지원 포맷
+
+`.webp` · `.png` · `.jpg` · `.jpeg` 모두 자동 인식 (대소문자 무관 — `.PNG`, `.JPG`도 OK).
+
+**우선순위**: `webp` → `png` → `jpeg` → `jpg`. 같은 슬롯에 여러 포맷이 공존하면 우선순위 높은 게 선택됩니다. 본인 사진(예: `hero.png`)을 올리면 기본 placeholder(`hero.jpg`)는 그대로 둬도 자동으로 본인 것이 표시됩니다. 원하면 placeholder를 삭제해도 됩니다.
+
 ## 교체 방법
 
-1. 본인 사진을 `.jpg`로 준비 (권장 해상도: Hero 1600×900 이상 / Challenge 1280×720 이상, 16:9)
-2. 위 폴더 구조의 같은 파일명으로 저장 (예: `public/projects/project-nemesis/hero.jpg`를 본인 파일로 교체)
-3. 개발 중이면 `npm run dev`가 HMR로 자동 반영. 배포 빌드면 `npm run build` 재실행
+1. 본인 사진을 `.webp` / `.png` / `.jpg` / `.jpeg` 중 하나로 준비 (권장 해상도: Hero 1600×900 이상 / Challenge 1280×720 이상, 16:9)
+2. 슬롯 이름(`hero` 또는 `challenge-NN`)에 본인 포맷 확장자를 붙여 저장 (예: `public/projects/project-nemesis/hero.png`)
+3. **포맷을 바꿨다면 dev 서버 재시작** (또는 `npm run build` 재실행) — 자동 인식은 build 시점에 확정됨. **같은 포맷 내 덮어쓰기**(예: `hero.png`을 새 `hero.png`으로)는 HMR로 즉시 반영
 4. 브라우저 캐시가 옛 사진을 계속 보여주면 강제 새로고침 (Ctrl/Cmd+Shift+R)
 
 ## 슬러그 ↔ 챌린지 매핑
