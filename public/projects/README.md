@@ -23,7 +23,7 @@ public/projects/
 ## 교체 방법
 
 1. 본인 사진을 `.webp` / `.png` / `.jpg` / `.jpeg` 중 하나로 준비 (권장 해상도: Hero 1600×900 이상 / Challenge 1280×720 이상, 16:9)
-2. 슬롯 이름(`hero` 또는 `challenge-NN`)에 본인 포맷 확장자를 붙여 저장 (예: `public/projects/project-nemesis/hero.png`)
+2. 슬롯 이름(`hero` 또는 `challenge-NN`)에 본인 포맷 확장자를 붙여 저장 (예: `public/projects/metaverse-core/hero.png`)
 3. **포맷을 바꿨다면 dev 서버 재시작** (또는 `npm run build` 재실행) — 자동 인식은 build 시점에 확정됨. **같은 포맷 내 덮어쓰기**(예: `hero.png`을 새 `hero.png`으로)는 HMR로 즉시 반영
 4. 브라우저 캐시가 옛 사진을 계속 보여주면 강제 새로고침 (Ctrl/Cmd+Shift+R)
 
@@ -33,17 +33,17 @@ public/projects/
 
 | 슬러그 | 챌린지 번호 | 챌린지 제목 (요약) |
 |---|---|---|
-| `project-nemesis` | 01 | UI 고도화 · WebView → 네이티브 |
-| `project-nemesis` | 02 | 플랫폼 고도화 · 입력·사운드·리소스 통합 |
-| `project-nemesis` | 03 | 마커리스 모션 캡처 · PC/iOS/Android |
-| `echo-runner` | 01 | 침 위치·각도·깊이 평가 시각화 |
-| `echo-runner` | 02 | 멀티 실습 룸 동기화 + Meta Horizon |
-| `rune-tactics` | 01 | 멀티 주문·조리 흐름 동기화 |
-| `rune-tactics` | 02 | VR 컨트롤러 햅틱 피드백 |
-| `poly-drift` | 01 | 미니게임 4종 공통 레이어 |
-| `poly-drift` | 02 | 관리자/참여자 비대칭 동기화 |
-| `render-lab` | 01 | SDK 초기 설정 → Editor Tool |
-| `render-lab` | 02 | SDK 버전 관리 + 패키지 갱신 |
+| `metaverse-core` | 01 | UI 고도화 · WebView → 네이티브 |
+| `metaverse-core` | 02 | 플랫폼 고도화 · 입력·사운드·리소스 통합 |
+| `metaverse-core` | 03 | 마커리스 모션 캡처 · PC/iOS/Android |
+| `vr-acupuncture-lab` | 01 | 침 위치·각도·깊이 평가 시각화 |
+| `vr-acupuncture-lab` | 02 | 멀티 실습 룸 동기화 + Meta Horizon |
+| `haptic-cooking` | 01 | 멀티 주문·조리 흐름 동기화 |
+| `haptic-cooking` | 02 | VR 컨트롤러 햅틱 피드백 |
+| `therapy-minis` | 01 | 미니게임 4종 공통 레이어 |
+| `therapy-minis` | 02 | 관리자/참여자 비대칭 동기화 |
+| `sdk-tooling` | 01 | SDK 초기 설정 → Editor Tool |
+| `sdk-tooling` | 02 | SDK 버전 관리 + 패키지 갱신 |
 
 ## 사진 없는 슬롯을 비우고 싶을 때
 
