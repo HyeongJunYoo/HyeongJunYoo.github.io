@@ -17,10 +17,11 @@ export type ProjectChallenge = {
   solution: string;
   outcome?: string;
   /**
-   * Optional 16:9 image URL rendered inside the challenge card between
-   * the title and the first label. Leave undefined when there's no
-   * meaningful screenshot — placeholder/filler images are worse than
-   * no image. The detail template handles missing values cleanly.
+   * Optional 16:9 inline image rendered inside the challenge card
+   * between the title and the first label. Each challenge defaults to
+   * `/projects/<slug>/challenge-NN.jpg` (overwrite that file to swap).
+   * Remove this field to suppress the inline image entirely — the
+   * detail template handles missing values cleanly.
    */
   image?: string;
 };
@@ -81,22 +82,25 @@ export const projects: Project[] = [
         title: "UI 고도화 · WebView → 네이티브 (10+ 화면, 4개월)",
         problem: "메타버스 플랫폼 주요 화면이 WebView 기반이라 매 진입마다 [[1-2초]] 로딩 지연이 발생했고, WebView 인스턴스가 [[수십~수백 MB]] 메모리를 점유했습니다. Home·Room 같은 자주 진입하는 화면의 누적 지연이 체감 속도를 크게 떨어뜨리고, 모바일 확장 시 메모리 한계가 가장 큰 병목이었습니다.",
         solution: "Unity 네이티브 UGUI로 Home·Room·Chat·Emote·Setting 등 [[10개+ 화면]]을 재구현했습니다. MVVM 패턴으로 View / ViewModel / Repository 계층을 분리하고, Repository에서 UniTask 비동기 처리, ViewModel이 View에 바인딩하는 흐름. 화면 객체는 초기 1회 생성 후 활성/비활성 토글로 재사용. Canvas Scaler·Auto Layout·EventTrigger 추상화로 PC/VR/모바일 해상도와 입력 방식까지 단일 codebase로 대응.",
-        outcome: "화면 진입 대기 [[1-2초 → 약 0.1초]], 클라이언트 메모리 [[약 -50%]] 절감, 모바일 확장 가능 베이스 확보"
+        outcome: "화면 진입 대기 [[1-2초 → 약 0.1초]], 클라이언트 메모리 [[약 -50%]] 절감, 모바일 확장 가능 베이스 확보",
+        image: "/projects/project-nemesis/challenge-01.jpg"
       },
       {
         title: "플랫폼 고도화 · 입력·사운드·리소스 구조 공통화 (1년)",
         problem: "기존 입력 처리는 PC·모바일·XR 환경별로 분리되어 신규 입력 기기 추가 시 [[3개 환경]] 코드를 모두 수정해야 했습니다. PC/VR 음성 기기 전환은 [[프로그램 재실행]]이 강제됐고, 리소스는 prefab/scene이 직접 참조되어 클라이언트 메모리 사용량이 [[16GB 이상]]까지 상승, 모바일 한계로 즉시 충돌하는 수준이었습니다.",
         solution: "세 영역을 차례로 통합했습니다. New Input System 기반 공통 action map으로 PC/모바일/XR 입력을 일원화하고 device 변경 시 UI prompt도 자동 전환. FMOD 기반 audio bus 계층 + OS device enumeration 감시로 음성 기기 런타임 전환. 직접 참조를 AssetReference로 교체하고 Addressables group으로 dependency 자동 추적·unload.",
-        outcome: "신규 입력 기기 확장 시 수정 범위 [[3곳 → 1곳]], 음성 기기 [[재실행 없이]] 런타임 전환, 메모리 [[16GB+ → 4GB 이하]]"
+        outcome: "신규 입력 기기 확장 시 수정 범위 [[3곳 → 1곳]], 음성 기기 [[재실행 없이]] 런타임 전환, 메모리 [[16GB+ → 4GB 이하]]",
+        image: "/projects/project-nemesis/challenge-02.jpg"
       },
       {
         title: "마커리스 모션 캡처 · PC/iOS/Android 통합 (3개월)",
         problem: "MediaPipe는 정규화 keypoint coordinate를, ARKit은 ARFaceAnchor blend shape weight를 반환합니다. 두 데이터는 좌표계·단위·축 정의가 모두 달라 source별로 별도 아바타 리깅 로직을 만들면 [[3개 환경]]에 코드 중복이 빠르게 늘어나는 구조였습니다. 또 손목·손가락은 평면 좌표 + depth 추정 기반이라 3D rotation 변환 시 [[비현실적 꼬임]](impossible joint angle)이 자주 발생했습니다.",
         solution: "중간 추상 계층 'AvatarMotionFrame'을 정의해 모든 source가 일단 이 구조로 변환되고, 아바타 리깅은 이 구조만 소비하도록 분리. AvatarMotionFrame은 표준 좌표계(Unity 좌표 + meter 단위)와 표준 본 매핑을 가지고, source별 adapter(MediaPipeAdapter / ARKitAdapter)가 conversion을 책임집니다. 본 단위 회전 constraint를 human anatomy 기준으로 clamp, 손가락은 인접 본 회전 의존성을 IK 후처리로 보정, frame jitter는 1-Euro filter로 부드럽게 처리.",
-        outcome: "PC·iOS·Android 모션 데이터를 [[단일 처리 흐름]]으로 통합, 손목·손가락 회전 자연스러움 시각적으로 개선"
+        outcome: "PC·iOS·Android 모션 데이터를 [[단일 처리 흐름]]으로 통합, 손목·손가락 회전 자연스러움 시각적으로 개선",
+        image: "/projects/project-nemesis/challenge-03.jpg"
       }
     ],
-    image: "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1400&q=84",
+    image: "/projects/project-nemesis/hero.jpg",
     tone: "hot",
     stack: ["Unity 2022", "C#", "MVVM", "OpenXR", "FMOD", "Addressables", "MediaPipe", "ARKit"],
     stats: [
@@ -142,16 +146,18 @@ export const projects: Project[] = [
         title: "침 위치·각도·깊이 평가 시각화",
         problem: "침술 실습 평가는 침이 경혈에 정확히 들어갔는지를 위치·각도·깊이 [[세 축]]에서 판정해야 했습니다. 초기 구현은 단순히 [[hit/miss]]만 boolean으로 표시했는데, 강사진 피드백에서 '왜 틀렸는지' 학생이 이해할 단서가 부족하다는 의견이 반복됐습니다. 학습 콘텐츠 본래 목적과 어긋나는 상황.",
         solution: "침 데이터를 위치(경혈 중심점과의 거리), 각도(권장 각도와의 편차), 깊이(권장 깊이와의 편차) 세 축으로 분해해 평가하고, 각 축마다 시각화 피드백을 다르게 줬습니다. 위치는 평면 marker, 각도는 3D arrow, 깊이는 단면도 indicator로 표시하고 권장 범위 안에 들어오면 점진적으로 색이 바뀌도록 구현했습니다.",
-        outcome: "한의대 수업 적용 결과 만족도 [[4.20 / 5.0]], 강사진 피드백에서 '학습 단서가 풍부하다' 평가 확보"
+        outcome: "한의대 수업 적용 결과 만족도 [[4.20 / 5.0]], 강사진 피드백에서 '학습 단서가 풍부하다' 평가 확보",
+        image: "/projects/echo-runner/challenge-01.jpg"
       },
       {
         title: "멀티 실습 룸 동기화 + Meta Horizon 배포",
         problem: "여러 학생이 동일한 환자 데이터를 보며 침술 실습을 진행할 때, 룸 상태(현재 시나리오 단계, 환자 상태, 선택된 경혈)가 클라이언트 간에 즉시 동기화되어야 했습니다. 초기 구현은 매 단계 변경마다 [[전체 상태]]를 브로드캐스트해 네트워크 대역폭과 latency 둘 다 부담이 컸습니다. 또 Meta Horizon 비공개 앱 빌드/배포는 팀 내 첫 경험으로 procedure도 함께 정리 필요.",
         solution: "Netcode 기반 변경분(delta) 동기화로 전환했습니다. 시나리오 단계·환자 상태·선택 경혈을 각각 NetworkVariable로 분리해 변경된 항목만 send. Meta Horizon 배포는 Quest 전용 IL2CPP build profile 분리, 앱 서명, 비공개 채널 업로드 과정을 internal wiki에 정리해 이후 팀이 동일 프로세스를 재사용할 수 있게 했습니다.",
-        outcome: "룸 상태 동기화 패킷량 감소, Meta Horizon 비공개 채널 [[첫 배포 성공]]"
+        outcome: "룸 상태 동기화 패킷량 감소, Meta Horizon 비공개 채널 [[첫 배포 성공]]",
+        image: "/projects/echo-runner/challenge-02.jpg"
       }
     ],
-    image: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=1400&q=84",
+    image: "/projects/echo-runner/hero.jpg",
     tone: "aqua",
     stack: ["Unity 2022", "C#", "OpenXR", "XR Interaction Toolkit", "Netcode", "Meta Horizon"],
     stats: [
@@ -196,16 +202,18 @@ export const projects: Project[] = [
         title: "멀티 주문·조리 흐름 동기화",
         problem: "여러 참여자가 동시에 다른 요리를 진행하고 같은 재료를 공유하는 환경에서, 주문→조리→서빙 단계가 클라이언트 간에 즉시 동기화되어야 했습니다. 초기 구현은 매 단계마다 전체 룸 상태를 브로드캐스트해 네트워크 부담이 컸고, 동시 동작 시 [[race condition]]으로 같은 재료를 두 사람이 동시에 집어드는 충돌이 발생했습니다.",
         solution: "주문·재료·요리 상태를 도메인별로 분리해 변경된 항목만 전송하도록 SDK 동기화 API를 정리했습니다. 재료 점유는 atomic 단위로 처리 — 한 클라이언트가 집어드는 순간 lock을 걸고 권한 검증을 거쳐야 다른 클라이언트가 동일 재료를 집을 수 없게 했습니다. 조리 단계 전환은 host-authoritative 검증으로 일관성 보장.",
-        outcome: "동시 동작 시 [[재료 충돌]] 제거, 룸 상태 동기화 패킷량 감소"
+        outcome: "동시 동작 시 [[재료 충돌]] 제거, 룸 상태 동기화 패킷량 감소",
+        image: "/projects/rune-tactics/challenge-01.jpg"
       },
       {
         title: "VR 컨트롤러 햅틱 피드백 연동",
         problem: "요리 콘텐츠의 핵심은 '손에 닿는 감각'이라 단순 buzz 진동이 아니라 동작별로 다른 햅틱 패턴이 필요했습니다. 칼질·끓이기·붓기 같은 동작이 모두 동일한 진동으로 들리면 몰입이 깨지는 문제. 또 햅틱 트리거 타이밍이 시각 피드백과 [[수십 ms]] 어긋나도 사용자가 즉시 인지하는 민감도.",
         solution: "동작 카테고리별 햅틱 프로필(amplitude curve + frequency + duration)을 ScriptableObject로 정리. 시각 피드백 trigger와 햅틱 trigger를 같은 frame에 묶어 timing drift 최소화. VR 컨트롤러 양손에 독립 채널로 보내, 양손 동작(예: 도마+칼)이 자연스럽게 분리되도록 했습니다.",
-        outcome: "동작별 햅틱 차별화로 몰입감 향상, 행사 시연에서 사용자 반응 [[즉각적 피드백]] 확보"
+        outcome: "동작별 햅틱 차별화로 몰입감 향상, 행사 시연에서 사용자 반응 [[즉각적 피드백]] 확보",
+        image: "/projects/rune-tactics/challenge-02.jpg"
       }
     ],
-    image: "https://images.unsplash.com/photo-1483058712412-4245e9b90334?auto=format&fit=crop&w=1400&q=84",
+    image: "/projects/rune-tactics/hero.jpg",
     tone: "violet",
     stack: ["Unity 2022", "Lua", "Metaverse SDK", "OpenXR", "Haptic", "Room State Sync"],
     stats: [
@@ -250,16 +258,18 @@ export const projects: Project[] = [
         title: "미니게임 4종 공통 레이어",
         problem: "미니게임 [[4종]]은 각자 다른 규칙·입력·진행 방식을 가졌지만, 모두 동일한 관리자 제어와 참여자 상태 동기화를 필요로 했습니다. 게임마다 별도 구현하면 동일 로직이 [[4번]] 중복되고, 룰만 다른데 동기화 코드가 분기점이 되면 유지보수 비용이 빠르게 늘어나는 구조였습니다.",
         solution: "MiniGameBase 추상 클래스에 공통 인터페이스(StartGame / PauseGame / SubmitInput / GetState)를 정의하고, 4종 미니게임이 각자 상속해 게임별 로직만 구현했습니다. 관리자 제어와 상태 동기화는 base class 레벨에서 처리되어, 신규 미니게임 추가 시에도 동일하게 동작합니다.",
-        outcome: "미니게임 [[4종]]을 공통 인터페이스 위에 구현, 신규 미니게임 추가 시 동기화 코드 재구현 불필요"
+        outcome: "미니게임 [[4종]]을 공통 인터페이스 위에 구현, 신규 미니게임 추가 시 동기화 코드 재구현 불필요",
+        image: "/projects/poly-drift/challenge-01.jpg"
       },
       {
         title: "관리자/참여자 비대칭 동기화",
         problem: "상담사(관리자)와 내담자(참여자)는 같은 세션을 보지만 권한과 화면 구성이 완전히 다릅니다. 관리자는 미니게임 시작·정지·난이도 조정·결과 확인 권한, 참여자는 게임 입력 권한만. 동기화 시 권한 검증을 빼먹으면 참여자가 임의로 게임을 정지하거나 결과를 조작할 수 있는 [[보안 허점]].",
         solution: "권한 모델을 Authority 단위로 분리했습니다. 관리자 권한 변수는 host(상담사) 전용 write, 참여자 입력 변수는 client write 후 host validate. UI도 권한 모델에 따라 자동 분기 — 관리자 클라이언트는 control panel, 참여자 클라이언트는 게임 화면만 보이도록 했습니다.",
-        outcome: "관리자/참여자 권한 분리로 [[보안 허점]] 제거, 동일 codebase로 비대칭 UI 자동 분기"
+        outcome: "관리자/참여자 권한 분리로 [[보안 허점]] 제거, 동일 codebase로 비대칭 UI 자동 분기",
+        image: "/projects/poly-drift/challenge-02.jpg"
       }
     ],
-    image: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1400&q=84",
+    image: "/projects/poly-drift/hero.jpg",
     tone: "lime",
     stack: ["Unity 2022", "Lua", "Metaverse SDK", "UGUI", "Authority Model"],
     stats: [
@@ -304,16 +314,18 @@ export const projects: Project[] = [
         title: "SDK 초기 설정 6~8단계 → Editor Tool 3개 버튼",
         problem: "신규 콘텐츠 개발자가 SDK를 처음 적용할 때 [[6-8단계]]의 수동 설정(패키지 설치, 프로젝트 설정 조정, Addressables 그룹 생성, build profile 추가, 샘플 scene 복사 등)이 필요했습니다. 한 단계라도 놓치면 빌드 실패나 런타임 에러가 발생해, 신규 개발자가 환경 셋업에만 [[하루 이상]] 쓰는 일이 반복됐습니다.",
         solution: "Editor Tool로 'Install SDK', 'Configure Project', 'Create Template'의 3개 버튼을 만들었습니다. Install SDK 버튼은 Unity Package Manager로 Git URL을 통해 패키지를 추가하고 의존 패키지까지 자동 설치. Configure Project 버튼은 PlayerSettings·GraphicsSettings·Addressables 기본 group을 한 번에 적용. Create Template 버튼은 표준 sample scene과 빈 콘텐츠 scene을 생성합니다.",
-        outcome: "SDK 초기 설정 [[6-8단계 → 3버튼]], 설정 누락으로 인한 환경 오류 대폭 감소"
+        outcome: "SDK 초기 설정 [[6-8단계 → 3버튼]], 설정 누락으로 인한 환경 오류 대폭 감소",
+        image: "/projects/render-lab/challenge-01.jpg"
       },
       {
         title: "SDK 버전 관리 + 패키지 갱신",
         problem: "기존 워크플로우에서 SDK 업데이트는 폴더 단위 [[수동 재설치]]였습니다. 신규 SDK 버전이 나올 때마다 모든 콘텐츠 개발자가 SDK 폴더를 삭제 후 재배치하는 절차를 거쳐야 했고, 그 과정에서 로컬 수정사항이 덮어쓰이거나 의존 패키지 버전 mismatch가 발생했습니다.",
         solution: "Unity Package Manager의 Git URL 의존 기능을 활용해 SDK 자체를 패키지로 패키징했습니다. manifest.json에 SDK Git URL과 commit hash가 기록되고, Update 버튼은 manifest 항목의 hash를 최신 release tag로 변경 + Package Manager에 reload 요청. 의존 패키지는 SDK 패키지의 package.json dependencies에서 자동 해석.",
-        outcome: "SDK 갱신이 수동 재설치 → [[Update 버튼 1회 클릭]]으로 단축, 버전 mismatch 가능성 감소"
+        outcome: "SDK 갱신이 수동 재설치 → [[Update 버튼 1회 클릭]]으로 단축, 버전 mismatch 가능성 감소",
+        image: "/projects/render-lab/challenge-02.jpg"
       }
     ],
-    image: "https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1400&q=84",
+    image: "/projects/render-lab/hero.jpg",
     tone: "orange",
     stack: ["Unity 2022", "C#", "Lua", "Unity Package Manager", "Addressables", "Editor Tooling"],
     stats: [
