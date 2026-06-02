@@ -2084,3 +2084,152 @@ button {
     --world-card-scale: 1;
   }
 }
+
+/* ============================================================
+   Featured hero carousel (replaces the single .featured-hero hero)
+   Slides keep the .featured-hero class so all media/scrim/overlay/
+   typography/HUD-frame styling is inherited. This section only adds
+   the stacking viewport, slide transitions, and number/arrow controls.
+   ============================================================ */
+.hero-carousel {
+  position: relative;
+  width: min(100%, 1480px);
+  margin: 88px auto 0;
+  padding: 0 22px;
+  touch-action: pan-y;
+}
+
+.hero-carousel-viewport {
+  position: relative;
+}
+
+/* Slides stack: first slide stays in flow (defines height); the rest
+   overlay it. This selector also overrides the outer margin/padding the
+   .featured-hero base rule would otherwise apply to each slide. */
+.hero-carousel .hero-slide {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1;
+  user-select: none;
+  transition: opacity 380ms ease, visibility 0s linear 380ms;
+}
+.hero-carousel .hero-slide:not(:first-child) {
+  position: absolute;
+  inset: 0;
+}
+.hero-carousel .hero-slide.is-active {
+  opacity: 1;
+  visibility: visible;
+  z-index: 2;
+  transition: opacity 380ms ease;
+}
+/* Prevent native image drag from stealing pointer events during swipe. */
+.hero-carousel .hero-slide img {
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+/* Directional entrance for the newly-active slide (set via data-dir). */
+@keyframes hero-slide-in-right {
+  from { opacity: 0; transform: translateX(7%); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes hero-slide-in-left {
+  from { opacity: 0; transform: translateX(-7%); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.hero-carousel[data-dir="next"] .hero-slide.is-active {
+  animation: hero-slide-in-right 460ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.hero-carousel[data-dir="prev"] .hero-slide.is-active {
+  animation: hero-slide-in-left 460ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* One/two-line summary in the hero overlay. */
+.hero-carousel .hero-summary {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Number buttons — top-left. */
+.hero-nav-numbers {
+  position: absolute;
+  top: clamp(18px, 3vw, 32px);
+  left: clamp(34px, 4vw, 56px);
+  display: flex;
+  gap: 8px;
+  z-index: 5;
+}
+.hero-num {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 7px;
+  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-weight: 800;
+  font-size: 0.85rem;
+  line-height: 1;
+  color: rgba(244, 241, 232, 0.72);
+  background: rgba(12, 12, 12, 0.5);
+  border: 1px solid rgba(244, 241, 232, 0.3);
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+}
+.hero-num:hover {
+  border-color: var(--tone);
+  color: var(--ink);
+}
+.hero-num.is-active {
+  background: var(--tone);
+  border-color: var(--tone);
+  color: #0c0c0c;
+}
+
+/* Prev/next arrows — vertical center of the media. */
+.hero-nav-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 24px;
+  line-height: 1;
+  color: var(--ink);
+  background: rgba(12, 12, 12, 0.45);
+  border: 1px solid rgba(244, 241, 232, 0.26);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  z-index: 5;
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+}
+.hero-nav-arrow:hover {
+  border-color: var(--tone);
+  color: var(--tone);
+}
+.hero-nav-arrow.is-prev { left: clamp(30px, 3.2vw, 46px); }
+.hero-nav-arrow.is-next { right: clamp(30px, 3.2vw, 46px); }
+
+/* Responsive — carousel container owns the outer spacing the slides no
+   longer do. Inner overlay/title responsive comes from existing
+   .featured-hero @media blocks (slides keep that class). */
+@media (max-width: 1100px) {
+  .hero-carousel { margin-top: 76px; }
+}
+@media (max-width: 560px) {
+  .hero-carousel { margin: 64px auto 0; padding: 0 12px; }
+  .hero-nav-numbers { top: 14px; left: 18px; gap: 6px; }
+  .hero-num { width: 30px; height: 30px; font-size: 0.8rem; }
+  .hero-nav-arrow { width: 40px; height: 40px; font-size: 20px; }
+  .hero-nav-arrow.is-prev { left: 14px; }
+  .hero-nav-arrow.is-next { right: 14px; }
+}
