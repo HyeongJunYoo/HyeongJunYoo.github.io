@@ -1,0 +1,73 @@
+---
+import type { Project } from "../data/projects";
+
+interface Props {
+  projects: Project[];
+}
+
+const { projects } = Astro.props;
+const initialTone = projects[0]?.tone ?? "acid";
+---
+
+<section
+  class="hero-carousel"
+  data-hero-carousel
+  style={`--tone: var(--${initialTone});`}
+  role="region"
+  aria-roledescription="carousel"
+  aria-label="대표 프로젝트"
+>
+  <div class="hero-carousel-viewport" data-hero-viewport>
+    {projects.map((project, index) => (
+      <a
+        href={`/portfolio/${project.id}`}
+        class:list={["featured-hero", "hero-slide", { "is-active": index === 0 }]}
+        data-hero-slide
+        data-index={index}
+        data-tone={project.tone}
+        style={`--tone: var(--${project.tone});`}
+        aria-hidden={index === 0 ? "false" : "true"}
+        tabindex={index === 0 ? 0 : -1}
+        aria-label={`${project.title} 케이스 보기`}
+      >
+        <div class="hero-media hud-frame" aria-hidden="true">
+          <span class="hud-corner-tr"></span>
+          <span class="hud-corner-bl"></span>
+          <img
+            src={project.image}
+            alt=""
+            loading={index === 0 ? "eager" : "lazy"}
+            fetchpriority={index === 0 ? "high" : "auto"}
+            decoding="async"
+            draggable={false}
+          />
+          <span class="hero-scrim"></span>
+        </div>
+        <div class="hero-overlay">
+          <span class="hero-eyebrow">
+            <span>{project.genre}</span>
+            <span>{project.period}</span>
+          </span>
+          <span class="hero-title">{project.title}</span>
+          <span class="hero-summary">{project.summary}</span>
+        </div>
+      </a>
+    ))}
+  </div>
+
+  <div class="hero-nav-numbers" role="group" aria-label="대표 프로젝트 선택">
+    {projects.map((project, index) => (
+      <button
+        type="button"
+        class:list={["hero-num", { "is-active": index === 0 }]}
+        data-hero-number
+        data-index={index}
+        aria-label={`${index + 1}번: ${project.title}`}
+        aria-pressed={index === 0 ? "true" : "false"}
+      >{index + 1}</button>
+    ))}
+  </div>
+
+  <button type="button" class="hero-nav-arrow is-prev" data-hero-prev aria-label="이전 프로젝트">‹</button>
+  <button type="button" class="hero-nav-arrow is-next" data-hero-next aria-label="다음 프로젝트">›</button>
+</section>

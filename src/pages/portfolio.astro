@@ -1,7 +1,8 @@
 ---
 import Layout from "../components/Layout.astro";
+import HeroCarousel from "../components/HeroCarousel.astro";
 import "../styles/portfolio.css";
-import { projects, featuredProject } from "../data/projects";
+import { projects, featuredProject, heroProjects } from "../data/projects";
 
 ---
 
@@ -35,17 +36,7 @@ import { projects, featuredProject } from "../data/projects";
     </header>
 
     <main id="main">
-      <a class="featured-hero" href={`/portfolio/${featuredProject.id}`} data-tone={featuredProject.tone} aria-labelledby="hero-title">
-        <div class="hero-media hud-frame" aria-hidden="true">
-          <span class="hud-corner-tr"></span>
-          <span class="hud-corner-bl"></span>
-          <img src={featuredProject.image} alt="" fetchpriority="high" draggable={false} />
-          <span class="hero-scrim"></span>
-        </div>
-        <div class="hero-overlay">
-          <h1 id="hero-title" class="hero-title">{featuredProject.title}</h1>
-        </div>
-      </a>
+      <HeroCarousel projects={heroProjects} />
 
       <section class="world-stage" aria-labelledby="world-title">
         <div class="projects-section-header">
