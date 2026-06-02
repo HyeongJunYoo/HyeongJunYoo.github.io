@@ -17,6 +17,7 @@ const initialTone = projects[0]?.tone ?? "acid";
   aria-roledescription="carousel"
   aria-label="대표 프로젝트"
 >
+  <h1 class="hero-carousel-heading">대표 프로젝트</h1>
   <div class="hero-carousel-viewport" data-hero-viewport>
     {projects.map((project, index) => (
       <a
@@ -142,7 +143,7 @@ const initialTone = projects[0]?.tone ?? "acid";
       btn.addEventListener("click", (event) => {
         event.preventDefault();
         event.stopPropagation();
-        goTo(Number(btn.getAttribute("data-index") || 0));
+        goTo(Number(btn.getAttribute("data-index") ?? 0));
         restartAutoplay();
       });
     });
@@ -188,15 +189,19 @@ const initialTone = projects[0]?.tone ?? "acid";
       }
     };
     root.addEventListener("pointerup", endDrag);
-    root.addEventListener("pointercancel", () => { dragging = false; });
+    root.addEventListener("pointercancel", () => { dragging = false; suppressClick = false; });
 
-    // Autoplay: pause on hover / focus, resume on leave / blur.
-    root.addEventListener("pointerenter", stopAutoplay);
-    root.addEventListener("pointerleave", startAutoplay);
-    root.addEventListener("focusin", stopAutoplay);
+    // Autoplay: pause while hovered or focused; resume only when neither.
+    let hovered = false;
+    let focused = false;
+    const maybeResume = () => { if (!hovered && !focused) startAutoplay(); };
+    root.addEventListener("pointerenter", () => { hovered = true; stopAutoplay(); });
+    root.addEventListener("pointerleave", () => { hovered = false; maybeResume(); });
+    root.addEventListener("focusin", () => { focused = true; stopAutoplay(); });
     root.addEventListener("focusout", (event) => {
       if (!(event.relatedTarget instanceof Node) || !root.contains(event.relatedTarget)) {
-        startAutoplay();
+        focused = false;
+        maybeResume();
       }
     });
 

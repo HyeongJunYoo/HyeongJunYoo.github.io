@@ -2233,3 +2233,17 @@ button {
   .hero-nav-arrow.is-prev { left: 14px; }
   .hero-nav-arrow.is-next { right: 14px; }
 }
+
+/* Visually-hidden page heading for the hero carousel (a11y document outline). */
+.hero-carousel-heading {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
