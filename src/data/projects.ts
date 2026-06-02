@@ -375,6 +375,15 @@ export const projects: Project[] = [
 export const featuredProject = projects[0];
 export const otherProjects = projects.slice(1);
 
+// Featured hero 캐러셀에 띄울 프로젝트와 순서.
+// 숫자는 위 `projects[]` 배열의 1-based 위치:
+//   1=metaverse-core 2=vr-acupuncture-lab 3=haptic-cooking 4=therapy-minis 5=sdk-tooling
+// 이 리스트만 바꾸면 대표 프로젝트와 노출 순서가 바뀐다.
+export const heroOrder = [3, 1, 2];
+export const heroProjects = heroOrder
+  .map((n) => projects[n - 1])
+  .filter((p): p is Project => Boolean(p));
+
 export function getProjectBySlug(slug: string): Project | undefined {
   return projects.find((p) => p.id === slug);
 }
