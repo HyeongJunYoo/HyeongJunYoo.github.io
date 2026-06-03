@@ -2156,6 +2156,12 @@ button {
   overflow: hidden;
 }
 
+/* Eyebrow now holds only the genre (period removed); keep the tone accent
+   (otherwise the single span matches :last-child and renders muted). */
+.hero-carousel .hero-eyebrow span:last-child {
+  color: var(--tone);
+}
+
 /* Number buttons — top-left. */
 .hero-nav-numbers {
   position: absolute;
