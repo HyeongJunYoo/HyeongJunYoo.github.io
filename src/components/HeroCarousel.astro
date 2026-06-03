@@ -30,6 +30,7 @@ const initialTone = projects[0]?.tone ?? "acid";
         aria-hidden={index === 0 ? "false" : "true"}
         tabindex={index === 0 ? 0 : -1}
         aria-label={`${project.title} 케이스 보기`}
+        draggable={false}
       >
         <div class="hero-media hud-frame" aria-hidden="true">
           <span class="hud-corner-tr"></span>
@@ -69,8 +70,12 @@ const initialTone = projects[0]?.tone ?? "acid";
     ))}
   </div>
 
-  <button type="button" class="hero-nav-arrow is-prev" data-hero-prev aria-label="이전 프로젝트">‹</button>
-  <button type="button" class="hero-nav-arrow is-next" data-hero-next aria-label="다음 프로젝트">›</button>
+  <button type="button" class="hero-nav-arrow is-prev" data-hero-prev aria-label="이전 프로젝트">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 5 8 12 15 19"></polyline></svg>
+  </button>
+  <button type="button" class="hero-nav-arrow is-next" data-hero-next aria-label="다음 프로젝트">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 5 16 12 9 19"></polyline></svg>
+  </button>
 </section>
 
 <script>
@@ -175,7 +180,9 @@ const initialTone = projects[0]?.tone ?? "acid";
       suppressClick = false;
       startX = event.clientX;
     });
-    root.addEventListener("pointermove", (event) => {
+    // Move/up listen on window so a drag that ends outside the carousel still
+    // completes (and isn't dropped on the root element).
+    window.addEventListener("pointermove", (event) => {
       if (!dragging) return;
       if (Math.abs(event.clientX - startX) > 10) suppressClick = true;
     });
@@ -188,8 +195,8 @@ const initialTone = projects[0]?.tone ?? "acid";
         restartAutoplay();
       }
     };
-    root.addEventListener("pointerup", endDrag);
-    root.addEventListener("pointercancel", () => { dragging = false; suppressClick = false; });
+    window.addEventListener("pointerup", endDrag);
+    window.addEventListener("pointercancel", () => { dragging = false; suppressClick = false; });
 
     // Autoplay: pause while hovered or focused; resume only when neither.
     let hovered = false;

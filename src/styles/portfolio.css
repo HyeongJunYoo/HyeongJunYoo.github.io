@@ -2170,10 +2170,11 @@ button {
   height: 34px;
   display: grid;
   place-items: center;
+  padding: 0;
   border-radius: 7px;
-  font-family: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  font-family: inherit;
   font-weight: 800;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   line-height: 1;
   color: rgba(244, 241, 232, 0.72);
   background: rgba(12, 12, 12, 0.5);
@@ -2201,9 +2202,8 @@ button {
   height: 46px;
   display: grid;
   place-items: center;
+  padding: 0;
   border-radius: 50%;
-  font-size: 24px;
-  line-height: 1;
   color: var(--ink);
   background: rgba(12, 12, 12, 0.45);
   border: 1px solid rgba(244, 241, 232, 0.26);
@@ -2218,6 +2218,7 @@ button {
 }
 .hero-nav-arrow.is-prev { left: clamp(30px, 3.2vw, 46px); }
 .hero-nav-arrow.is-next { right: clamp(30px, 3.2vw, 46px); }
+.hero-nav-arrow svg { display: block; }
 
 /* Responsive — carousel container owns the outer spacing the slides no
    longer do. Inner overlay/title responsive comes from existing
