@@ -292,7 +292,7 @@ export const projects: Project[] = [
     cardTitle: "햅틱 요리형 실시간 멀티 콘텐츠",
     level: "core",
     eyebrow: "Core 05",
-    period: "2025.05 ~ 2025.10",
+    period: "2025.08 ~ 2025.10",
     role: "Client Developer (Lead)",
     engine: "Unity 2022 LTS",
     platform: "VR",
@@ -330,7 +330,7 @@ export const projects: Project[] = [
     stats: [
       { value: "VR", label: "Platform" },
       { value: "Realtime", label: "Sync mode" },
-      { value: "6mo", label: "Dev period" }
+      { value: "3mo", label: "Dev period" }
     ],
     gallery: [
       "https://images.unsplash.com/photo-1542751110-97427bbecf20?auto=format&fit=crop&w=900&q=80",
@@ -355,7 +355,7 @@ export const projects: Project[] = [
     cardTitle: "심리상담형 실시간 멀티 콘텐츠",
     level: "core",
     eyebrow: "Core 06",
-    period: "2025.05 ~ 2025.10",
+    period: "2025.06 ~ 2025.08",
     role: "Client Developer (Lead)",
     engine: "Unity 2022 LTS",
     platform: "PC / VR",
@@ -393,7 +393,7 @@ export const projects: Project[] = [
     stats: [
       { value: "4", label: "Mini-games" },
       { value: "Realtime", label: "Sync mode" },
-      { value: "6mo", label: "Dev period" }
+      { value: "3mo", label: "Dev period" }
     ],
     gallery: [
       "https://images.unsplash.com/photo-1486572788966-cfd3df1f5b42?auto=format&fit=crop&w=900&q=80",
