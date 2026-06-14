@@ -8,6 +8,8 @@ import {
   skills
 } from "../data/resume";
 import { projects } from "../data/projects";
+// 홈은 최신순(시작일 내림차순)으로 표시. period 형식 "YYYY.MM ~ ..." 의 시작값 기준.
+const homeProjects = [...projects].sort((a, b) => b.period.localeCompare(a.period));
 
 const activityPreviewLimit = 5;
 const hasHiddenActivities = activities.length > activityPreviewLimit;
@@ -122,12 +124,12 @@ const hasHiddenActivities = activities.length > activityPreviewLimit;
       </div>
 
       <div class="project-timeline">
-        {projects.map((project) => (
+        {homeProjects.map((project) => (
           <article class="project-card">
-            <aside class="project-meta" aria-label={`${project.title} 요약`}>
-              <h3>{project.title}</h3>
+            <aside class="project-meta" aria-label={`${project.cardTitle} 요약`}>
+              <h3>{project.cardTitle}</h3>
               <p class="project-period">{project.period}</p>
-              <ul class="tech-list project-meta-tech" aria-label={`${project.title} 기술 스택`}>
+              <ul class="tech-list project-meta-tech" aria-label={`${project.cardTitle} 기술 스택`}>
                 {project.stack.map((tech) => <li>{tech}</li>)}
               </ul>
             </aside>
@@ -143,7 +145,7 @@ const hasHiddenActivities = activities.length > activityPreviewLimit;
                     {project.description.map((item) => <li>{item}</li>)}
                   </ul>
                 </section>
-                <a class="project-more" href={`/portfolio/${project.id}`} aria-label={`${project.title} 자세히 보기`}>자세히 →</a>
+                <a class="project-more" href={`/portfolio/${project.id}`} aria-label={`${project.cardTitle} 자세히 보기`}>자세히 →</a>
               </div>
             </div>
           </article>

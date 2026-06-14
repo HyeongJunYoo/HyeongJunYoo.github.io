@@ -49,6 +49,8 @@ export type ProjectChallenge = {
 export type Project = {
   id: string;
   title: string;
+  /** 홈 카드용 한글 제목 (포트폴리오 hero/archive/상세는 영문 title 사용). */
+  cardTitle: string;
   level: "featured" | "core" | "support";
   eyebrow: string;
   period: string;
@@ -89,9 +91,10 @@ export const projects: Project[] = [
   {
     id: "metaverse-ui",
     title: "METAVERSE UI",
+    cardTitle: "메타버스 플랫폼 UI 네이티브 전환",
     level: "featured",
     eyebrow: "Featured 01",
-    period: "2025 · 4 months",
+    period: "2025.01 ~ 2025.04",
     role: "Client Developer / Team Lead",
     engine: "Unity 2022 LTS",
     platform: "PC / VR / Mobile",
@@ -133,9 +136,10 @@ export const projects: Project[] = [
   {
     id: "metaverse-platform",
     title: "METAVERSE PLATFORM",
+    cardTitle: "메타버스 플랫폼 시스템 고도화",
     level: "core",
     eyebrow: "Core 02",
-    period: "2023–2024 · 12 months",
+    period: "2023.09 ~ 2024.09",
     role: "Client Developer / Team Lead",
     engine: "Unity 2022 LTS",
     platform: "PC / VR / Mobile",
@@ -177,9 +181,10 @@ export const projects: Project[] = [
   {
     id: "markerless-mocap",
     title: "MARKERLESS MOCAP",
+    cardTitle: "마커리스 모션 캡처 아바타 트래킹",
     level: "core",
     eyebrow: "Core 03",
-    period: "2024 · 3 months",
+    period: "2024.10 ~ 2024.12",
     role: "Client Developer",
     engine: "Unity 2022 LTS",
     platform: "PC / iOS / Android",
@@ -221,9 +226,10 @@ export const projects: Project[] = [
   {
     id: "vr-acupuncture-lab",
     title: "VR ACUPUNCTURE LAB",
+    cardTitle: "교육용 VR 침술 실습 콘텐츠",
     level: "core",
     eyebrow: "Core 04",
-    period: "2025–2026 · 4 months",
+    period: "2025.11 ~ 2026.02",
     role: "Client Developer",
     engine: "Unity 2022 LTS",
     platform: "VR (Meta Horizon)",
@@ -283,9 +289,10 @@ export const projects: Project[] = [
   {
     id: "haptic-cooking",
     title: "HAPTIC COOKING",
+    cardTitle: "햅틱 요리형 실시간 멀티 콘텐츠",
     level: "core",
     eyebrow: "Core 05",
-    period: "2025 · 6 months",
+    period: "2025.05 ~ 2025.10",
     role: "Client Developer (Lead)",
     engine: "Unity 2022 LTS",
     platform: "VR",
@@ -345,9 +352,10 @@ export const projects: Project[] = [
   {
     id: "therapy-minis",
     title: "THERAPY MINIS",
+    cardTitle: "심리상담형 실시간 멀티 콘텐츠",
     level: "core",
     eyebrow: "Core 06",
-    period: "2025 · 6 months",
+    period: "2025.05 ~ 2025.10",
     role: "Client Developer (Lead)",
     engine: "Unity 2022 LTS",
     platform: "PC / VR",
@@ -407,9 +415,10 @@ export const projects: Project[] = [
   {
     id: "sdk-tooling",
     title: "SDK TOOLING",
+    cardTitle: "SDK 배포·제작 환경 자동화",
     level: "core",
     eyebrow: "Core 07",
-    period: "2026 · ongoing",
+    period: "2026.03 ~ 현재",
     role: "Client Developer / Tools",
     engine: "Unity 2022 LTS",
     platform: "Internal Tooling",
