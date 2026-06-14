@@ -152,15 +152,15 @@ export const projects: Project[] = [
     stack: ["Unity 2022", "C#", "New Input System", "FMOD", "Addressables", "OpenXR"],
     stats: [
       { value: "16GB→4GB", label: "Memory" },
-      { value: "3→1", label: "입력 수정 범위" },
-      { value: "Runtime", label: "Audio 전환" }
+      { value: "3→1", label: "Input scope" },
+      { value: "Runtime", label: "Audio switch" }
     ],
     gallery: [
       "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1556438064-2d7646166914?auto=format&fit=crop&w=900&q=80"
     ],
     links: { source: "#", devlog: "#" },
-    theta: 51, phi: 8, width: 230, height: 286, gridX: -120, gridY: -165
+    theta: 51, phi: 8, width: 230, height: 286, gridX: -100, gridY: 160
   },
   {
     id: "markerless-mocap",
@@ -199,7 +199,7 @@ export const projects: Project[] = [
       "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=900&q=80"
     ],
     links: { source: "#", devlog: "#" },
-    theta: 103, phi: -4, width: 220, height: 274, gridX: 170, gridY: -150
+    theta: 103, phi: -4, width: 220, height: 274, gridX: 180, gridY: 150
   },
   {
     id: "vr-acupuncture-lab",
