@@ -129,7 +129,7 @@ const hasHiddenActivities = activities.length > activityPreviewLimit;
             </aside>
             <div class="project-content project-summary-content">
               <p class="project-tagline">{project.tagline}</p>
-              <a class="project-more" href={`/portfolio/${project.id}`}>자세히 →</a>
+              <a class="project-more" href={`/portfolio/${project.id}`} aria-label={`${project.title} 자세히 보기`}>자세히 →</a>
             </div>
           </article>
         ))}
