@@ -85,75 +85,127 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    id: "metaverse-core",
-    title: "METAVERSE CORE",
+    id: "metaverse-ui",
+    title: "METAVERSE UI",
     level: "featured",
     eyebrow: "Featured 01",
-    period: "2023–2025 · 19 months",
+    period: "2025 · 4 months",
     role: "Client Developer / Team Lead",
     engine: "Unity 2022 LTS",
     platform: "PC / VR / Mobile",
-    genre: "Metaverse Platform",
+    genre: "UI Architecture",
     team: "개발팀",
     status: "Live",
-    tagline: "WebView UI 네이티브 전환·입력/사운드/리소스 통합·마커리스 모션 캡처.",
-    summary: "트웬티온스 PC/VR/모바일 메타버스 플랫폼. UI 네이티브 전환·입력/사운드/리소스 통합·마커리스 모션 캡처까지 클라이언트 핵심 영역을 책임졌습니다.",
-    goal: "트웬티온스 PC/VR 메타버스 플랫폼의 클라이언트 핵심 영역을 1년 7개월에 걸쳐 다듬은 작업입니다. 화면 진입 지연을 줄이고 메모리를 절감하기 위한 UI 네이티브 전환, 입력·사운드·리소스 로드 구조를 환경 무관하게 만든 플랫폼 고도화, 별도 마커 없이 카메라 입력만으로 아바타가 사용자 움직임을 따라가는 마커리스 모션 캡처까지 세 가지 핵심 영역을 차례로 개선했습니다. 개발팀 리더 역할로 일정 관리·작업 분배·기술 방향성 조율과 운영 배포·이슈 대응을 함께 책임졌습니다.",
-    challengeIntro: "UI 네이티브 전환, 입력·사운드·리소스 구조 통합, 마커리스 아바타 트래킹 — 메타버스 플랫폼 클라이언트의 세 가지 케이스.",
+    tagline: "WebView UI를 Unity 네이티브로 전환해 진입 지연·메모리 개선.",
+    summary: "메타버스 플랫폼 주요 화면을 WebView에서 Unity 네이티브 UGUI로 전환해 진입 지연과 메모리 사용을 개선한 작업입니다.",
+    goal: "WebView 기반 주요 화면의 1~2초 로딩 지연과 높은 메모리 점유를 해결하기 위해 Home·Room·Chat·Emote·Setting 등 10개+ 화면을 Unity 네이티브 UGUI로 재구현했습니다. MVVM 패턴으로 View / ViewModel / Repository 계층을 분리하고, Canvas Scaler·Auto Layout·EventTrigger 추상화로 PC/VR/모바일 해상도·입력을 단일 codebase로 대응했습니다.",
+    challengeIntro: "WebView 기반 화면을 Unity 네이티브로 전환하며 부딪힌 케이스.",
     challenges: [
       {
         title: "UI 고도화 · WebView → 네이티브 (10+ 화면, 4개월)",
         problem: "메타버스 플랫폼 주요 화면이 WebView 기반이라 매 진입마다 [[1-2초]] 로딩 지연이 발생했고, WebView 인스턴스가 [[수십~수백 MB]] 메모리를 점유했습니다. Home·Room 같은 자주 진입하는 화면의 누적 지연이 체감 속도를 크게 떨어뜨리고, 모바일 확장 시 메모리 한계가 가장 큰 병목이었습니다.",
         solution: "Unity 네이티브 UGUI로 Home·Room·Chat·Emote·Setting 등 [[10개+ 화면]]을 재구현했습니다. MVVM 패턴으로 View / ViewModel / Repository 계층을 분리하고, Repository에서 UniTask 비동기 처리, ViewModel이 View에 바인딩하는 흐름. 화면 객체는 초기 1회 생성 후 활성/비활성 토글로 재사용. Canvas Scaler·Auto Layout·EventTrigger 추상화로 PC/VR/모바일 해상도와 입력 방식까지 단일 codebase로 대응.",
-        outcome: "화면 진입 대기 [[1-2초 → 약 0.1초]], 클라이언트 메모리 [[약 -50%]] 절감, 모바일 확장 가능 베이스 확보",
-        image: resolveImage("metaverse-core", "challenge-01")
-      },
+        outcome: "화면 진입 대기 [[1-2초 → 약 0.1초]], 클라이언트 메모리 [[약 -50%]] 절감, 모바일 확장 가능 베이스 확보"
+      }
+    ],
+    image: resolveImage("metaverse-ui", "hero"),
+    tone: "hot",
+    stack: ["Unity 2022", "C#", "MVVM", "Repository Pattern", "UniTask", "UGUI"],
+    stats: [
+      { value: "0.1s", label: "Entry latency" },
+      { value: "-50%", label: "Memory" },
+      { value: "10+", label: "Native screens" }
+    ],
+    gallery: [
+      "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=900&q=80"
+    ],
+    links: { source: "#", devlog: "#" },
+    theta: 0, phi: -8, width: 240, height: 300, gridX: -410, gridY: -150
+  },
+  {
+    id: "metaverse-platform",
+    title: "METAVERSE PLATFORM",
+    level: "core",
+    eyebrow: "Core 02",
+    period: "2023–2024 · 12 months",
+    role: "Client Developer / Team Lead",
+    engine: "Unity 2022 LTS",
+    platform: "PC / VR / Mobile",
+    genre: "Platform Architecture",
+    team: "개발팀",
+    status: "Live",
+    tagline: "입력·사운드·리소스 로드 구조를 환경 무관하게 공통화.",
+    summary: "PC/VR/모바일 환경 확장을 위해 입력·사운드·리소스 로드 구조를 공통화하고 메모리를 절감한 플랫폼 고도화 작업입니다.",
+    goal: "환경별로 분리되어 있던 입력 처리, 재실행을 강제하던 음성 기기 전환, 직접 참조로 메모리를 16GB 이상 점유하던 리소스 로드를 차례로 통합했습니다. New Input System 공통 action map, FMOD audio bus + OS device 감시, Addressables 기반 dependency 자동 추적·unload로 환경 무관 구조를 만들었습니다.",
+    challengeIntro: "입력·사운드·리소스 로드를 환경 무관하게 공통화한 케이스.",
+    challenges: [
       {
         title: "플랫폼 고도화 · 입력·사운드·리소스 구조 공통화 (1년)",
         problem: "기존 입력 처리는 PC·모바일·XR 환경별로 분리되어 신규 입력 기기 추가 시 [[3개 환경]] 코드를 모두 수정해야 했습니다. PC/VR 음성 기기 전환은 [[프로그램 재실행]]이 강제됐고, 리소스는 prefab/scene이 직접 참조되어 클라이언트 메모리 사용량이 [[16GB 이상]]까지 상승, 모바일 한계로 즉시 충돌하는 수준이었습니다.",
         solution: "세 영역을 차례로 통합했습니다. New Input System 기반 공통 action map으로 PC/모바일/XR 입력을 일원화하고 device 변경 시 UI prompt도 자동 전환. FMOD 기반 audio bus 계층 + OS device enumeration 감시로 음성 기기 런타임 전환. 직접 참조를 AssetReference로 교체하고 Addressables group으로 dependency 자동 추적·unload.",
-        outcome: "신규 입력 기기 확장 시 수정 범위 [[3곳 → 1곳]], 음성 기기 [[재실행 없이]] 런타임 전환, 메모리 [[16GB+ → 4GB 이하]]",
-        image: resolveImage("metaverse-core", "challenge-02")
-      },
+        outcome: "신규 입력 기기 확장 시 수정 범위 [[3곳 → 1곳]], 음성 기기 [[재실행 없이]] 런타임 전환, 메모리 [[16GB+ → 4GB 이하]]"
+      }
+    ],
+    image: resolveImage("metaverse-platform", "hero"),
+    tone: "orange",
+    stack: ["Unity 2022", "C#", "New Input System", "FMOD", "Addressables", "OpenXR"],
+    stats: [
+      { value: "16GB→4GB", label: "Memory" },
+      { value: "3→1", label: "입력 수정 범위" },
+      { value: "Runtime", label: "Audio 전환" }
+    ],
+    gallery: [
+      "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=900&q=80",
+      "https://images.unsplash.com/photo-1556438064-2d7646166914?auto=format&fit=crop&w=900&q=80"
+    ],
+    links: { source: "#", devlog: "#" },
+    theta: 51, phi: 8, width: 230, height: 286, gridX: -120, gridY: -165
+  },
+  {
+    id: "markerless-mocap",
+    title: "MARKERLESS MOCAP",
+    level: "core",
+    eyebrow: "Core 03",
+    period: "2024 · 3 months",
+    role: "Client Developer",
+    engine: "Unity 2022 LTS",
+    platform: "PC / iOS / Android",
+    genre: "Avatar Tracking",
+    team: "개발팀",
+    status: "Live",
+    tagline: "카메라 입력만으로 아바타가 사용자 움직임을 추적.",
+    summary: "별도 마커 없이 카메라 입력만으로 아바타가 사용자 움직임을 따라가는 마커리스 모션 캡처를 PC/iOS/Android 단일 흐름으로 통합했습니다.",
+    goal: "MediaPipe(정규화 keypoint)와 ARKit(blend shape)의 좌표계·단위·축이 모두 달라 source별 리깅 로직이 중복되던 구조를, 중간 추상 계층 'AvatarMotionFrame'으로 통합했습니다. source별 adapter가 표준 좌표계로 변환하고, 본 회전 constraint·IK 후처리·1-Euro filter로 손목·손가락 꼬임과 jitter를 보정했습니다.",
+    challengeIntro: "이종 모션 데이터를 단일 처리 흐름으로 통합한 케이스.",
+    challenges: [
       {
         title: "마커리스 모션 캡처 · PC/iOS/Android 통합 (3개월)",
         problem: "MediaPipe는 정규화 keypoint coordinate를, ARKit은 ARFaceAnchor blend shape weight를 반환합니다. 두 데이터는 좌표계·단위·축 정의가 모두 달라 source별로 별도 아바타 리깅 로직을 만들면 [[3개 환경]]에 코드 중복이 빠르게 늘어나는 구조였습니다. 또 손목·손가락은 평면 좌표 + depth 추정 기반이라 3D rotation 변환 시 [[비현실적 꼬임]](impossible joint angle)이 자주 발생했습니다.",
         solution: "중간 추상 계층 'AvatarMotionFrame'을 정의해 모든 source가 일단 이 구조로 변환되고, 아바타 리깅은 이 구조만 소비하도록 분리. AvatarMotionFrame은 표준 좌표계(Unity 좌표 + meter 단위)와 표준 본 매핑을 가지고, source별 adapter(MediaPipeAdapter / ARKitAdapter)가 conversion을 책임집니다. 본 단위 회전 constraint를 human anatomy 기준으로 clamp, 손가락은 인접 본 회전 의존성을 IK 후처리로 보정, frame jitter는 1-Euro filter로 부드럽게 처리.",
-        outcome: "PC·iOS·Android 모션 데이터를 [[단일 처리 흐름]]으로 통합, 손목·손가락 회전 자연스러움 시각적으로 개선",
-        image: resolveImage("metaverse-core", "challenge-03")
+        outcome: "PC·iOS·Android 모션 데이터를 [[단일 처리 흐름]]으로 통합, 손목·손가락 회전 자연스러움 시각적으로 개선"
       }
     ],
-    image: resolveImage("metaverse-core", "hero"),
-    tone: "hot",
-    stack: ["Unity 2022", "C#", "MVVM", "OpenXR", "FMOD", "Addressables", "MediaPipe", "ARKit"],
+    image: resolveImage("markerless-mocap", "hero"),
+    tone: "acid",
+    stack: ["Unity 2022", "C#", "MediaPipe", "ARKit", "IK", "1-Euro Filter"],
     stats: [
-      { value: "0.1s", label: "Entry latency" },
-      { value: "4GB", label: "Memory ceiling" },
-      { value: "3", label: "Platform targets" }
+      { value: "3", label: "Platforms" },
+      { value: "1", label: "처리 흐름" },
+      { value: "Markerless", label: "Capture" }
     ],
     gallery: [
-      "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=900&q=80",
       "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=900&q=80",
-      "https://images.unsplash.com/photo-1556438064-2d7646166914?auto=format&fit=crop&w=900&q=80"
+      "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=900&q=80"
     ],
-    links: {
-      play: "#",
-      source: "#",
-      devlog: "#"
-    },
-    theta: 0,
-    phi: -8,
-    width: 260,
-    height: 330,
-    gridX: -410,
-    gridY: -150
+    links: { source: "#", devlog: "#" },
+    theta: 103, phi: -4, width: 220, height: 274, gridX: 170, gridY: -150
   },
   {
     id: "vr-acupuncture-lab",
     title: "VR ACUPUNCTURE LAB",
     level: "core",
-    eyebrow: "Core 02",
+    eyebrow: "Core 04",
     period: "2025–2026 · 4 months",
     role: "Client Developer",
     engine: "Unity 2022 LTS",
@@ -210,7 +262,7 @@ export const projects: Project[] = [
     id: "haptic-cooking",
     title: "HAPTIC COOKING",
     level: "core",
-    eyebrow: "Core 03",
+    eyebrow: "Core 05",
     period: "2025 · 6 months",
     role: "Client Developer (Lead)",
     engine: "Unity 2022 LTS",
@@ -267,7 +319,7 @@ export const projects: Project[] = [
     id: "therapy-minis",
     title: "THERAPY MINIS",
     level: "core",
-    eyebrow: "Core 04",
+    eyebrow: "Core 06",
     period: "2025 · 6 months",
     role: "Client Developer (Lead)",
     engine: "Unity 2022 LTS",
@@ -324,7 +376,7 @@ export const projects: Project[] = [
     id: "sdk-tooling",
     title: "SDK TOOLING",
     level: "core",
-    eyebrow: "Core 05",
+    eyebrow: "Core 07",
     period: "2026 · ongoing",
     role: "Client Developer / Tools",
     engine: "Unity 2022 LTS",
@@ -382,11 +434,10 @@ export const projects: Project[] = [
 export const featuredProject = projects[0];
 export const otherProjects = projects.slice(1);
 
-// Featured hero 캐러셀에 띄울 프로젝트와 순서.
-// 숫자는 위 `projects[]` 배열의 1-based 위치:
-//   1=metaverse-core 2=vr-acupuncture-lab 3=haptic-cooking 4=therapy-minis 5=sdk-tooling
-// 이 리스트만 바꾸면 대표 프로젝트와 노출 순서가 바뀐다.
-export const heroOrder = [3, 1, 2];
+// Featured hero 캐러셀에 띄울 프로젝트와 순서. 숫자는 위 projects[] 배열의 1-based 위치:
+//   1=metaverse-ui 2=metaverse-platform 3=markerless-mocap 4=vr-acupuncture-lab
+//   5=haptic-cooking 6=therapy-minis 7=sdk-tooling
+export const heroOrder = [1, 4, 5];
 export const heroProjects = heroOrder
   .map((n) => projects[n - 1])
   .filter((p): p is Project => Boolean(p));
