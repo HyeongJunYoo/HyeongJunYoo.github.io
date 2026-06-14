@@ -123,13 +123,28 @@ const hasHiddenActivities = activities.length > activityPreviewLimit;
 
       <div class="project-timeline">
         {projects.map((project) => (
-          <article class="project-card project-card-summary">
+          <article class="project-card">
             <aside class="project-meta" aria-label={`${project.title} 요약`}>
               <h3>{project.title}</h3>
+              <p class="project-period">{project.period}</p>
+              <ul class="tech-list project-meta-tech" aria-label={`${project.title} 기술 스택`}>
+                {project.stack.map((tech) => <li>{tech}</li>)}
+              </ul>
             </aside>
-            <div class="project-content project-summary-content">
-              <p class="project-tagline">{project.tagline}</p>
-              <a class="project-more" href={`/portfolio/${project.id}`} aria-label={`${project.title} 자세히 보기`}>자세히 →</a>
+            <div class="project-content">
+              <div class="project-detail-grid">
+                <section class="project-definition">
+                  <h4>업무 정의</h4>
+                  <p>{project.definition}</p>
+                </section>
+                <section>
+                  <h4>주요 업무 내용</h4>
+                  <ul>
+                    {project.description.map((item) => <li>{item}</li>)}
+                  </ul>
+                </section>
+                <a class="project-more" href={`/portfolio/${project.id}`} aria-label={`${project.title} 자세히 보기`}>자세히 →</a>
+              </div>
             </div>
           </article>
         ))}

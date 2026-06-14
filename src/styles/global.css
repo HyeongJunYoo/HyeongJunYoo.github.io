@@ -1454,33 +1454,15 @@ li {
   }
 }
 
-/* Home Projects 요약 카드 — 기존 .project-card 행 패턴 재사용, 내용만 축소 */
-.project-card-summary {
-  align-items: center;
-}
-.project-summary-content {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-}
-.project-tagline {
-  margin: 0;
-  color: var(--muted);
-  font-size: var(--reading-size-sm);
-  line-height: 1.6;
-  word-break: keep-all;
-}
+/* "자세히 →" link at the bottom of the home project detail grid (where 성과 was) */
 .project-more {
-  flex-shrink: 0;
-  margin-left: auto;            /* 자세히 → 행 우측 정렬 */
+  display: inline-block;
+  margin-top: 2px;
   color: var(--accent);
   font-weight: 700;
-  font-size: 0.92rem;
+  font-size: 0.95rem;
   text-decoration: none;
-  white-space: nowrap;
 }
-.project-more:hover { text-decoration: underline; }
-@media (max-width: 640px) {
-  .project-summary-content { flex-direction: column; align-items: flex-start; gap: 8px; }
-  .project-more { margin-left: 0; }
+.project-more:hover {
+  text-decoration: underline;
 }

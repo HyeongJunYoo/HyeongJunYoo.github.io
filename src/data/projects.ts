@@ -58,8 +58,10 @@ export type Project = {
   genre: string;
   team: string;
   status: string;
-  /** 홈 요약 카드용 1줄 정의 (제목 아래 한 줄). */
-  tagline: string;
+  /** 홈 카드 "업무 정의" (1문장). */
+  definition: string;
+  /** 홈 카드 "주요 업무 내용" 불릿. */
+  description: string[];
   summary: string;
   goal: string;
   /**
@@ -96,7 +98,12 @@ export const projects: Project[] = [
     genre: "UI Architecture",
     team: "개발팀",
     status: "Live",
-    tagline: "WebView UI를 Unity 네이티브로 전환해 진입 지연·메모리 개선.",
+    definition: "WebView 기반 UI의 로딩 지연과 높은 메모리 사용 문제를 개선하기 위해 주요 화면을 Unity 네이티브 UI로 전환",
+    description: [
+      "API 호출, 화면 상태, View 로직을 분리해 UI 코드 구조를 유지보수하기 쉽게 개선",
+      "Home, Room, Chat, Emote, Setting 등 주요 서비스 화면 10개 이상 구현",
+      "PC/VR/모바일 해상도와 입력 방식에 대응하는 UI 구조 개선"
+    ],
     summary: "메타버스 플랫폼 주요 화면을 WebView에서 Unity 네이티브 UGUI로 전환해 진입 지연과 메모리 사용을 개선한 작업입니다.",
     goal: "WebView 기반 주요 화면의 1~2초 로딩 지연과 높은 메모리 점유를 해결하기 위해 Home·Room·Chat·Emote·Setting 등 10개+ 화면을 Unity 네이티브 UGUI로 재구현했습니다. MVVM 패턴으로 View / ViewModel / Repository 계층을 분리하고, Canvas Scaler·Auto Layout·EventTrigger 추상화로 PC/VR/모바일 해상도·입력을 단일 codebase로 대응했습니다.",
     challengeIntro: "WebView 기반 화면을 Unity 네이티브로 전환하며 부딪힌 케이스.",
@@ -135,7 +142,12 @@ export const projects: Project[] = [
     genre: "Platform Architecture",
     team: "개발팀",
     status: "Live",
-    tagline: "입력·사운드·리소스 로드 구조를 환경 무관하게 공통화.",
+    definition: "PC/VR/모바일 환경 확장을 위해 입력, 사운드, 리소스 로드 구조를 공통화하고 개선",
+    description: [
+      "PC, 모바일, XR 환경의 입력을 New Input System 기반 공통 구조로 재구성",
+      "효과음, 음성 입출력, 볼륨 제어 흐름을 FMOD 기반으로 개선",
+      "직접 참조되던 리소스를 Addressables 기반 로드 방식으로 전환"
+    ],
     summary: "PC/VR/모바일 환경 확장을 위해 입력·사운드·리소스 로드 구조를 공통화하고 메모리를 절감한 플랫폼 고도화 작업입니다.",
     goal: "환경별로 분리되어 있던 입력 처리, 재실행을 강제하던 음성 기기 전환, 직접 참조로 메모리를 16GB 이상 점유하던 리소스 로드를 차례로 통합했습니다. New Input System 공통 action map, FMOD audio bus + OS device 감시, Addressables 기반 dependency 자동 추적·unload로 환경 무관 구조를 만들었습니다.",
     challengeIntro: "입력·사운드·리소스 로드를 환경 무관하게 공통화한 케이스.",
@@ -174,7 +186,12 @@ export const projects: Project[] = [
     genre: "Avatar Tracking",
     team: "개발팀",
     status: "Live",
-    tagline: "카메라 입력만으로 아바타가 사용자 움직임을 추적.",
+    definition: "카메라 기반 모션 데이터를 Unity 아바타에 반영해 별도 마커 없이 움직임을 표현하는 기능 개발",
+    description: [
+      "MediaPipe 기반 Face/Pose/Hand Tracking 데이터 처리 및 아바타 리깅 연동",
+      "기기별로 다른 모션 데이터를 아바타 리깅 구조에 맞게 변환하는 공통 처리 흐름 구성",
+      "표정·손·상하체 움직임을 아바타에 적용하고 iOS ARKit 입력도 동일 구조에 연결"
+    ],
     summary: "별도 마커 없이 카메라 입력만으로 아바타가 사용자 움직임을 따라가는 마커리스 모션 캡처를 PC/iOS/Android 단일 흐름으로 통합했습니다.",
     goal: "MediaPipe(정규화 keypoint)와 ARKit(blend shape)의 좌표계·단위·축이 모두 달라 source별 리깅 로직이 중복되던 구조를, 중간 추상 계층 'AvatarMotionFrame'으로 통합했습니다. source별 adapter가 표준 좌표계로 변환하고, 본 회전 constraint·IK 후처리·1-Euro filter로 손목·손가락 꼬임과 jitter를 보정했습니다.",
     challengeIntro: "이종 모션 데이터를 단일 처리 흐름으로 통합한 케이스.",
@@ -213,7 +230,12 @@ export const projects: Project[] = [
     genre: "Educational VR",
     team: "개발팀",
     status: "Shipped",
-    tagline: "VR에서 침술 학습→실습→평가를 잇는 교육 콘텐츠.",
+    definition: "VR 환경에서 침술 학습, 실습, 평가를 진행할 수 있는 교육용 콘텐츠 클라이언트 개발",
+    description: [
+      "학습/실습/관찰 모드 흐름과 환자 문진·치료 단계·결과 UI를 하나의 실습 시나리오로 연결",
+      "침 위치·각도·깊이 데이터를 기준으로 실습 결과를 평가하는 시각화 로직 구현",
+      "경혈 데이터 동기화, 햅틱 피드백, 메뉴/룸 UI, Meta Horizon 빌드·배포 수행"
+    ],
     summary: "VR 환경에서 침술 학습·실습·평가를 진행하는 교육용 콘텐츠. 한의대 수업에 실제 적용해 만족도 4.20/5.0을 기록했습니다.",
     goal: "VR 헤드셋에서 침술 학습→실습→평가까지 하나의 시나리오로 연결되는 교육용 콘텐츠를 클라이언트 측에서 책임진 4개월 프로젝트입니다. 학습/실습/관찰 3가지 모드를 환자 문진·치료 단계·결과 UI 흐름으로 연결하고, 침의 위치·각도·깊이 데이터를 기준으로 실습 결과를 평가하는 시각화 로직을 직접 구현했습니다. 경혈 데이터 동기화, 햅틱 피드백, 메뉴/룸 UI, Meta Horizon 비공개 앱 빌드와 배포까지 콘텐츠 완성에 필요한 클라이언트 작업을 수행했고, 완성된 빌드를 실제 한의대 수업에 적용해 교육 현장 활용 가능성을 검증했습니다.",
     challengeIntro: "VR 침술 실습 평가 시스템과 멀티 참여자 동기화에서 부딪힌 두 가지 케이스.",
@@ -270,7 +292,12 @@ export const projects: Project[] = [
     genre: "Realtime Multiplayer",
     team: "개발팀",
     status: "Shipped",
-    tagline: "주문·조리 흐름과 햅틱 피드백을 동기화하는 실시간 멀티.",
+    definition: "플랫폼 SDK 기반으로 여러 참여자가 함께 요리 미션을 수행하는 실시간 멀티 콘텐츠 개발 주도",
+    description: [
+      "룸 상태와 주문→조리→서빙 진행 흐름을 클라이언트 간 동기화",
+      "재료 점유를 atomic lock으로 처리해 동시 동작 시 재료 충돌 제거",
+      "동작별 햅틱 프로필을 정의하고 시각 피드백과 동기화해 VR 컨트롤러 햅틱 연동"
+    ],
     summary: "주문·조리 흐름과 햅틱 피드백을 동기화하는 실시간 멀티 요리형 콘텐츠. 행사·시연에 활용.",
     goal: "플랫폼 SDK 기반으로 여러 참여자가 함께 요리 미션을 수행하는 실시간 멀티 콘텐츠를 개발 주도한 작업입니다. 룸 상태(현재 주문, 조리 단계, 완료 여부), 주문→조리→서빙으로 이어지는 진행 흐름, 그리고 햅틱 피드백을 함께 동기화하는 클라이언트 로직을 책임졌습니다. 결과적으로 행사 및 시연에 활용해 실시간 협력형 콘텐츠의 사용 경험을 검증했고, 동시에 플랫폼 SDK의 개선 필요 기능을 정리할 수 있었습니다.",
     challengeIntro: "주문·조리 흐름과 햅틱 피드백을 멀티 환경에서 동기화한 두 가지 케이스.",
@@ -327,7 +354,12 @@ export const projects: Project[] = [
     genre: "Realtime Multiplayer",
     team: "개발팀",
     status: "Shipped",
-    tagline: "미니게임 4종 + 관리자 제어 + 참여자 상태 동기화.",
+    definition: "심리상담사가 내담자와 함께 진행하는 미니게임 4종과 관리자 제어·참여자 상태 동기화를 책임진 실시간 멀티 콘텐츠",
+    description: [
+      "MiniGameBase 추상 클래스로 미니게임 4종의 공통 인터페이스를 정의하고 게임별 로직만 구현",
+      "관리자/참여자 권한을 Authority 단위로 분리하고 host 검증으로 보안 허점 제거",
+      "권한 모델에 따라 UI 자동 분기 — 관리자는 제어판, 참여자는 게임 화면"
+    ],
     summary: "심리상담 세션을 위한 미니게임 4종 + 관리자 제어 + 참여자 상태 동기화 실시간 콘텐츠.",
     goal: "심리상담사가 내담자와 함께 진행할 수 있는 미니게임 4종과 관리자 제어, 참여자 상태 동기화를 책임진 실시간 멀티 콘텐츠입니다. 상담사 측에서는 관리자 모드로 게임 진행을 통제하고 참여자 상태를 모니터링하며, 참여자는 상담 세션 중 미니게임을 수행하는 비대칭 구조. 4종의 미니게임은 각자 다른 규칙과 입력 방식을 가지지만, 동일한 상태 동기화·관리자 제어 인터페이스를 따르는 공통 레이어 위에 올렸습니다.",
     challengeIntro: "비대칭 관리자/참여자 구조와 미니게임 4종 공통 레이어를 다듬은 두 가지 케이스.",
@@ -384,7 +416,12 @@ export const projects: Project[] = [
     genre: "Dev Pipeline",
     team: "개발팀",
     status: "Ongoing",
-    tagline: "SDK 설치·초기 설정을 Editor Tool 버튼으로 자동화.",
+    definition: "신규 콘텐츠 개발자가 SDK 설치와 초기 설정을 반복해야 하는 문제를 줄이고 제작 환경을 표준화하는 작업",
+    description: [
+      "Git URL 기반 SDK 설치와 버전 관리 흐름을 정리해 콘텐츠 개발 시작 절차 단순화",
+      "프로젝트 설정과 빌드 관련 초기 작업을 Editor Tool에서 처리하도록 구성",
+      "샘플 Scene과 템플릿 Scene을 정리해 신규 콘텐츠 제작 시작점 표준화"
+    ],
     summary: "Unity Package Manager + Editor Tool 3개 버튼으로 SDK 초기 설정 6~8단계를 자동화한 사내 도구.",
     goal: "신규 콘텐츠 개발자가 SDK 설치와 초기 프로젝트 설정에 매번 6~8단계를 반복해야 하는 문제를 줄이고, 제작 환경을 표준화하기 위해 진행 중인 사내 도구 작업입니다. Git URL 기반 SDK 설치와 버전 관리 흐름을 정리하고, 콘텐츠 제작에 필요한 프로젝트 설정과 빌드 관련 초기 작업을 Editor Tool로 옮겼습니다. 샘플 Scene과 템플릿 Scene을 정리해 신규 콘텐츠 제작의 시작점을 표준화했고, 결과적으로 환경 차이로 인한 초기 셋업 버그를 줄이는 게 목표입니다.",
     challengeIntro: "SDK 설치 마찰과 환경 차이로 인한 셋업 버그를 줄이기 위한 두 가지 케이스.",
