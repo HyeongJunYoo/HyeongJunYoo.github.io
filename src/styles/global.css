@@ -1453,3 +1453,35 @@ li {
     page-break-inside: avoid;
   }
 }
+
+/* Home Projects 요약 카드 — 기존 .project-card 행 패턴 재사용, 내용만 축소 */
+.project-card-summary {
+  align-items: center;
+}
+.project-summary-content {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+}
+.project-tagline {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--reading-size-sm);
+  line-height: 1.6;
+  word-break: keep-all;
+}
+.project-more {
+  flex-shrink: 0;
+  margin-left: auto;            /* 자세히 → 행 우측 정렬 */
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.92rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.project-more:hover { text-decoration: underline; }
+@media (max-width: 720px) {
+  .project-summary-content { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .project-more { margin-left: 0; }
+}
