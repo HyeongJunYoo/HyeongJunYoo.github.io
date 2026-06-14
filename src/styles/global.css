@@ -1460,8 +1460,7 @@ li {
 }
 .project-summary-content {
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
+  align-items: center;
   gap: 24px;
 }
 .project-tagline {
@@ -1481,7 +1480,7 @@ li {
   white-space: nowrap;
 }
 .project-more:hover { text-decoration: underline; }
-@media (max-width: 720px) {
+@media (max-width: 640px) {
   .project-summary-content { flex-direction: column; align-items: flex-start; gap: 8px; }
   .project-more { margin-left: 0; }
 }
