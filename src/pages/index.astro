@@ -5,9 +5,9 @@ import {
   career,
   education,
   profile,
-  projects,
   skills
 } from "../data/resume";
+import { projects } from "../data/projects";
 
 const activityPreviewLimit = 5;
 const hasHiddenActivities = activities.length > activityPreviewLimit;
@@ -122,38 +122,14 @@ const hasHiddenActivities = activities.length > activityPreviewLimit;
       </div>
 
       <div class="project-timeline">
-        {projects.map((project, index) => (
-          <article class="project-card" id={`project-${index + 1}`}>
+        {projects.map((project) => (
+          <article class="project-card project-card-summary">
             <aside class="project-meta" aria-label={`${project.title} 요약`}>
               <h3>{project.title}</h3>
-              <p class="project-period">{project.period}</p>
-              <ul class="tech-list project-meta-tech" aria-label={`${project.title} 기술 스택`}>
-                {project.tech.map((tech) => <li>{tech}</li>)}
-              </ul>
             </aside>
-
-            <div class="project-content">
-              <div class="project-detail-grid">
-                <section
-                  class="project-definition"
-                  aria-labelledby={`project-${index + 1}-definition`}
-                >
-                  <h4 id={`project-${index + 1}-definition`}>업무 정의</h4>
-                  <p>{project.definition}</p>
-                </section>
-                <section aria-labelledby={`project-${index + 1}-description`}>
-                  <h4 id={`project-${index + 1}-description`}>주요 업무 내용</h4>
-                  <ul>
-                    {project.description.map((item) => <li>{item}</li>)}
-                  </ul>
-                </section>
-                <section aria-labelledby={`project-${index + 1}-results`}>
-                  <h4 id={`project-${index + 1}-results`}>프로젝트 성과</h4>
-                  <ul>
-                    {project.results.map((item) => <li>{item}</li>)}
-                  </ul>
-                </section>
-              </div>
+            <div class="project-content project-summary-content">
+              <p class="project-tagline">{project.tagline}</p>
+              <a class="project-more" href={`/portfolio/${project.id}`}>자세히 →</a>
             </div>
           </article>
         ))}
