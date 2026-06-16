@@ -79,12 +79,20 @@ export type Project = {
   stats: ProjectStat[];
   gallery: string[];
   links: ProjectLinks;
+  /**
+   * World(globe) 모드 배치 좌표 — 카드를 반지름 ~260–460px 구 위에
+   * (theta=경도, phi=위도)로 놓는다.
+   *  - theta: 360 / 프로젝트수 로 균등 분배 (현재 7개 → ~51°씩: 0·51·103·154·206·257·309).
+   *           theta 0° = 월드 모드 초기 정면(가장 크게 보이는 자리).
+   *  - phi:   이웃끼리 +/- 부호를 번갈아 위·아래로 흩어 평평한 고리 대신 입체감을 준다 (대략 ±8~18°).
+   * 프로젝트를 추가/삭제하면 theta 간격(360/N)이 바뀌므로 전체 theta를 다시 균등 배치할 것.
+   * 간격이 카드 1장이 차지하는 각도(~44°)보다 좁으면 월드 모드에서 카드가 겹친다.
+   */
   theta: number;
   phi: number;
+  /** 카드 종횡비 기준값 (월드 모드에선 균일 크기로 override됨). */
   width: number;
   height: number;
-  gridX: number;
-  gridY: number;
 };
 
 export const projects: Project[] = [
@@ -131,7 +139,7 @@ export const projects: Project[] = [
       "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=900&q=80"
     ],
     links: { source: "#", devlog: "#" },
-    theta: 0, phi: -8, width: 240, height: 300, gridX: -410, gridY: -150
+    theta: 0, phi: 8, width: 240, height: 300
   },
   {
     id: "metaverse-platform",
@@ -176,7 +184,7 @@ export const projects: Project[] = [
       "https://images.unsplash.com/photo-1556438064-2d7646166914?auto=format&fit=crop&w=900&q=80"
     ],
     links: { source: "#", devlog: "#" },
-    theta: 51, phi: 8, width: 230, height: 286, gridX: -100, gridY: 160
+    theta: 51, phi: -16, width: 230, height: 286
   },
   {
     id: "markerless-mocap",
@@ -221,7 +229,7 @@ export const projects: Project[] = [
       "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=900&q=80"
     ],
     links: { source: "#", devlog: "#" },
-    theta: 103, phi: -4, width: 220, height: 274, gridX: 180, gridY: 150
+    theta: 103, phi: 18, width: 220, height: 274
   },
   {
     id: "vr-acupuncture-lab",
@@ -279,12 +287,10 @@ export const projects: Project[] = [
       play: "#",
       source: "#"
     },
-    theta: 72,
-    phi: 10,
+    theta: 154,
+    phi: -12,
     width: 238,
-    height: 294,
-    gridX: -120,
-    gridY: -160
+    height: 294
   },
   {
     id: "haptic-cooking",
@@ -342,12 +348,10 @@ export const projects: Project[] = [
       source: "#",
       devlog: "#"
     },
-    theta: 142,
-    phi: -4,
+    theta: 206,
+    phi: 16,
     width: 220,
-    height: 270,
-    gridX: 150,
-    gridY: -150
+    height: 270
   },
   {
     id: "therapy-minis",
@@ -405,12 +409,10 @@ export const projects: Project[] = [
       play: "#",
       source: "#"
     },
-    theta: 214,
-    phi: 12,
+    theta: 257,
+    phi: -18,
     width: 200,
-    height: 240,
-    gridX: 400,
-    gridY: -110
+    height: 240
   },
   {
     id: "sdk-tooling",
@@ -468,12 +470,10 @@ export const projects: Project[] = [
       source: "#",
       devlog: "#"
     },
-    theta: 288,
-    phi: -2,
+    theta: 309,
+    phi: 10,
     width: 200,
-    height: 240,
-    gridX: -380,
-    gridY: 150
+    height: 240
   }
 ];
 
