@@ -1457,6 +1457,7 @@ li {
 /* "자세히 →" link at the bottom of the home project detail grid (where 성과 was) */
 .project-more {
   display: inline-block;
+  justify-self: end;
   margin-top: 2px;
   color: var(--accent);
   font-weight: 700;
