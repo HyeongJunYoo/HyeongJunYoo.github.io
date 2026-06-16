@@ -1475,14 +1475,12 @@ li {
 }
 
 /* Hover-highlight breathing room: inset content from the highlighted edge while
-   keeping content aligned (negative margin offsets the horizontal padding). */
+   keeping divider lines aligned with the section borders (content inset, no negative margin). */
 .career-item,
 .activity-item,
 .education-item,
 .project-card,
 .skill-row {
-  margin-left: -16px;
-  margin-right: -16px;
   padding-left: 16px;
   padding-right: 16px;
 }
