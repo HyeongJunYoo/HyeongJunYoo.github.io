@@ -435,7 +435,7 @@ button {
 .world-shell[data-mode="grid"] .world-rotator {
   position: static;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 28px;
   width: 100%;
   transform: none;
@@ -2050,6 +2050,10 @@ button {
   .project-detail-page {
     margin-top: 76px;
   }
+
+  .world-shell[data-mode="grid"] .world-rotator {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 560px) {
@@ -2061,6 +2065,10 @@ button {
   .project-detail-page {
     margin: 64px auto 0;
     padding: 0 12px 56px;
+  }
+
+  .world-shell[data-mode="grid"] .world-rotator {
+    grid-template-columns: 1fr;
   }
 
   .featured-hero .hero-overlay {
